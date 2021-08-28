@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
-
+import {
+  isIphone8PlusOrLower
+} from '../../helpers/iphone';
 
 const styles = StyleSheet.create({
     container: {
