@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {isIphone8PlusOrLower} from '../helpers/iphone';
 
 const styles = StyleSheet.create({
   container: {
@@ -7,12 +6,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 10,
   },
-  navigationTabs: {
-    paddingBottom: isIphone8PlusOrLower() ? 10 : 0,
-  },
   loginButton: {
     backgroundColor: '#226ddcff',
     borderRadius: 20,
+  },
+  input: {
+    height: 40,
+    borderWidth: 1,
+    padding: 10,
+    marginTop: 10,
+    borderColor: '#666666',
+    borderRadius: 5,
   },
 });
 

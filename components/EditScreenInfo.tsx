@@ -1,12 +1,16 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 
 import Colors from '../constants/Colors';
-import { MonoText } from './StyledText';
-import { Text, View } from './Themed';
+import Navigation from '../navigation';
+import {RootStackScreenProps} from '../types';
+import {MonoText} from './StyledText';
+import {Text, View} from './Themed';
 
-export default function EditScreenInfo({ path }: { path: string }) {
+export default function EditScreenInfo({
+  navigation,
+}: RootStackScreenProps<'LogOff'>) {
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -33,19 +37,15 @@ export default function EditScreenInfo({ path }: { path: string }) {
       </View>
 
       <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Root')}
+          style={styles.helpLink}>
           <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
             Sair
           </Text>
         </TouchableOpacity>
       </View>
     </View>
-  );
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
   );
 }
 

@@ -5,6 +5,13 @@ import * as Updates from 'expo-updates';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
+
+if (__DEV__) {
+  import('./config/Reactotron.config').then(() =>
+    console.log('Reactotron Configured'),
+  );
+}
+
 const App: React.FC = () => {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
