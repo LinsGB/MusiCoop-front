@@ -13,13 +13,14 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import reactotron from '../../config/Reactotron.config';
 
 const Search = () => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
-  const [listContent, setListContent] = useState();
+  const [refresh, setRefresh] = useState(false);
 
   const dados: any = [
     {
@@ -55,7 +56,7 @@ const Search = () => {
 
     setFilteredDataSource(dados);
     setMasterDataSource(dados);
-  }, [reactotron.debug!(search)]);
+  }, []);
 
   const searchFilterFunction = (text: any) => {
     // Check if searched text is not blank
@@ -80,14 +81,12 @@ const Search = () => {
     }
   };
 
-  const ItemView = ({item}: any) => {
-    return (
-      // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-        {item.title}
-      </Text>
-    );
-  };
+  // const ItemView = ({item}: any) => {
+  //   return (
+  //     // Flat List Item
+
+  //   );
+  // };
 
   const ItemSeparatorView = () => {
     return (
@@ -106,6 +105,8 @@ const Search = () => {
     // Function for click on an item
     // alert(item.title);
     setSearch(item.title);
+    setRefresh(true);
+    reactotron.debug!(refresh);
   };
 
   return (
@@ -116,12 +117,17 @@ const Search = () => {
           onChangeText={(text) => searchFilterFunction(text)}
           value={search}
           underlineColorAndroid="transparent"
-          placeholder="Search Here"></TextInput>
+          placeholder="Escolha a categoria"></TextInput>
         <FlatList
           data={filteredDataSource}
+          extraData={search}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={ItemSeparatorView}
-          renderItem={ItemView}
+          renderItem={({item}: any) => (
+            <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+              {item.title}
+            </Text>
+          )}
         />
       </View>
     </SafeAreaView>

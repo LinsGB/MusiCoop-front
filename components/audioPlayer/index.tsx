@@ -4,7 +4,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
 
 const audio = {
-  filename: 'My Awesome Audio',
+  filename: 'teste',
   uri: 'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3',
 };
 

@@ -27,6 +27,9 @@ const postScreen = () => {
             </Picker>
           </View>
         </View> */}
+        <Text style={[{padding: 10, fontWeight: 'bold'}]}>
+          Insira uma categoria
+        </Text>
         <Search />
         <View
           style={styles.separator}
