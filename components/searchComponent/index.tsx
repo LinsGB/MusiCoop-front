@@ -21,6 +21,7 @@ const Search = () => {
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [showList, setShowList] = useState(false);
 
   const dados: any = [
     {
@@ -73,6 +74,7 @@ const Search = () => {
       });
       setFilteredDataSource(newData);
       setSearch(text);
+      setShowList(false);
     } else {
       // Inserted text is blank
       // Update FilteredDataSource with masterDataSource
@@ -104,7 +106,9 @@ const Search = () => {
   const getItem = (item: any) => {
     // Function for click on an item
     // alert(item.title);
+    setShowList(!showList);
     setSearch(item.title);
+    // searchFilterFunction(item.title);
     setRefresh(true);
     reactotron.debug!(refresh);
   };
@@ -118,17 +122,21 @@ const Search = () => {
           value={search}
           underlineColorAndroid="transparent"
           placeholder="Escolha a categoria"></TextInput>
-        <FlatList
-          data={filteredDataSource}
-          extraData={search}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={ItemSeparatorView}
-          renderItem={({item}: any) => (
-            <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-              {item.title}
-            </Text>
-          )}
-        />
+        {!showList ? (
+          <FlatList
+            data={filteredDataSource}
+            extraData={search}
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={ItemSeparatorView}
+            renderItem={({item}: any) => (
+              <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+                {item.title}
+              </Text>
+            )}
+          />
+        ) : (
+          <></>
+        )}
       </View>
     </SafeAreaView>
   );
