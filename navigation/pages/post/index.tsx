@@ -8,6 +8,7 @@ import {TextInput} from 'react-native';
 import AudioPlayer from '../../../components/audioPlayer';
 import {ScrollView} from 'react-native-gesture-handler';
 import Search from '../../../components/searchComponent';
+import UploadFile from '../../../components/uploadComponent';
 
 const postScreen = () => {
   const [selectedValue, setSelectedValue] = useState('java');
@@ -49,6 +50,9 @@ const postScreen = () => {
           lightColor="#C8C8C8"
           darkColor="rgba(255,255,255,0.1)"
         />
+        <View>
+          <UploadFile />
+        </View>
         <View>
           <AudioPlayer />
         </View>

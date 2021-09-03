@@ -16,7 +16,7 @@ console.dev = () => ({});
   console.dev = function logDev(...args: any) {
     console.log(`\n============== DEBUG ==============\n\n`);
     console.log(...args);
-    Reactotron.log!(...args);
+    Reactotron.log(...args);
     console.log(`\n============== END DEBUG ==============\n\n`);
   };
 })();

@@ -110,7 +110,6 @@ const Search = () => {
     setSearch(item.title);
     // searchFilterFunction(item.title);
     setRefresh(true);
-    reactotron.debug!(refresh);
   };
 
   return (
