@@ -112,18 +112,21 @@ function BottomTabNavigator() {
           title: 'Musicoop',
           tabBarIcon: ({color}) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({pressed}) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="user"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{marginRight: 15}}
-              />
-            </Pressable>
+            <View>
+              <Pressable
+                onPress={() => navigation.navigate('Modal')}
+                style={({pressed}) => ({
+                  opacity: pressed ? 0.5 : 1,
+                })}>
+                <FontAwesome
+                  name="user"
+                  size={25}
+                  color={Colors[colorScheme].text}
+                  style={{marginRight: 15}}
+                />
+              </Pressable>
+              <View></View>
+            </View>
           ),
         })}
       />

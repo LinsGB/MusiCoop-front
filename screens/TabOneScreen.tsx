@@ -1,39 +1,58 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import {View, useWindowDimensions, Text} from 'react-native';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import {Text, View} from '../components/Themed';
-import {RootTabScreenProps} from '../types';
-
-export default function TabOneScreen({
-  navigation,
-}: RootTabScreenProps<'TabOne'>) {
+const FirstRoute = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Categorias2</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
-    </View>
+    <React.Fragment>
+      <View style={{flex: 1, margin: 10}}>
+        <Text>Home</Text>
+      </View>
+    </React.Fragment>
+  );
+};
+
+const SecondRoute = () => {
+  return (
+    <React.Fragment>
+      <View style={{flex: 1, margin: 10}}>
+        <Text>Popular</Text>
+      </View>
+    </React.Fragment>
+  );
+};
+
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute,
+});
+
+export default function TabViewExample() {
+  const layout = useWindowDimensions();
+  const color = 1;
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'first', title: 'Home'},
+    {key: 'second', title: 'Popular'},
+  ]);
+
+  return (
+    <TabView
+      navigationState={{index, routes}}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{width: layout.width}}
+      renderTabBar={(props) => (
+        <TabBar
+          {...props}
+          indicatorStyle={{backgroundColor: '#226ddcff'}}
+          style={{
+            backgroundColor: 'white',
+          }}
+          renderLabel={({route}) => (
+            <Text style={{color: 'black', margin: 8}}>{route.title}</Text>
+          )}></TabBar>
+      )}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
