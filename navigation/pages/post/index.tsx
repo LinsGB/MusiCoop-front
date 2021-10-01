@@ -15,19 +15,6 @@ const postScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {/* <View style={[{marginLeft: 20}]}>
-          <Text style={[{marginBottom: 10}]}>Insira uma categoria</Text>
-          <View style={styles.picker}>
-            <Picker
-              selectedValue={selectedValue}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedValue(itemValue)
-              }>
-              <Picker.Item label="Java" value="java" />
-              <Picker.Item label="JavaScript" value="js" />
-            </Picker>
-          </View>
-        </View> */}
         <Text style={[{padding: 10, fontWeight: 'bold'}]}>
           Insira uma categoria
         </Text>
