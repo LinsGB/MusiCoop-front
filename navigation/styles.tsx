@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
   },
   navigationTabs: {
     paddingBottom: isIphone8PlusOrLower() ? 10 : 0,
+    borderTopWidth: 0,
+    elevation: 0,
   },
   loginButton: {
     backgroundColor: '#226ddcff',
