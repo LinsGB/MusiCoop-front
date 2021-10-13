@@ -5,7 +5,7 @@ import {Audio} from 'expo-av';
 import reactotron from 'reactotron-react-native';
 
 const audio: any = {
-  filename: 'teste',
+  filename: 'nome da musica(se tiver)',
   song: 'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3',
 };
 
@@ -48,13 +48,11 @@ const AudioPlayer = () => {
   };
 
   return (
-    <View style={{flex: 1, padding: 50, backgroundColor: '#fff'}}>
-      <Text style={{fontWeight: 'bold', fontSize: 18, marginBottom: 15}}>
-        {audio.filename}
-      </Text>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
+      {/* <Text style={{fontSize: 18, marginBottom: 15}}>{audio.filename}</Text> */}
       <Ionicons
         style={{
-          alignSelf: 'center',
+          alignSelf: 'flex-end',
           backgroundColor: 'gray',
           padding: 10,
           borderRadius: 50,
