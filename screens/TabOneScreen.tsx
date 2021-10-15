@@ -60,7 +60,7 @@ export default function TabViewExample() {
   const color = 1;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    // {key: 'first', title: 'Home'},
+    {key: 'first', title: 'Últimos posts'},
     // {key: 'second', title: 'Popular'},
   ]);
 
