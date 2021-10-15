@@ -109,7 +109,7 @@ function BottomTabNavigator() {
         name="TabOne"
         component={TabOneScreen}
         options={({navigation}: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Musicoop',
+          title: 'Início',
           tabBarIcon: ({color}) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <View>
