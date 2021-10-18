@@ -14,5 +14,14 @@
       "tittlePost": "Titulo do post 2",
       "postDate": "Jp - 20/10/2012 - 10:10"
     }
+  ],
+  "musics": [
+    {
+      "audio": [
+        {
+          "file": "oi"
+        }
+      ]
+    }
   ]
 }

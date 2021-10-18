@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import postReducer from './post/useComments';
+import audioReducer from './audio/reducers';
 
 export const rootReducer = combineReducers({
-  post: postReducer,
+  audio: audioReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -16,7 +16,7 @@ import {
   TextInput,
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import api from '../../config/axios/Axios';
+import api from '../../config/axios/AudioAxios';
 import reactotron from '../../config/Reactotron.config';
 import postScreen from '../../navigation/pages/post';
 import useComments from '../../hooks/useComments';
@@ -27,6 +27,8 @@ const handleComments = () => {};
 
 const Comments = () => {
   const [comments, setComments] = useState();
+
+  const [audio, setAudio] = useState();
 
   const {items, post, setPost, setItem, setToggle} = useComments();
 
@@ -55,6 +57,20 @@ const Comments = () => {
       return item;
     });
   };
+
+  const handleAudio = useCallback(async () => {
+    await api
+      .get('posts')
+      .then((response) => {
+        setPost(response.data);
+      })
+      .catch((err) => {
+        console.error('ops! ocorreu um erro' + err);
+      });
+    if (post) {
+      setItem(post);
+    }
+  }, []);
 
   const handlePost = useCallback(async () => {
     await api
