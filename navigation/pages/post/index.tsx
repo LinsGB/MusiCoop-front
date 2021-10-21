@@ -40,9 +40,6 @@ const postScreen = () => {
         <View>
           <UploadFile />
         </View>
-        <View>
-          <AudioPlayer />
-        </View>
       </ScrollView>
     </View>
   );

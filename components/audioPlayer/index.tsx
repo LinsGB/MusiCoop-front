@@ -18,8 +18,9 @@ const AudioPlayer = (props:any) => {
 
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
+      const uri = props.uri || `http://192.168.0.22:8000/musics/${props.id}`
       const status = await playbackObject.loadAsync(
-        {uri: `http://192.168.0.22:8000/musics/${props.id}`},
+        {uri},
         {shouldPlay: true},
       );
       setIsPlaying(true);

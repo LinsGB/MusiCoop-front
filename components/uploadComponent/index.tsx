@@ -8,18 +8,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import AudioPlayer from '../audioPlayer';
 
 const UploadFile = () => {
+  const [uri, setUri] = useState()
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
-    // Object {
-    //     "name": "IMG-20210902-WA0005.jpg",
-    //     "size": 117439,
-    //     "type": "success",
-    //     "uri": "/data/user/0/host.exp.exponent/cache/ExperienceData/%40quioto%2Fmusicoop-app-expo/DocumentPicker/e3904a97-781e-4ef4-9907-310616b96289.jpg",
-    //   }
-    // console.log(result.uri);
-    // console.log(result);
+    //@ts-ignore
+    setUri(result.uri)
   };
 
   return (
@@ -29,6 +25,7 @@ const UploadFile = () => {
         <TouchableOpacity>
           <Button title="selecionar" color="black" onPress={pickDocument} />
         </TouchableOpacity>
+        <AudioPlayer uri={uri} />
       </View>
     </View>
   );
