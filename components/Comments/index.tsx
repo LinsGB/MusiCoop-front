@@ -3,27 +3,21 @@
 
 // import React in our code
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {FA5Style} from '@expo/vector-icons/build/FontAwesome5';
 import React, {useState, useEffect, useCallback} from 'react';
 
 // import all the components we are going to use
 import {
-  SafeAreaView,
   Text,
   StyleSheet,
   View,
-  FlatList,
   TextInput,
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import api from '../../config/axios/AudioAxios';
-import reactotron from '../../config/Reactotron.config';
-import postScreen from '../../navigation/pages/post';
 import useComments from '../../hooks/useComments';
 import AudioPlayer from '../audioPlayer';
-import {awaitExpression} from '@babel/types';
+import {listPosts} from '../../services/post'
 
-const handleComments = () => {};
 
 const Comments = () => {
   const [comments, setComments] = useState();
@@ -32,20 +26,7 @@ const Comments = () => {
 
   const {items, post, setPost, setItem, setToggle} = useComments();
 
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      name: 'lulu',
-      comentario: 'comentario1',
-      isOpen: false,
-    },
-    {
-      id: 2,
-      name: 'jp',
-      comentario: 'comentario2',
-      isOpen: false,
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
 
   const handleComments = (idx: any) => {
     const data = posts.map((item, index) => {
@@ -58,19 +39,14 @@ const Comments = () => {
     });
   };
 
-  const handleAudio = useCallback(async () => {
-    await api
-      .get('posts')
-      .then((response) => {
-        setPost(response.data);
-      })
-      .catch((err) => {
-        console.error('ops! ocorreu um erro' + err);
-      });
-    if (post) {
-      setItem(post);
-    }
-  }, []);
+  useEffect(() => {
+    listPosts().then( posts => {
+      if(Array.isArray(posts))
+        setPosts(posts)
+    })
+  }, [])
+
+
 
   const handlePost = useCallback(async () => {
     await api
@@ -86,9 +62,6 @@ const Comments = () => {
     }
   }, []);
 
-  useEffect(() => {
-    handlePost();
-  }, []);
 
   const handleToggle = (commentIndex: number) => {
     setToggle(commentIndex);
@@ -100,8 +73,7 @@ const Comments = () => {
           flex: 1,
           margin: 10,
         }}>
-        {items.map((item: any, commentIndex) => {
-          //const {title, comments, music} = post
+        {posts.map((item: any, commentIndex) => {
           return (
             <View
               key={commentIndex.toString()}
@@ -130,7 +102,7 @@ const Comments = () => {
                     }}>
                     {item.tittlePost}
                   </Text>
-                  <AudioPlayer />
+                  <AudioPlayer id={item.id} />
                 </View>
                 {item.toggle && (
                   <React.Fragment>

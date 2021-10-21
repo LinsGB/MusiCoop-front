@@ -4,12 +4,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
 import reactotron from 'reactotron-react-native';
 
-const audio: any = {
-  filename: 'nome da musica(se tiver)',
-  song: 'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3',
-};
-
-const AudioPlayer = () => {
+const AudioPlayer = (props:any) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackObject, setPlaybackObject] = useState<any>(null);
   const [playbackStatus, setPlaybackStatus] = useState<any>(null);
@@ -19,13 +14,12 @@ const AudioPlayer = () => {
     if (playbackObject === null) {
       setPlaybackObject(new Audio.Sound());
     }
-    reactotron.debug!(audio);
   }, []);
 
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
       const status = await playbackObject.loadAsync(
-        {uri: audio.song},
+        {uri: `http://192.168.0.22:8000/musics/${props.id}`},
         {shouldPlay: true},
       );
       setIsPlaying(true);
