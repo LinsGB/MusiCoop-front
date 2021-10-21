@@ -15,12 +15,11 @@ const createPost = async (payload: TPost) => {
   console.log('TEST => ', payload);
   bodyFormData.append('project_name', payload.project_name);
   bodyFormData.append('file', payload.file);
-  return await api.post('/projects', bodyFormData, {
-    headers: {
-      accept: 'application/json',
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  try {
+    await api.post('/projects', bodyFormData); 
+  } catch (error) {
+    console.log("ERROR => ", error)
+  }
 };
 
 type TComment = {
