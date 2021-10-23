@@ -14,6 +14,7 @@ import AudioPlayer from '../audioPlayer';
 import {listPosts} from '../../services/post';
 import TouchableButton from '../touchableButton';
 import {useNavigation} from '@react-navigation/native';
+import reactotron from 'reactotron-react-native';
 
 const Comments = () => {
   const [comments, setComments] = useState();
@@ -35,10 +36,14 @@ const Comments = () => {
       return item;
     });
   };
-
+  type Comment = {
+    items: any;
+  };
   useEffect(() => {
     listPosts().then((posts) => {
-      if (Array.isArray(posts)) setPosts(posts);
+      if (Array.isArray(posts)) {
+        setPosts(posts);
+      }
     });
   }, []);
 
@@ -61,14 +66,18 @@ const Comments = () => {
   };
   return (
     <React.Fragment>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('Postagem')}>
-        <View
-          style={{
-            flex: 1,
-            margin: 10,
-          }}>
-          {posts.map((item: any, commentIndex) => {
-            return (
+      <View
+        style={{
+          flex: 1,
+          margin: 10,
+        }}>
+        {posts.map((item: any, commentIndex) => {
+          return (
+            <TouchableWithoutFeedback
+              onPress={() =>
+                //@ts-ignore
+                navigation.navigate('Postagem', {postTitle: item.project_name})
+              }>
               <View
                 key={commentIndex.toString()}
                 style={{
@@ -94,9 +103,9 @@ const Comments = () => {
                         lineHeight: 25,
                         marginBottom: 20,
                       }}>
-                      {item.tittlePost}
+                      {item.project_name}
                     </Text>
-                    <AudioPlayer id={item.id} />
+                    {/* <AudioPlayer id={item.id} /> */}
                   </View>
                   {item.toggle && (
                     <React.Fragment>
@@ -136,14 +145,14 @@ const Comments = () => {
                       color="black"
                       style={{marginRight: 8}}
                     />
-                    <Text>1000 Comentarios</Text>
+                    <Text>1000 Contribuições</Text>
                   </View>
                 </TouchableWithoutFeedback>
               </View>
-            );
-          })}
-        </View>
-      </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+          );
+        })}
+      </View>
     </React.Fragment>
   );
 };

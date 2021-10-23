@@ -15,8 +15,11 @@ import Colors from '../constants/Colors';
 import logoUsuario from '../assets/images/fffa.png';
 import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../assets/images/clipe.png';
+import reactotron from 'reactotron-react-native';
 
-const ModalScreenPost = () => {
+const ModalScreenPost = ({route}: {route: any}) => {
+  const items = route.params;
+  reactotron.debug(items);
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     //@ts-ignore
@@ -45,7 +48,7 @@ const ModalScreenPost = () => {
             />
             <Text>Nome do usuario</Text>
           </View>
-          <Text style={styles.title}>Titulo do post</Text>
+          <Text style={styles.title}>{items.postTitle}</Text>
           <View>
             <View style={styles.getStartedContainer}>
               <Text
