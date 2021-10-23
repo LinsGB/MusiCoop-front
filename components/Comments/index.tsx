@@ -4,9 +4,10 @@
 // import React in our code
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import React, {useState, useEffect, useCallback} from 'react';
+import logoUsuario from '../../assets/images/fffa.png';
 
 // import all the components we are going to use
-import {Text, StyleSheet, View, TextInput, Pressable} from 'react-native';
+import {Text, StyleSheet, View, TextInput, Image} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import api from '../../config/axios/AudioAxios';
 import useComments from '../../hooks/useComments';
@@ -93,7 +94,25 @@ const Comments = () => {
                   shadowRadius: 4,
                   elevation: 4,
                 }}>
-                <Text>{item.name}</Text>
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      flex: 1,
+                    }}>
+                    <Image
+                      source={logoUsuario}
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 100,
+                        marginRight: 10,
+                      }}
+                    />
+                    <Text>Nome do usuario</Text>
+                  </View>
+                </View>
                 <View>
                   <View style={{marginTop: 20, flexDirection: 'row'}}>
                     <Text
