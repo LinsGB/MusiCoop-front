@@ -25,7 +25,7 @@ const Routes = () => {
   const FirstRoute = () => {
     return (
       <React.Fragment>
-        <ScrollView>
+        <ScrollView style={{backgroundColor: 'white'}}>
           <View
             style={{
               flex: 1,

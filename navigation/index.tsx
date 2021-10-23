@@ -11,7 +11,7 @@ import {ColorSchemeName, Pressable, Touchable} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
+import ModalScreenUser from '../screens/ModalScreenUser';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import styles from './styles';
@@ -31,6 +31,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import loginScreen from './pages/login';
 import SingUp from './pages/signUp';
 import postScreen from './pages/post';
+import ModalScreenPost from '../screens/ModalScreenPost';
 
 export default function Navigation({
   colorScheme,
@@ -83,7 +84,10 @@ function RootNavigator() {
         options={{headerShown: false}}
       />
       <Stack.Group screenOptions={{presentation: 'modal'}}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="Modal" component={ModalScreenUser} />
+      </Stack.Group>
+      <Stack.Group screenOptions={{presentation: 'modal'}}>
+        <Stack.Screen name="Postagem" component={ModalScreenPost} />
       </Stack.Group>
     </Stack.Navigator>
   );

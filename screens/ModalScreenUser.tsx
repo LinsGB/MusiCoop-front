@@ -6,7 +6,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import {Text, View} from '../components/Themed';
 import Colors from '../constants/Colors';
 
-const ModalScreen = ({navigation}: {navigation: any}) => {
+const ModalScreenUser = ({navigation}: {navigation: any}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Modal</Text>
@@ -55,7 +55,7 @@ const ModalScreen = ({navigation}: {navigation: any}) => {
     </View>
   );
 };
-export default ModalScreen;
+export default ModalScreenUser;
 
 const styles = StyleSheet.create({
   container: {

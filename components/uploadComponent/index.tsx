@@ -11,19 +11,25 @@ import * as DocumentPicker from 'expo-document-picker';
 import AudioPlayer from '../audioPlayer';
 
 const UploadFile = () => {
-  const [uri, setUri] = useState()
+  const [uri, setUri] = useState();
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     //@ts-ignore
-    setUri(result.uri)
+    setUri(result.uri);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.file}>Envie sua música</Text>
       <View style={styles.button}>
-        <TouchableOpacity>
-          <Button title="selecionar" color="black" onPress={pickDocument} />
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#eee',
+            paddingHorizontal: 40,
+            paddingVertical: 5,
+            borderRadius: 10,
+            alignItems: 'center',
+          }}>
+          <Button title="Enviar arquivo" color="black" onPress={pickDocument} />
         </TouchableOpacity>
         <AudioPlayer uri={uri} />
       </View>
@@ -41,6 +47,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 60,
+    flexDirection: 'row',
   },
 });
 

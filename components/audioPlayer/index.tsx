@@ -4,7 +4,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
 import reactotron from 'reactotron-react-native';
 
-const AudioPlayer = (props:any) => {
+const AudioPlayer = (props: any) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackObject, setPlaybackObject] = useState<any>(null);
   const [playbackStatus, setPlaybackStatus] = useState<any>(null);
@@ -18,11 +18,8 @@ const AudioPlayer = (props:any) => {
 
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
-      const uri = props.uri || `http://192.168.0.22:8000/musics/${props.id}`
-      const status = await playbackObject.loadAsync(
-        {uri},
-        {shouldPlay: true},
-      );
+      const uri = props.uri || `http://192.168.0.61:8000/musics/${props.id}`;
+      const status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       setIsPlaying(true);
       return setPlaybackStatus(status);
     }
