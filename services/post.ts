@@ -1,21 +1,21 @@
 import axios from 'axios';
 
-const api = axios.create({baseURL: 'http://192.168.0.61:8000'});
+const api = axios.create({baseURL: 'http://192.168.0.5:8000'});
 
 const listPosts = async () => {
-  return (await api.get('/projects')).data;
+  return (await api.get('/posts')).data;
 };
 
 const createComment = async (payload: TComment) => {
-  return await api.post('/coments', payload);
+  return await api.post('/comments', payload);
 };
 
-const createPost = async (payload: TPost) => {
+const createPost = async (post_name: string, file: any) => {
   const bodyFormData = new FormData();
-  console.log('TEST => ', payload);
-  bodyFormData.append('project_name', payload.project_name);
-  bodyFormData.append('file', payload.file);
-  return await api.post('/projects', bodyFormData, {
+  console.log('TEST => ', file);
+  bodyFormData.append('post_name', post_name);
+  bodyFormData.append('file', file + ";type=audio/mpeg");
+  return await api.post('/posts', bodyFormData, {
     headers: {
       accept: 'application/json',
       'Content-Type': 'multipart/form-data',
@@ -29,7 +29,7 @@ type TComment = {
 };
 
 type TPost = {
-  project_name: string;
+  post_name: string;
   file: any;
   user: number;
 };

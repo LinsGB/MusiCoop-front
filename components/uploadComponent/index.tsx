@@ -8,15 +8,29 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import * as uploadFile from '../../services/post'
+import * as FileSystem from 'expo-file-system';
 import AudioPlayer from '../audioPlayer';
 
 const UploadFile = () => {
   const [uri, setUri] = useState();
+
   const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
+    const result = await DocumentPicker.getDocumentAsync({type:'*/*',
+                                                          copyToCacheDirectory: false,});
+    
     //@ts-ignore
-    setUri(result.uri);
+    const uri = FileSystem.documentDirectory+result.name;
+    await FileSystem.copyAsync({
+      //@ts-ignore
+       from: result.uri,
+       to: uri
+    })
+    //@ts-ignore
+    setUri(uri)
+    uploadFile.createPost("TESTE", uri)
   };
+  
 
   return (
     <View style={styles.container}>
