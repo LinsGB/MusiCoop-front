@@ -7,19 +7,20 @@ const listPosts = async () => {
 };
 
 const createComment = async (payload: TComment) => {
-  return await api.post('/coments', payload);
+  return await api.post('/comments', payload);
 };
 
-const createPost = async (payload: TPost) => {
+const createPost = async (post_name: string, file: any) => {
   const bodyFormData = new FormData();
-  console.log('TEST => ', payload);
-  bodyFormData.append('project_name', payload.project_name);
-  bodyFormData.append('file', payload.file);
-  try {
-    await api.post('/projects', bodyFormData); 
-  } catch (error) {
-    console.log("ERROR => ", error)
-  }
+  console.log('TEST => ', file);
+  bodyFormData.append('post_name', post_name);
+  bodyFormData.append('file', file);
+  return await api.post('/projects', bodyFormData, {
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 
 type TComment = {
@@ -28,7 +29,7 @@ type TComment = {
 };
 
 type TPost = {
-  project_name: string;
+  post_name: string;
   file: any;
   user: number;
 };

@@ -4,9 +4,10 @@
 // import React in our code
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import React, {useState, useEffect, useCallback} from 'react';
+import logoUsuario from '../../assets/images/fffa.png';
 
 // import all the components we are going to use
-import {Text, StyleSheet, View, TextInput, Pressable} from 'react-native';
+import {Text, StyleSheet, View, TextInput, Image} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import api from '../../config/axios/AudioAxios';
 import useComments from '../../hooks/useComments';
@@ -14,6 +15,7 @@ import AudioPlayer from '../audioPlayer';
 import {listPosts} from '../../services/post';
 import TouchableButton from '../touchableButton';
 import {useNavigation} from '@react-navigation/native';
+import reactotron from 'reactotron-react-native';
 
 const Comments = () => {
   const [comments, setComments] = useState();
@@ -35,10 +37,14 @@ const Comments = () => {
       return item;
     });
   };
-
+  type Comment = {
+    items: any;
+  };
   useEffect(() => {
     listPosts().then((posts) => {
-      if (Array.isArray(posts)) setPosts(posts);
+      if (Array.isArray(posts)) {
+        setPosts(posts);
+      }
     });
   }, []);
 
@@ -61,14 +67,18 @@ const Comments = () => {
   };
   return (
     <React.Fragment>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('Postagem')}>
-        <View
-          style={{
-            flex: 1,
-            margin: 10,
-          }}>
-          {posts.map((item: any, commentIndex) => {
-            return (
+      <View
+        style={{
+          flex: 1,
+          margin: 10,
+        }}>
+        {posts.map((item: any, commentIndex) => {
+          return (
+            <TouchableWithoutFeedback
+              onPress={() =>
+                //@ts-ignore
+                navigation.navigate('Postagem', {postTitle: item.project_name})
+              }>
               <View
                 key={commentIndex.toString()}
                 style={{
@@ -84,7 +94,25 @@ const Comments = () => {
                   shadowRadius: 4,
                   elevation: 4,
                 }}>
-                <Text>{item.name}</Text>
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      flex: 1,
+                    }}>
+                    <Image
+                      source={logoUsuario}
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 100,
+                        marginRight: 10,
+                      }}
+                    />
+                    <Text>Nome do usuario</Text>
+                  </View>
+                </View>
                 <View>
                   <View style={{marginTop: 20, flexDirection: 'row'}}>
                     <Text
@@ -94,9 +122,9 @@ const Comments = () => {
                         lineHeight: 25,
                         marginBottom: 20,
                       }}>
-                      {item.tittlePost}
+                      {item.project_name}
                     </Text>
-                    <AudioPlayer id={item.id} />
+                    {/* <AudioPlayer id={item.id} /> */}
                   </View>
                   {item.toggle && (
                     <React.Fragment>
@@ -136,14 +164,14 @@ const Comments = () => {
                       color="black"
                       style={{marginRight: 8}}
                     />
-                    <Text>1000 Comentarios</Text>
+                    <Text>1000 Contribuições</Text>
                   </View>
                 </TouchableWithoutFeedback>
               </View>
-            );
-          })}
-        </View>
-      </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+          );
+        })}
+      </View>
     </React.Fragment>
   );
 };

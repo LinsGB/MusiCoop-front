@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,40 +8,40 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import * as uploadFile from '../../services/post'
+import * as FileSystem from 'expo-file-system';
 import AudioPlayer from '../audioPlayer';
-import {createPost} from '../../services/post'
-import FileSystem from 'expo-file-system'
+import { createPost } from '../../services/post'
 import { StorageAccessFramework } from 'expo-file-system';
 
 const UploadFile = () => {
   const [uri, setUri] = useState();
-  const [file, setFile] = useState()
-  const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
-    console.log("RESULT => ", result)
-    //@ts-ignore
-    setUri(result.uri);
-    //@ts-ignore
-    setFile(result)
-    await setDocument()
-  };
-  
 
-  const setDocument = async () => {
+  const pickDocument = async () => {
     try {
-      console.log("URI => ", uri)
-      console.log("TEST => ", FileSystem.readAsStringAsync('file://'+uri, {encoding: FileSystem.EncodingType.Base64}))  
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        copyToCacheDirectory: false,
+      });
+
+      //@ts-ignore
+      const uri = FileSystem.documentDirectory + result.name;
+      await FileSystem.copyAsync({
+        //@ts-ignore
+        from: result.uri,
+        to: uri
+      })
+      //@ts-ignore
+      setUri(uri)
+      const x = await FileSystem.readAsStringAsync(uri)
+      console.log("BASE64 => ", x)
+      uploadFile.createPost("BATATINHA123", x).then(resp => console.log("RESP => ", resp))
     } catch (error) {
-      console.log("ER => ", error)
+      console.log("BATATINHA123 => ", error)
     }
-    
-    await createPost({project_name: 'params', file:{
-      "name": "AUD-20200414-WA0008.mp3",
-      "size": 4536000,
-      "type": "success",
-      "uri": "/data/user/0/host.exp.exponent/cache/ExperienceData/%40anonymous%2Fmusicoop-app-expo-64b84db0-930a-41ef-beab-2bd4270c239a/DocumentPicker/cf3bde75-c45e-4504-8311-1c506688c330.mp3",
-    } , user: 1})
-  }
+
+  };
+
 
   return (
     <View style={styles.container}>
