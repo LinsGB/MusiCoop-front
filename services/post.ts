@@ -10,10 +10,10 @@ const listPosts = async () => {
 
 const createContribuition = async (id: number, payload: any) => {
   const bodyFormData = new FormData();
-  const {post_name, description, file} = payload
-  bodyFormData.append('post_name', post_name);
+  const {name, description, file} = payload;
+  bodyFormData.append('name', name);
   bodyFormData.append('description', description);
-  bodyFormData.append("file", file);
+  bodyFormData.append('file', file);
   return await api.post(`/contribuitions?post_id=${id}`, bodyFormData, {
     headers: {
       accept: 'application/json',
@@ -24,10 +24,10 @@ const createContribuition = async (id: number, payload: any) => {
 
 const createPost = async (payload: any) => {
   const bodyFormData = new FormData();
-  const {post_name, description, file} = payload
+  const {post_name, description, file} = payload;
   bodyFormData.append('post_name', post_name);
   bodyFormData.append('description', description);
-  bodyFormData.append("file", file);
+  bodyFormData.append('file', file);
   return await api.post('/posts', bodyFormData, {
     headers: {
       accept: 'application/json',
