@@ -43,8 +43,6 @@ const postScreen = () => {
     setFileName(result.name);
     //@ts-ignore
     setUri(result.uri);
-    //@ts-ignore
-    console.log("FILE => ", result.name)
   };
 
   const post = async () => {
