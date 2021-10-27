@@ -3,7 +3,7 @@ import axios from 'axios';
 const api = axios.create({baseURL: 'https://musicoop-api.herokuapp.com'});
 
 const getMusic = async (id: number) => {
-  return await api.get(`/musics/${id}`);
+  return await api.get(`/musics?post_id=${id}`);
 };
 
 const getContribution = async (id: number) => {
