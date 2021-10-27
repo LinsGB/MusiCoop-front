@@ -162,7 +162,7 @@ const Comments = () => {
                     color="black"
                     style={{marginRight: 8}}
                   />
-                  <Text>1000 Contribuições</Text>
+                  <Text>{item.contribuitions.length}</Text>
                 </View>
               </View>
             </TouchableWithoutFeedback>

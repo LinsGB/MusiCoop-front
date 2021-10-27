@@ -148,7 +148,9 @@ const postScreen = () => {
             marginBottom: 20,
             borderRadius: 100,
             padding: 10,
+            opacity: (fileName && title && description) ? 1 : 0.4
           }}
+          disabled={!(fileName && title && description)}
           onPress={() => post()}>
           <Text style={{ color: '#2f95dc', fontWeight: 'bold' }}>Postar</Text>
         </TouchableOpacity>
