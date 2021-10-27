@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View} from '../../../components/Themed';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from '../../../components/Themed';
 
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 
 import styles from './styles';
-import {Button, Pressable, TextInput} from 'react-native';
+import { Button, Pressable, TextInput } from 'react-native';
 import AudioPlayer from '../../../components/audioPlayer';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import * as DocumentPicker from 'expo-document-picker';
 import * as uploadFile from '../../../services/post';
-import {listPosts} from '../../../services/post';
+import { listPosts } from '../../../services/post';
 import reactotron from '../../../config/Reactotron.config';
 
 const postScreen = () => {
   const [uri, setUri] = useState();
-  const [fileName, setFileName] = useState();
+  const [fileName, setFileName] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [posts, setPosts] = useState([]);
@@ -43,6 +43,8 @@ const postScreen = () => {
     setFileName(result.name);
     //@ts-ignore
     setUri(result.uri);
+    //@ts-ignore
+    console.log("FILE => ", result.name)
   };
 
   const post = async () => {
@@ -53,35 +55,40 @@ const postScreen = () => {
       type,
     };
     await textInput.clear();
-    if (title.length <= 0) {
+    if (!title) {
       alert('Por favor, preencha o titulo da postagem');
     }
-    if (description.length <= 0) {
+    if (!description) {
       alert('Por favor, preencha a descrição da postagem');
     }
     if (!fileName) {
       alert('Por favor, insira um arquivo de áudio');
     }
-    await uploadFile.createPost({file, description, post_name: title});
-    listPosts().then((posts) => {
-      if (Array.isArray(posts)) {
-        setPosts(posts);
-      }
-      reactotron.debug(posts);
-    });
+    else if (!`${fileName}`.match(/mp3|opus$/)) {
+      alert('Por favor, insira um arquivo de áudio válido');
+    }
+    else {
+      await uploadFile.createPost({ file, description, post_name: title });
+      listPosts().then((posts) => {
+        if (Array.isArray(posts)) {
+          setPosts(posts);
+        }
+        reactotron.debug(posts);
+      });
 
-    alert('Postagem realizada!');
+      alert('Postagem realizada!');
+    }
   };
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={[{marginLeft: 20}]}>
+        <View style={[{ marginLeft: 20 }]}>
           <View>
-            <View style={{marginBottom: 20}}>
+            <View style={{ marginBottom: 20 }}>
               <Text>Titulo</Text>
               <TextInput
-                style={{fontWeight: 'bold'}}
+                style={{ fontWeight: 'bold' }}
                 placeholder="Insira um titulo bacana pro seu post"
                 onChangeText={(text) => {
                   setTitle(text);
@@ -99,7 +106,7 @@ const postScreen = () => {
             <View>
               <Text>Descrição</Text>
               <TextInput
-                style={{fontWeight: 'bold'}}
+                style={{ fontWeight: 'bold' }}
                 placeholder="Insira uma descrição bacana pro seu post"
                 onChangeText={(text) => setDescription(text)}
                 ref={(input) => {
@@ -145,7 +152,7 @@ const postScreen = () => {
             padding: 10,
           }}
           onPress={() => post()}>
-          <Text style={{color: '#2f95dc', fontWeight: 'bold'}}>Postar</Text>
+          <Text style={{ color: '#2f95dc', fontWeight: 'bold' }}>Postar</Text>
         </TouchableOpacity>
       </View>
     </View>
