@@ -20,26 +20,41 @@ const AudioPlayer = (props: any) => {
 
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
+      console.log("1")
       const status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
-      if (playbackObject.didJustFinish === true) {
-        reactotron.debug('aosdkasokdsao');
-      }
       setIsPlaying(true);
+      playbackObject.setOnPlaybackStatusUpdate(async (status) => {
+        if (status.didJustFinish === true) {
+          console.log("CABOU")
+          await playbackObject.unloadAsync();
+          reactotron.debug('acabou');
+          await setIsPlaying(false);
+          setPlaybackObject(new Audio.Sound());
+        }
+      });
       return setPlaybackStatus(status);
     }
 
     // It will pause our audio
-    if (playbackStatus.isPlaying) {
+    if (isPlaying) {
+      console.log("2")
       const status = await playbackObject.pauseAsync();
       setIsPlaying(false);
       return setPlaybackStatus(status);
     }
 
     // It will resume our audio
-    if (!playbackStatus.isPlaying) {
-      const status = await playbackObject.playAsync();
+    if (!isPlaying) {
+      console.log("3")
+      let status
+      try {
+        status = await playbackObject.playAsync();  
+      } catch (error) {
+        status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
+      }
       playbackObject.setOnPlaybackStatusUpdate(async (status) => {
         if (status.didJustFinish === true) {
+          console.log("CABOU")
           await playbackObject.unloadAsync();
           reactotron.debug('acabou');
           await setIsPlaying(false);
