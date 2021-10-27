@@ -8,8 +8,8 @@ const listPosts = async () => {
   return (await api.get('/posts')).data;
 };
 
-const createComment = async (payload: TComment) => {
-  return await api.post('/comments', payload);
+const createContribuition = async (id: number, payload: TContribuition) => {
+  return await api.post(`/contribuitions?post_id=${id}`, payload);
 };
 
 const createPost = async (payload: any) => {
@@ -26,9 +26,9 @@ const createPost = async (payload: any) => {
   });
 };
 
-type TComment = {
-  project: number;
-  comment: string;
+type TContribuition = {
+  name: number;
+  description: string;
 };
 
 type TPost = {
@@ -39,4 +39,4 @@ type TPost = {
   type: string
 };
 
-export {createPost, createComment, listPosts};
+export {createPost, createContribuition, listPosts};

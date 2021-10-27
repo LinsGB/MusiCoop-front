@@ -27,39 +27,12 @@ const Comments = () => {
 
   const [posts, setPosts] = useState([]);
 
-  const handleComments = (idx: any) => {
-    const data = posts.map((item, index) => {
-      if (index == idx)
-        return {
-          ...item,
-          isOpen: !item.isOpen,
-        };
-      return item;
-    });
-  };
-  type Comment = {
-    items: any;
-  };
   useEffect(() => {
     listPosts().then((posts) => {
       if (Array.isArray(posts)) {
         setPosts(posts);
       }
     });
-  }, []);
-
-  const handlePost = useCallback(async () => {
-    await api
-      .get('posts')
-      .then((response) => {
-        setPost(response.data);
-      })
-      .catch((err) => {
-        console.error('ops! ocorreu um erro' + err);
-      });
-    if (post) {
-      setItem(post);
-    }
   }, []);
 
   const handleToggle = (commentIndex: number) => {
@@ -77,7 +50,7 @@ const Comments = () => {
             <TouchableWithoutFeedback
               onPress={() =>
                 //@ts-ignore
-                navigation.navigate('Postagem', {postTitle: item.project_name})
+                navigation.navigate('Postagem', {item: item})
               }>
               <View
                 key={commentIndex.toString()}
