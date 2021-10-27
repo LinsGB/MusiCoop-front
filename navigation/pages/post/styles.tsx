@@ -17,6 +17,14 @@ const styles = StyleSheet.create({
     height: 1,
     alignItems: 'center',
   },
+  file: {
+    color: 'black',
+    marginVertical: 5,
+  },
+  button: {
+    marginHorizontal: 60,
+    flexDirection: 'row',
+  },
 });
 
 export default styles;

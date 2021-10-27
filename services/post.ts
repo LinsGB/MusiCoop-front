@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 const listPosts = async () => {
-  return (await api.get('/projects')).data;
+  return (await api.get('/posts')).data;
 };
 
 const createComment = async (payload: TComment) => {
@@ -14,10 +14,11 @@ const createComment = async (payload: TComment) => {
 
 const createPost = async (payload: any) => {
   const bodyFormData = new FormData();
-  console.log('TEST => ', payload);
-  bodyFormData.append('post_name', "teste");
-  bodyFormData.append("file", payload);
-  return api.post('/posts', bodyFormData, {
+  const {post_name, description, file} = payload
+  bodyFormData.append('post_name', post_name);
+  bodyFormData.append('description', description);
+  bodyFormData.append("file", file);
+  return await api.post('/posts', bodyFormData, {
     headers: {
       accept: 'application/json',
       'Content-Type': 'multipart/form-data',
