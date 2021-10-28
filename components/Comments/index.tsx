@@ -155,18 +155,15 @@ const Comments = () => {
                     </React.Fragment>
                   )}
                 </View>
-                <TouchableWithoutFeedback
-                  onPress={() => handleToggle(commentIndex)}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <MaterialCommunityIcons
-                      name="comment-text-outline"
-                      size={24}
-                      color="black"
-                      style={{marginRight: 8}}
-                    />
-                    <Text>1000 Contribuições</Text>
-                  </View>
-                </TouchableWithoutFeedback>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <MaterialCommunityIcons
+                    name="comment-text-outline"
+                    size={24}
+                    color="black"
+                    style={{marginRight: 8}}
+                  />
+                  <Text>1000 Contribuições</Text>
+                </View>
               </View>
             </TouchableWithoutFeedback>
           );

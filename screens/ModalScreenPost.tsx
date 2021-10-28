@@ -19,7 +19,6 @@ import reactotron from 'reactotron-react-native';
 
 const ModalScreenPost = ({route}: {route: any}) => {
   const items = route.params;
-  reactotron.debug(items);
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     //@ts-ignore
