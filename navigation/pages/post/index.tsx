@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Text, View } from '../../../components/Themed';
+import React, {useState} from 'react';
+import {Text, View} from '../../../components/Themed';
 
-import { Picker } from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
 
 import styles from './styles';
-import { Button, Pressable, TextInput } from 'react-native';
+import {Button, Pressable, TextInput} from 'react-native';
 import AudioPlayer from '../../../components/audioPlayer';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import * as DocumentPicker from 'expo-document-picker';
-import * as uploadFile from '../../../services/post'
+import * as uploadFile from '../../../services/post';
 
 const postScreen = () => {
   const [uri, setUri] = useState();
@@ -24,38 +24,39 @@ const postScreen = () => {
     //@ts-ignore
     setFileName(result.name);
     //@ts-ignore
-    setUri(result.uri)
+    setUri(result.uri);
   };
 
   const post = async () => {
-    console.log(description, title)
+    console.log(description, title);
     const type = 'audio/mpeg';
     const file = {
       uri: uri,
-      name: fileName, type,
+      name: fileName,
+      type,
     };
-    await uploadFile.createPost({file, description, post_name: title})
-  }
+    await uploadFile.createPost({file, description, post_name: title});
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={[{ marginLeft: 20 }]}>
+        <View style={[{marginLeft: 20}]}>
           <View>
-            <View style={{ marginBottom: 20 }}>
+            <View style={{marginBottom: 20}}>
               <Text>Titulo</Text>
               <TextInput
-                style={{ fontWeight: 'bold' }}
+                style={{fontWeight: 'bold'}}
                 placeholder="Insira um titulo bacana pro seu post"
-                onChangeText={text => setTitle(text)}
+                onChangeText={(text) => setTitle(text)}
               />
             </View>
             <View>
               <Text>Descrição</Text>
               <TextInput
-                style={{ fontWeight: 'bold' }}
+                style={{fontWeight: 'bold'}}
                 placeholder="Insira uma descrição bacana pro seu post"
-                onChangeText={text => setDescription(text)}
+                onChangeText={(text) => setDescription(text)}
               />
             </View>
           </View>
@@ -68,14 +69,17 @@ const postScreen = () => {
         <View style={styles.container}>
           <View style={styles.button}>
             <TouchableOpacity
+              onPress={pickDocument}
               style={{
                 backgroundColor: '#eee',
                 paddingHorizontal: 40,
                 paddingVertical: 5,
                 borderRadius: 10,
                 alignItems: 'center',
+                height: 50,
+                justifyContent: 'center',
               }}>
-              <Button title="Enviar arquivo" color="black" onPress={pickDocument} />
+              <Text>Enviar arquivo</Text>
             </TouchableOpacity>
             <AudioPlayer uri={uri} />
           </View>
@@ -91,7 +95,7 @@ const postScreen = () => {
           padding: 10,
         }}
         onPress={() => post()}>
-        <Text style={{ color: '#2f95dc', fontWeight: 'bold' }}>Postar</Text>
+        <Text style={{color: '#2f95dc', fontWeight: 'bold'}}>Postar</Text>
       </TouchableOpacity>
     </View>
   );

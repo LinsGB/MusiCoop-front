@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
   button: {
     marginHorizontal: 60,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

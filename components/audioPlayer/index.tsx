@@ -40,14 +40,21 @@ const AudioPlayer = (props: any) => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        marginLeft: 5,
+        maxWidth: 45,
+      }}>
       {/* <Text style={{fontSize: 18, marginBottom: 15}}>{audio.filename}</Text> */}
       <Ionicons
         style={{
-          alignSelf: 'flex-end',
           backgroundColor: 'gray',
           padding: 10,
-          borderRadius: 50,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
         name={isPlaying ? 'pause' : 'play'}
         size={24}

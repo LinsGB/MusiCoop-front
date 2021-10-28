@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,31 +9,33 @@ import {
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
-import * as uploadFile from '../../services/post'
+import * as uploadFile from '../../services/post';
 import * as FileSystem from 'expo-file-system';
 import AudioPlayer from '../audioPlayer';
-import { Buffer } from "buffer";
+import {Buffer} from 'buffer';
 
 const UploadFile = () => {
   const [uri, setUri] = useState();
 
   const pickDocument = async () => {
-    const result = await DocumentPicker.getDocumentAsync({type:'*/*',
-                                                          copyToCacheDirectory: false,});
+    const result = await DocumentPicker.getDocumentAsync({
+      type: '*/*',
+      copyToCacheDirectory: false,
+    });
     //@ts-ignore
     let localUri = result.uri;
     //@ts-ignore
     let filename = result.name;
     let type = 'audio/mpeg';
     //@ts-ignore
-    setUri(result.uri + "/" + result.name)
+    setUri(result.uri + '/' + result.name);
     var fileToUpload = {
       uri: localUri,
-      name: filename, type,
+      name: filename,
+      type,
     };
-    await uploadFile.createPost(fileToUpload)
+    await uploadFile.createPost(fileToUpload);
   };
-
 
   return (
     <View style={styles.container}>
