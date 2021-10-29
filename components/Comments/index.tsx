@@ -95,7 +95,7 @@ const Comments = () => {
                         lineHeight: 25,
                         marginBottom: 20,
                       }}>
-                      {item.project_name}
+                      {item.post_name}
                     </Text>
                     {/* <AudioPlayer id={item.id} /> */}
                   </View>
