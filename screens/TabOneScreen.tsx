@@ -5,14 +5,12 @@ import {
   View,
   useWindowDimensions,
   Text,
-  TouchableNativeFeedbackBase,
-  TouchableWithoutFeedback,
-  TextInput,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import AudioPlayer from '../components/audioPlayer';
 import Comments from '../components/Comments';
+import TouchableButton from '../components/touchableButton';
 
 const Routes = () => {
   const [posts, setPosts] = useState(['Jp', 'lulu', 'linsguebe']);
@@ -23,14 +21,22 @@ const Routes = () => {
   }, []);
   const handleComments = () => {};
   const FirstRoute = () => {
+    const [reload, setReload] = useState(0);
+    const test= () => {
+      setReload(reload+1)
+    }
     return (
       <React.Fragment>
         <ScrollView style={{backgroundColor: 'white'}}>
           <View
             style={{
               flex: 1,
-            }}>
+            }}
+            key={reload}>
             <Comments></Comments>
+            <TouchableOpacity onPress={() => test()}>
+              <Text>RELOAD</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </React.Fragment>

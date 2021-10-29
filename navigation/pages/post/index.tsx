@@ -28,7 +28,6 @@ const postScreen = () => {
   };
 
   const post = async () => {
-    console.log(description, title);
     const type = 'audio/mpeg';
     const file = {
       uri: uri,
