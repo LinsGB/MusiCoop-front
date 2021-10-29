@@ -44,6 +44,7 @@ const postScreen = () => {
       }
       reactotron.debug(posts);
     });
+    alert('Postagem realizada!');
   };
 
   return (
