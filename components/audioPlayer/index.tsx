@@ -14,12 +14,16 @@ const AudioPlayer = (props: any) => {
     if (playbackObject === null) {
       setPlaybackObject(new Audio.Sound());
     }
+    setIsPlaying(false);
   }, []);
+  const uri = props.uri || `http://192.168.0.61:8000/musics/${props.id}`;
 
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
-      const uri = props.uri || `http://192.168.0.61:8000/musics/${props.id}`;
       const status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
+      if (playbackObject.didJustFinish === true) {
+        reactotron.debug('aosdkasokdsao');
+      }
       setIsPlaying(true);
       return setPlaybackStatus(status);
     }
@@ -34,9 +38,28 @@ const AudioPlayer = (props: any) => {
     // It will resume our audio
     if (!playbackStatus.isPlaying) {
       const status = await playbackObject.playAsync();
+      playbackObject.setOnPlaybackStatusUpdate(async (status) => {
+        if (status.didJustFinish === true) {
+          await playbackObject.unloadAsync();
+          reactotron.debug('acabou');
+          await setIsPlaying(false);
+          setPlaybackObject(new Audio.Sound());
+        }
+      });
+
       setIsPlaying(true);
       return setPlaybackStatus(status);
     }
+
+    if (playbackStatus.didJustFinish) {
+      reactotron.debug('ACABOOOOO');
+    }
+  };
+
+  const restartSong = async () => {
+    const status = await playbackObject.replayAsync();
+    setIsPlaying(false);
+    return setPlaybackStatus(status);
   };
 
   return (
