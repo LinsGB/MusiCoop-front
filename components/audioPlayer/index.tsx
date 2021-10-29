@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, componentwil} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
@@ -17,15 +17,20 @@ const AudioPlayer = (props: any) => {
     setIsPlaying(false);
   }, []);
   const uri = props.uri || `http://192.168.0.61:8000/musics/${props.id}`;
-
+  useEffect(
+    () => async () => {
+      await playbackObject.pauseAsync();
+    },
+    [playbackObject],
+  );
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
-      console.log("1")
+      console.log('1');
       const status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status) => {
         if (status.didJustFinish === true) {
-          console.log("CABOU")
+          console.log('CABOU');
           await playbackObject.unloadAsync();
           reactotron.debug('acabou');
           await setIsPlaying(false);
@@ -37,7 +42,7 @@ const AudioPlayer = (props: any) => {
 
     // It will pause our audio
     if (isPlaying) {
-      console.log("2")
+      console.log('2');
       const status = await playbackObject.pauseAsync();
       setIsPlaying(false);
       return setPlaybackStatus(status);
@@ -45,16 +50,16 @@ const AudioPlayer = (props: any) => {
 
     // It will resume our audio
     if (!isPlaying) {
-      console.log("3")
-      let status
+      console.log('3');
+      let status;
       try {
-        status = await playbackObject.playAsync();  
+        status = await playbackObject.playAsync();
       } catch (error) {
         status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       }
       playbackObject.setOnPlaybackStatusUpdate(async (status) => {
         if (status.didJustFinish === true) {
-          console.log("CABOU")
+          console.log('CABOU');
           await playbackObject.unloadAsync();
           reactotron.debug('acabou');
           await setIsPlaying(false);
