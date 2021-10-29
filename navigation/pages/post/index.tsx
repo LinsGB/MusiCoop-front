@@ -9,12 +9,15 @@ import AudioPlayer from '../../../components/audioPlayer';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import * as DocumentPicker from 'expo-document-picker';
 import * as uploadFile from '../../../services/post';
+import {listPosts} from '../../../services/post';
+import reactotron from '../../../config/Reactotron.config';
 
 const postScreen = () => {
   const [uri, setUri] = useState();
   const [fileName, setFileName] = useState();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [posts, setPosts] = useState([]);
 
   const pickDocument = async () => {
     const result = await DocumentPicker.getDocumentAsync({
@@ -35,6 +38,12 @@ const postScreen = () => {
       type,
     };
     await uploadFile.createPost({file, description, post_name: title});
+    listPosts().then((posts) => {
+      if (Array.isArray(posts)) {
+        setPosts(posts);
+      }
+      reactotron.debug(posts);
+    });
   };
 
   return (

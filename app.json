@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "Musicoop"
+      "package": "app.Musicoop.App"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

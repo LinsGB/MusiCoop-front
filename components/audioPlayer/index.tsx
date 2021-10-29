@@ -16,7 +16,7 @@ const AudioPlayer = (props: any) => {
     }
     setIsPlaying(false);
   }, []);
-  const uri = props.uri || `http://192.168.0.61:8000/musics/${props.id}`;
+  const uri = props.uri;
   useEffect(
     () => async () => {
       await playbackObject.pauseAsync();
@@ -30,7 +30,6 @@ const AudioPlayer = (props: any) => {
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status) => {
         if (status.didJustFinish === true) {
-          console.log('CABOU');
           await playbackObject.unloadAsync();
           reactotron.debug('acabou');
           await setIsPlaying(false);

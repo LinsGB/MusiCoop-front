@@ -1,45 +1,46 @@
 import {react} from '@babel/types';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  useWindowDimensions,
-  Text,
-} from 'react-native';
+import {View, useWindowDimensions, Text, RefreshControl} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import reactotron from 'reactotron-react-native';
 import AudioPlayer from '../components/audioPlayer';
 import Comments from '../components/Comments';
 import TouchableButton from '../components/touchableButton';
+import {listPosts} from '../services/post';
 
 const Routes = () => {
-  const [posts, setPosts] = useState(['Jp', 'lulu', 'linsguebe']);
+  const [posts, setPosts] = useState([]);
+
   const [comments, setComments] = useState(false);
   useEffect(() => {
-    //request de todos os posts
-    //set posts
+    reactotron.debug('oi');
+    listPosts().then((posts) => {
+      if (Array.isArray(posts)) {
+        setPosts(posts);
+      }
+      reactotron.debug(posts);
+    });
   }, []);
+  const [refreshing, setRefreshing] = React.useState<any>(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => setRefreshing(false), 3000);
+  };
   const handleComments = () => {};
   const FirstRoute = () => {
     const [reload, setReload] = useState(0);
-    const test= () => {
-      setReload(reload+1)
-    }
+    const test = () => {
+      setReload(reload + 1);
+    };
     return (
-      <React.Fragment>
-        <ScrollView style={{backgroundColor: 'white'}}>
-          <View
-            style={{
-              flex: 1,
-            }}
-            key={reload}>
-            <Comments></Comments>
-            <TouchableOpacity onPress={() => test()}>
-              <Text>RELOAD</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </React.Fragment>
+      <View style={{flex: 1}}>
+        <View style={{flex: 1}}>
+          <Comments />
+        </View>
+      </View>
     );
   };
 

@@ -7,7 +7,15 @@ import React, {useState, useEffect, useCallback} from 'react';
 import logoUsuario from '../../assets/images/fffa.png';
 
 // import all the components we are going to use
-import {Text, StyleSheet, View, TextInput, Image} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  TextInput,
+  Image,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import api from '../../config/axios/AudioAxios';
 import useComments from '../../hooks/useComments';
@@ -16,6 +24,10 @@ import {listPosts} from '../../services/post';
 import TouchableButton from '../touchableButton';
 import {useNavigation} from '@react-navigation/native';
 import reactotron from 'reactotron-react-native';
+
+const wait = (timeout: any) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 const Comments = () => {
   const [comments, setComments] = useState();
@@ -35,11 +47,26 @@ const Comments = () => {
     });
   }, []);
 
+  const [refreshing, setRefreshing] = React.useState<any>(false);
+
+  const onRefresh = React.useCallback(() => {
+    listPosts().then((posts) => {
+      if (Array.isArray(posts)) {
+        setPosts(posts);
+      }
+    });
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
   const handleToggle = (commentIndex: number) => {
     setToggle(commentIndex);
   };
   return (
-    <React.Fragment>
+    <ScrollView
+      bounces
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <View
         style={{
           flex: 1,
@@ -48,12 +75,12 @@ const Comments = () => {
         {posts.map((item: any, commentIndex) => {
           return (
             <TouchableWithoutFeedback
+              key={commentIndex.toString()}
               onPress={() =>
                 //@ts-ignore
                 navigation.navigate('Postagem', {item: item})
               }>
               <View
-                key={commentIndex.toString()}
                 style={{
                   marginVertical: 10,
                   backgroundColor: 'white',
@@ -142,7 +169,7 @@ const Comments = () => {
           );
         })}
       </View>
-    </React.Fragment>
+    </ScrollView>
   );
 };
 
