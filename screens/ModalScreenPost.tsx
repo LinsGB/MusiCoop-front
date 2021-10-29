@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import {StatusBar} from 'expo-status-bar';
+import React, {useState, useEffect} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -10,27 +10,26 @@ import {
   Button,
 } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import {Text, View} from '../components/Themed';
 import Colors from '../constants/Colors';
 import logoUsuario from '../assets/images/fffa.png';
 import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../assets/images/clipe.png';
 import reactotron from 'reactotron-react-native';
 import AudioPlayer from '../components/audioPlayer';
-import { createContribuition } from '../services/post'
-import { getContribution, getMusic } from '../services/music'
+import {createContribuition} from '../services/post';
+import {getContribution, getMusic} from '../services/music';
 
-const ModalScreenPost = ({ route }: { route: any }) => {
-  const [comment, setComment] = useState('')
-  const [contribuitions, setContribuitions] = useState([])
-  const [uri, setUri] = useState('')
-
+const ModalScreenPost = ({route}: {route: any}) => {
+  const [comment, setComment] = useState('');
+  const [contribuitions, setContribuitions] = useState([]);
+  const [uri, setUri] = useState('');
 
   useEffect(() => {
-    setContribuitions(route.params.item.contribuitions)
-  },[])
+    setContribuitions(route.params.item.contribuitions);
+  }, []);
 
-  console.log(route.params)
+  console.log(route.params);
   const items = route.params.item;
   reactotron.debug(items);
 
@@ -44,14 +43,14 @@ const ModalScreenPost = ({ route }: { route: any }) => {
     //@ts-ignore
     await createContribuition(items.id, {
       name: comment,
-      description: comment
-    })
-  }
+      description: comment,
+    });
+  };
 
   return (
     <React.Fragment>
       <View style={styles.container}>
-        <ScrollView style={{ backgroundColor: 'white' }}>
+        <ScrollView style={{backgroundColor: 'white'}}>
           <View
             style={{
               flexDirection: 'row',
@@ -72,9 +71,6 @@ const ModalScreenPost = ({ route }: { route: any }) => {
           </View>
           <View>
             <Text style={styles.title}>{items.post_name}</Text>
-            <AudioPlayer uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`} />
-          </View>
-          <View>
             <View style={styles.getStartedContainer}>
               <Text
                 style={styles.getStartedText}
@@ -82,17 +78,23 @@ const ModalScreenPost = ({ route }: { route: any }) => {
                 darkColor="rgba(255,255,255,0.8)">
                 Conteudo do post
               </Text>
-              {contribuitions && contribuitions.map((contribuition: any) => (
-                <View>
-                  <Text>{contribuition.name}</Text>
-                  <AudioPlayer uri={`https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`} />
-                </View>
-              ))}
+              {contribuitions &&
+                contribuitions.map((contribuition: any) => (
+                  <View>
+                    <Text>{contribuition.name}</Text>
+                    <AudioPlayer
+                      uri={`https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`}
+                    />
+                  </View>
+                ))}
             </View>
+            <AudioPlayer
+              uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
+            />
           </View>
         </ScrollView>
       </View>
-      <View style={{ borderTopWidth: 1, borderColor: '#eee' }}>
+      <View style={{borderTopWidth: 1, borderColor: '#eee'}}>
         <View
           style={{
             flexDirection: 'row',
@@ -110,8 +112,8 @@ const ModalScreenPost = ({ route }: { route: any }) => {
               }}
             />
           </TouchableOpacity>
-          <View style={{ marginTop: 10 }}>
-            <Text style={{ fontWeight: 'bold' }}>Enviar</Text>
+          <View style={{marginTop: 10}}>
+            <Text style={{fontWeight: 'bold'}}>Enviar</Text>
           </View>
         </View>
         <TextInput
@@ -124,7 +126,7 @@ const ModalScreenPost = ({ route }: { route: any }) => {
             marginBottom: 10,
             margin: 10,
           }}
-          onChangeText={text => setComment(text)}
+          onChangeText={(text) => setComment(text)}
           underlineColorAndroid="transparent"
           placeholder="Faça uma colaboração"></TextInput>
       </View>
@@ -143,7 +145,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'blue'
   },
   separator: {
     height: 1,
@@ -160,6 +161,7 @@ const styles = StyleSheet.create({
   getStartedText: {
     fontSize: 15,
     lineHeight: 24,
+    marginBottom: 20,
   },
   helpContainer: {},
   helpLink: {},
