@@ -25,7 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "versionCode": 2,
-      "package": "app.Musicoop.App"
+      "package": "com.quioto.musicoopappexpo"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
