@@ -28,7 +28,7 @@ const AudioPlayer = (props: any) => {
       console.log('1');
       const status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       setIsPlaying(true);
-      playbackObject.setOnPlaybackStatusUpdate(async (status) => {
+      playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
         if (status.didJustFinish === true) {
           await playbackObject.unloadAsync();
           reactotron.debug('acabou');
@@ -56,7 +56,7 @@ const AudioPlayer = (props: any) => {
       } catch (error) {
         status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       }
-      playbackObject.setOnPlaybackStatusUpdate(async (status) => {
+      playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
         if (status.didJustFinish === true) {
           console.log('CABOU');
           await playbackObject.unloadAsync();

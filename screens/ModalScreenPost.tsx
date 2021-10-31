@@ -26,9 +26,16 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const [uri, setUri] = useState('');
   const [fileName, setFileName] = useState('');
   const [textValue, setTextValue] = useState('');
+  const [hasFile, setHasFile] = useState<any>();
 
   useEffect(() => {
     setContribuitions(route.params.item.contribuitions);
+    if (fileName) {
+      setHasFile(true);
+    }
+    if (!fileName) {
+      setHasFile(false);
+    }
   }, []);
 
   const items = route.params.item;
@@ -97,23 +104,29 @@ const ModalScreenPost = ({route}: {route: any}) => {
                 darkColor="rgba(255,255,255,0.8)">
                 {items.description}
               </Text>
-              {contribuitions &&
-                contribuitions.map((contribuition: any) => (
-                  <View>
-                    <Text>{contribuition.name}</Text>
-                    <AudioPlayer
-                      uri={
-                        contribuition.uri ||
-                        `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
-                      }
-                    />
-                  </View>
-                ))}
             </View>
             <AudioPlayer
               uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
             />
           </View>
+          {contribuitions &&
+            contribuitions.map((contribuition: any) => (
+              <View
+                style={{
+                  marginTop: 20,
+                  borderTopWidth: 1,
+                  borderColor: '#C8C8C8',
+                  paddingVertical: 10,
+                }}>
+                <Text style={{marginBottom: 25}}>{contribuition.name}</Text>
+                <AudioPlayer
+                  uri={
+                    contribuition.uri ||
+                    `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
+                  }
+                />
+              </View>
+            ))}
         </ScrollView>
       </View>
       <View style={{borderTopWidth: 1, borderColor: '#eee'}}>
@@ -124,16 +137,24 @@ const ModalScreenPost = ({route}: {route: any}) => {
             justifyContent: 'space-between',
             marginHorizontal: 10,
           }}>
-          <TouchableOpacity onPress={() => pickDocument()}>
-            <Image
-              source={clipe}
-              style={{
-                marginTop: 10,
-                width: 17,
-                height: 15,
-              }}
-            />
-          </TouchableOpacity>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <TouchableOpacity onPress={() => pickDocument()}>
+              <Image
+                source={clipe}
+                style={{
+                  marginTop: 10,
+                  width: 17,
+                  height: 15,
+                }}
+              />
+            </TouchableOpacity>
+            {hasFile && (
+              <Text style={{marginTop: 10, marginLeft: 10}}>
+                Arquivo selecionado
+              </Text>
+            )}
+          </View>
+
           <View style={{marginTop: 10}}>
             <Text
               onPress={() => postContribuition()}

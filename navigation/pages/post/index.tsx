@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View} from '../../../components/Themed';
 
 import {Picker} from '@react-native-picker/picker';
@@ -18,6 +18,21 @@ const postScreen = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [posts, setPosts] = useState([]);
+  const [textInput, setTextInput] = useState<any>();
+  const [hasFile, setHasFile] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [useOpacity, setUseOpacity] = useState<any>(0.4);
+
+  useEffect(() => {
+    reactotron.debug(fileName);
+
+    if (fileName) {
+      setHasFile(true);
+    }
+    if (!fileName) {
+      setHasFile(false);
+    }
+  }, [fileName, hasFile, disabled, useOpacity]);
 
   const pickDocument = async () => {
     const result = await DocumentPicker.getDocumentAsync({
@@ -37,6 +52,16 @@ const postScreen = () => {
       name: fileName,
       type,
     };
+    await textInput.clear();
+    if (title.length <= 0) {
+      alert('Por favor, preencha o titulo da postagem');
+    }
+    if (description.length <= 0) {
+      alert('Por favor, preencha a descrição da postagem');
+    }
+    if (!fileName) {
+      alert('Por favor, insira um arquivo de áudio');
+    }
     await uploadFile.createPost({file, description, post_name: title});
     listPosts().then((posts) => {
       if (Array.isArray(posts)) {
@@ -44,6 +69,7 @@ const postScreen = () => {
       }
       reactotron.debug(posts);
     });
+
     alert('Postagem realizada!');
   };
 
@@ -57,7 +83,17 @@ const postScreen = () => {
               <TextInput
                 style={{fontWeight: 'bold'}}
                 placeholder="Insira um titulo bacana pro seu post"
-                onChangeText={(text) => setTitle(text)}
+                onChangeText={(text) => {
+                  setTitle(text);
+                  reactotron.debug(disabled);
+                  if (text.length > 0) {
+                    setUseOpacity(1);
+                    setDisabled(false);
+                  }
+                }}
+                ref={(input) => {
+                  setTextInput(input);
+                }}
               />
             </View>
             <View>
@@ -66,6 +102,9 @@ const postScreen = () => {
                 style={{fontWeight: 'bold'}}
                 placeholder="Insira uma descrição bacana pro seu post"
                 onChangeText={(text) => setDescription(text)}
+                ref={(input) => {
+                  setTextInput(input);
+                }}
               />
             </View>
           </View>
@@ -90,22 +129,25 @@ const postScreen = () => {
               }}>
               <Text>Enviar arquivo</Text>
             </TouchableOpacity>
-            <AudioPlayer uri={uri} />
+            {hasFile && <AudioPlayer uri={uri} />}
           </View>
         </View>
       </ScrollView>
-      <TouchableOpacity
-        style={{
-          backgroundColor: '#eee',
-          alignItems: 'center',
-          marginHorizontal: 40,
-          marginBottom: 20,
-          borderRadius: 100,
-          padding: 10,
-        }}
-        onPress={() => post()}>
-        <Text style={{color: '#2f95dc', fontWeight: 'bold'}}>Postar</Text>
-      </TouchableOpacity>
+
+      <View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#eee',
+            alignItems: 'center',
+            marginHorizontal: 40,
+            marginBottom: 20,
+            borderRadius: 100,
+            padding: 10,
+          }}
+          onPress={() => post()}>
+          <Text style={{color: '#2f95dc', fontWeight: 'bold'}}>Postar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
