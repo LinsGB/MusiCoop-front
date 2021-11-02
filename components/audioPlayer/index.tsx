@@ -1,15 +1,13 @@
-import React, {useEffect, useState, componentwil} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
 import reactotron from 'reactotron-react-native';
-
 const AudioPlayer = (props: any) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackObject, setPlaybackObject] = useState<any>(null);
   const [playbackStatus, setPlaybackStatus] = useState<any>(null);
   const [song, setSong] = useState();
-
   useEffect(() => {
     if (playbackObject === null) {
       setPlaybackObject(new Audio.Sound());
@@ -26,20 +24,18 @@ const AudioPlayer = (props: any) => {
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
       console.log('1');
-      const status = await Audio.Sound.createAsync({uri}, {shouldPlay: true});
+      const status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
-        reactotron.debug(status);
-        if (status.isLoaded === false) {
-          await Audio.Sound.createAsync({uri}, {shouldPlay: true});
+        if (status.didJustFinish === true) {
+          await playbackObject.unloadAsync();
           reactotron.debug('acabou');
           await setIsPlaying(false);
-          // setPlaybackObject(new Audio.Sound());
+          setPlaybackObject(new Audio.Sound());
         }
       });
       return setPlaybackStatus(status);
     }
-
     // It will pause our audio
     if (isPlaying) {
       console.log('2');
@@ -47,7 +43,6 @@ const AudioPlayer = (props: any) => {
       setIsPlaying(false);
       return setPlaybackStatus(status);
     }
-
     // It will resume our audio
     if (!isPlaying) {
       console.log('3');
@@ -55,7 +50,6 @@ const AudioPlayer = (props: any) => {
       try {
         status = await playbackObject.playAsync();
       } catch (error) {
-        reactotron.debug(error);
         status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       }
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
@@ -67,22 +61,18 @@ const AudioPlayer = (props: any) => {
           setPlaybackObject(new Audio.Sound());
         }
       });
-
       setIsPlaying(true);
       return setPlaybackStatus(status);
     }
-
     if (playbackStatus.didJustFinish) {
       reactotron.debug('ACABOOOOO');
     }
   };
-
   const restartSong = async () => {
     const status = await playbackObject.replayAsync();
     setIsPlaying(false);
     return setPlaybackStatus(status);
   };
-
   return (
     <View
       style={{
@@ -108,5 +98,4 @@ const AudioPlayer = (props: any) => {
     </View>
   );
 };
-
 export default AudioPlayer;
