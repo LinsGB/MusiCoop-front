@@ -26,14 +26,15 @@ const AudioPlayer = (props: any) => {
   const handleAudioPlayPause = async () => {
     if (playbackObject !== null && playbackStatus === null) {
       console.log('1');
-      const status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
+      const status = await Audio.Sound.createAsync({uri}, {shouldPlay: true});
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
-        if (status.didJustFinish === true) {
-          await playbackObject.unloadAsync();
+        reactotron.debug(status);
+        if (status.isLoaded === false) {
+          await Audio.Sound.createAsync({uri}, {shouldPlay: true});
           reactotron.debug('acabou');
           await setIsPlaying(false);
-          setPlaybackObject(new Audio.Sound());
+          // setPlaybackObject(new Audio.Sound());
         }
       });
       return setPlaybackStatus(status);
@@ -54,6 +55,7 @@ const AudioPlayer = (props: any) => {
       try {
         status = await playbackObject.playAsync();
       } catch (error) {
+        reactotron.debug(error);
         status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       }
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
