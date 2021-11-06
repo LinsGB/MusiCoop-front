@@ -1,8 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
 import reactotron from 'reactotron-react-native';
+import Play from '../../assets/images/play.png';
+import Pause from '../../assets/images/pause.png';
+
 const AudioPlayer = (props: any) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackObject, setPlaybackObject] = useState<any>(null);
@@ -72,33 +82,29 @@ const AudioPlayer = (props: any) => {
   return (
     <View
       style={{
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
         marginLeft: 5,
-        maxWidth: 45,
       }}>
       {/* <Text style={{fontSize: 18, marginBottom: 15}}>{audio.filename}</Text> */}
       <View style={{flexDirection: 'row'}}>
-        <Ionicons
+        <TouchableOpacity
           style={{
-            backgroundColor: 'gray',
-            padding: 10,
             alignItems: 'center',
             justifyContent: 'center',
+            backgroundColor: '#36375F',
+            borderRadius: 10,
+            height: 50,
+            width: 40,
           }}
-          name={isPlaying ? 'pause' : 'play'}
-          size={24}
-          color="white"
-          onPress={handleAudioPlayPause}
-        />
-        {loading && (
-          <ActivityIndicator
-            style={{marginLeft: 5}}
-            size="large"
-            color="#c8c8c8"
-          />
-        )}
+          onPress={handleAudioPlayPause}>
+          {loading ? (
+            <ActivityIndicator
+              style={{width: 12, height: 12}}
+              color="#c8c8c8"
+            />
+          ) : (
+            <Image source={isPlaying ? Pause : Play} />
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );

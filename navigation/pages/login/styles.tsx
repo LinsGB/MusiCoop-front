@@ -4,11 +4,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    marginHorizontal: 10,
+    backgroundColor: '#25214D',
   },
   loginButton: {
-    backgroundColor: '#226ddcff',
-    borderRadius: 20,
+    backgroundColor: '#F05922',
+    marginHorizontal: 40,
+    borderRadius: 25,
+    textTransform: 'capitalize',
   },
 });
 

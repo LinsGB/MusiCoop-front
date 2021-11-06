@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View } from '../../../components/Themed';
+import React, {useEffect, useState} from 'react';
+import {Text, View} from '../../../components/Themed';
 
-import { Picker } from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
 
 import styles from './styles';
-import { Button, Pressable, TextInput } from 'react-native';
+import {Button, Pressable, TextInput} from 'react-native';
 import AudioPlayer from '../../../components/audioPlayer';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import * as DocumentPicker from 'expo-document-picker';
 import * as uploadFile from '../../../services/post';
-import { listPosts } from '../../../services/post';
+import {listPosts} from '../../../services/post';
 import reactotron from '../../../config/Reactotron.config';
 
 const postScreen = () => {
@@ -61,12 +61,10 @@ const postScreen = () => {
     }
     if (!fileName) {
       alert('Por favor, insira um arquivo de áudio');
-    }
-    else if (!`${fileName}`.match(/mp3|opus$/)) {
+    } else if (!`${fileName}`.match(/mp3|opus$/)) {
       alert('Por favor, insira um arquivo de áudio válido');
-    }
-    else {
-      await uploadFile.createPost({ file, description, post_name: title });
+    } else {
+      await uploadFile.createPost({file, description, post_name: title});
       listPosts().then((posts) => {
         if (Array.isArray(posts)) {
           setPosts(posts);
@@ -81,13 +79,17 @@ const postScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={[{ marginLeft: 20 }]}>
+        <View style={[{marginLeft: 20}]}>
           <View>
-            <View style={{ marginBottom: 20 }}>
-              <Text>Titulo</Text>
+            <View style={{marginBottom: 20}}>
+              <Text
+                style={{color: 'white', fontWeight: 'bold', marginBottom: 8}}>
+                Titulo
+              </Text>
               <TextInput
-                style={{ fontWeight: 'bold' }}
+                style={{color: 'white'}}
                 placeholder="Insira um titulo bacana pro seu post"
+                placeholderTextColor={'#484B72'}
                 onChangeText={(text) => {
                   setTitle(text);
                   reactotron.debug(disabled);
@@ -102,10 +104,14 @@ const postScreen = () => {
               />
             </View>
             <View>
-              <Text>Descrição</Text>
+              <Text
+                style={{color: 'white', fontWeight: 'bold', marginBottom: 8}}>
+                Descrição
+              </Text>
               <TextInput
-                style={{ fontWeight: 'bold' }}
+                style={{color: 'white'}}
                 placeholder="Insira uma descrição bacana pro seu post"
+                placeholderTextColor={'#484B72'}
                 onChangeText={(text) => setDescription(text)}
                 ref={(input) => {
                   setTextInput(input);
@@ -116,7 +122,7 @@ const postScreen = () => {
         </View>
         <View
           style={styles.separator}
-          lightColor="#C8C8C8"
+          lightColor="#25214D"
           darkColor="rgba(255,255,255,0.1)"
         />
         <View style={styles.container}>
@@ -124,7 +130,7 @@ const postScreen = () => {
             <TouchableOpacity
               onPress={pickDocument}
               style={{
-                backgroundColor: '#eee',
+                backgroundColor: '#36375F',
                 paddingHorizontal: 40,
                 paddingVertical: 5,
                 borderRadius: 10,
@@ -142,17 +148,19 @@ const postScreen = () => {
       <View>
         <TouchableOpacity
           style={{
-            backgroundColor: '#eee',
+            backgroundColor:
+              fileName && title && description ? '#F05922' : '#623240',
             alignItems: 'center',
-            marginHorizontal: 40,
+            justifyContent: 'center',
+            marginHorizontal: 90,
             marginBottom: 20,
             borderRadius: 100,
             padding: 10,
-            opacity: (fileName && title && description) ? 1 : 0.4
+            // opacity: fileName && title && description ? 1 : 0.4,
           }}
           disabled={!(fileName && title && description)}
           onPress={() => post()}>
-          <Text style={{ color: '#2f95dc', fontWeight: 'bold' }}>Postar</Text>
+          <Text style={{color: '#fff', fontWeight: 'bold'}}>Postar</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -65,8 +65,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   button: {
-    marginHorizontal: 60,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

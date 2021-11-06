@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#25214D',
+    justifyContent: 'center',
   },
   picker: {
     borderWidth: 1,
@@ -22,7 +23,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   button: {
-    marginHorizontal: 60,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

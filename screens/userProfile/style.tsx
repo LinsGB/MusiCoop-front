@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 24,
     textAlign: 'center',
+    color: 'white',
   },
   helpContainer: {
     marginTop: 15,
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
   },
   helpLinkText: {
     textAlign: 'center',
+    color: '#F05922',
   },
 });
 

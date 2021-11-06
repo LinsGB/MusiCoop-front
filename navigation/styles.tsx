@@ -3,8 +3,10 @@ import {isIphone8PlusOrLower} from '../helpers/iphone';
 
 const styles = StyleSheet.create({
   navigationTabs: {
-    paddingBottom: 10,
-    height: 70,
+    height: 80,
+    borderTopColor: '#484B72',
+    borderTopWidth: 2,
+    marginBottom: -10,
   },
   loginButton: {
     backgroundColor: '#226ddcff',

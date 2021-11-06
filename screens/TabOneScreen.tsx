@@ -23,20 +23,14 @@ const Routes = () => {
       reactotron.debug(posts);
     });
   }, []);
-  const [refreshing, setRefreshing] = React.useState<any>(false);
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => setRefreshing(false), 3000);
-  };
-  const handleComments = () => {};
   const FirstRoute = () => {
     const [reload, setReload] = useState(0);
     const test = () => {
       setReload(reload + 1);
     };
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#25214D'}}>
         <View style={{flex: 1}}>
           <Comments />
         </View>
@@ -80,12 +74,12 @@ export default function TabViewExample() {
       renderTabBar={(props) => (
         <TabBar
           {...props}
-          indicatorStyle={{backgroundColor: '#226ddcff'}}
+          indicatorStyle={{backgroundColor: '#484B72'}}
           style={{
-            backgroundColor: 'white',
+            backgroundColor: '#25214D',
           }}
           renderLabel={({route}) => (
-            <Text style={{color: 'black', margin: 8}}>{route.title}</Text>
+            <Text style={{color: '#fff', margin: 8}}>{route.title}</Text>
           )}></TabBar>
       )}
     />

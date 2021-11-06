@@ -83,7 +83,7 @@ const Comments = () => {
               <View
                 style={{
                   marginVertical: 10,
-                  backgroundColor: 'white',
+                  backgroundColor: '#36375F',
                   padding: 10,
                   borderRadius: 4,
                   shadowOffset: {
@@ -110,7 +110,7 @@ const Comments = () => {
                         marginRight: 10,
                       }}
                     />
-                    <Text>Nome do usuario</Text>
+                    <Text style={{color: 'white'}}>Nome do usuario</Text>
                   </View>
                 </View>
                 <View>
@@ -121,6 +121,7 @@ const Comments = () => {
                         maxWidth: 270,
                         lineHeight: 25,
                         marginBottom: 20,
+                        color: 'white',
                       }}>
                       {item.post_name}
                     </Text>
@@ -159,10 +160,12 @@ const Comments = () => {
                   <MaterialCommunityIcons
                     name="comment-text-outline"
                     size={24}
-                    color="black"
+                    color="white"
                     style={{marginRight: 8}}
                   />
-                  <Text>{item.contribuitions.length}</Text>
+                  <Text style={{color: 'white'}}>
+                    {item.contribuitions.length}
+                  </Text>
                 </View>
               </View>
             </TouchableWithoutFeedback>
@@ -175,7 +178,7 @@ const Comments = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#25214D',
   },
   itemStyle: {
     padding: 10,

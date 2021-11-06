@@ -31,7 +31,7 @@ const App: React.FC = () => {
     return (
       <SafeAreaProvider>
         <Navigation colorScheme={colorScheme} />
-        <StatusBar />
+        <StatusBar style="light" />
       </SafeAreaProvider>
     );
   }

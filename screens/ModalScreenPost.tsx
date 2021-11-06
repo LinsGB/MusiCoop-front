@@ -76,7 +76,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
   return (
     <React.Fragment>
       <View style={styles.container}>
-        <ScrollView style={{backgroundColor: 'white'}}>
+        <ScrollView style={{backgroundColor: '#25214D'}}>
           <View
             style={{
               flexDirection: 'row',
@@ -93,7 +93,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
                 marginRight: 10,
               }}
             />
-            <Text>Nome do usuario</Text>
+            <Text style={{color: 'white'}}>Nome do usuario</Text>
           </View>
           <View>
             <Text style={styles.title}>{items.post_name}</Text>
@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'white',
   },
   separator: {
     height: 1,
@@ -213,6 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 24,
     marginBottom: 20,
+    color: 'white',
   },
   helpContainer: {},
   helpLink: {},

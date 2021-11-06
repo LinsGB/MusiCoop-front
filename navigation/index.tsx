@@ -7,7 +7,7 @@ import {
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import {ColorSchemeName, Pressable, Touchable} from 'react-native';
+import {ColorSchemeName, Pressable, Touchable, Image} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -32,6 +32,13 @@ import loginScreen from './pages/login';
 import SingUp from './pages/signUp';
 import postScreen from './pages/post';
 import ModalScreenPost from '../screens/ModalScreenPost';
+
+import Post from '../assets/images/post.png';
+import PostSelected from '../assets/images/post-selected.png';
+import Home from '../assets/images/home.png';
+import HomeSelected from '../assets/images/home-selected.png';
+import User from '../assets/images/user.png';
+import UserSelected from '../assets/images/user-selected.png';
 
 export default function Navigation({
   colorScheme,
@@ -83,10 +90,30 @@ function RootNavigator() {
         component={EditScreenInfo}
         options={{headerShown: false}}
       />
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
+      <Stack.Group
+        screenOptions={{
+          presentation: 'modal',
+          headerStyle: {
+            backgroundColor: '#25214D',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            color: '#fff',
+          },
+        }}>
         <Stack.Screen name="Modal" component={ModalScreenUser} />
       </Stack.Group>
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
+      <Stack.Group
+        screenOptions={{
+          presentation: 'modal',
+          headerTintColor: '#fff',
+          headerStyle: {
+            backgroundColor: '#25214D',
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+        }}>
         <Stack.Screen name="Postagem" component={ModalScreenPost} />
       </Stack.Group>
     </Stack.Navigator>
@@ -108,52 +135,76 @@ function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         tabBarStyle: styles.navigationTabs,
+        tabBarLabel: '',
+        headerTintColor: '#fff',
+        headerStyle: {
+          backgroundColor: '#25214D',
+        },
+        tabBarInactiveBackgroundColor: '#25214D',
+        tabBarActiveBackgroundColor: '#25214D',
       }}>
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({navigation}: RootTabScreenProps<'TabOne'>) => ({
           title: 'Início',
-          tabBarIcon: ({color}) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <View>
-              <Pressable
-                onPress={() => navigation.navigate('Modal')}
-                style={({pressed}) => ({
-                  opacity: pressed ? 0.5 : 1,
-                })}>
-                <FontAwesome
-                  name="user"
-                  size={25}
-                  color={Colors[colorScheme].text}
-                  style={{marginRight: 15}}
-                />
-              </Pressable>
-              <View></View>
-            </View>
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={focused ? HomeSelected : Home}
+              style={{
+                width: 23,
+                height: 21,
+              }}
+            />
           ),
+          // headerRight: () => (
+          //   <View>
+          //     <Pressable
+          //       onPress={() => navigation.navigate('Modal')}
+          //       style={({pressed}) => ({
+          //         opacity: pressed ? 0.5 : 1,
+          //       })}>
+          //       <FontAwesome
+          //         name="user"
+          //         size={25}
+          //         color={Colors[colorScheme].text}
+          //         style={{marginRight: 15}}
+          //       />
+          //     </Pressable>
+          //     <View></View>
+          //   </View>
+          // ),
         })}
       />
       <BottomTab.Screen
         name="Post"
         component={postScreen}
         options={({navigation}: RootTabScreenProps<'Post'>) => ({
-          title: 'Post',
-          tabBarIcon: ({color}) => <TabBarIcon name="plus" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({pressed}) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="user"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{marginRight: 15}}
-              />
-            </Pressable>
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={focused ? PostSelected : Post}
+              resizeMode={'contain'}
+              style={{
+                width: 30,
+                height: 38,
+              }}
+            />
           ),
+
+          // headerRight: () => (
+          //   <Pressable
+          //     onPress={() => navigation.navigate('Modal')}
+          //     style={({pressed}) => ({
+          //       opacity: pressed ? 0.5 : 1,
+          //     })}>
+          //     <FontAwesome
+          //       name="user"
+          //       size={25}
+          //       color={Colors[colorScheme].text}
+          //       style={{marginRight: 15}}
+          //     />
+          //   </Pressable>
+          // ),
         })}
       />
       <BottomTab.Screen
@@ -161,7 +212,16 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Meu perfil',
-          tabBarIcon: ({color}) => <TabBarIcon name="user" color={color} />,
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={focused ? UserSelected : User}
+              resizeMode={'contain'}
+              style={{
+                width: 23,
+                height: 25,
+              }}
+            />
+          ),
         }}
       />
     </BottomTab.Navigator>
