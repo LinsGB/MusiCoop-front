@@ -39,6 +39,7 @@ import Home from '../assets/images/home.png';
 import HomeSelected from '../assets/images/home-selected.png';
 import User from '../assets/images/user.png';
 import UserSelected from '../assets/images/user-selected.png';
+import Splash from '../Splash';
 
 export default function Navigation({
   colorScheme,
@@ -59,7 +60,14 @@ function RootNavigator() {
   const [logged, setLogged] = useState(false);
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      initialRouteName="Splash"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Login"
         component={loginScreen}

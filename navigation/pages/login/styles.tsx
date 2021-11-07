@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#25214D',
+    marginBottom: -200,
   },
   loginButton: {
     backgroundColor: '#F05922',
