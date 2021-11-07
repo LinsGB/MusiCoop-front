@@ -25,7 +25,7 @@ const Splash = () => {
           routes: [{name: 'Login'}],
         }),
       );
-    }, 4000);
+    }, 2000);
   }, []);
 
   //   const startRepeating = () => {

@@ -113,6 +113,7 @@ function RootNavigator() {
       </Stack.Group>
       <Stack.Group
         screenOptions={{
+          headerShown: true,
           presentation: 'modal',
           headerTintColor: '#fff',
           headerStyle: {
