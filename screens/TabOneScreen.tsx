@@ -1,7 +1,13 @@
 import {react} from '@babel/types';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import React, {useState, useEffect} from 'react';
-import {View, useWindowDimensions, Text, RefreshControl} from 'react-native';
+import {
+  View,
+  useWindowDimensions,
+  Text,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import reactotron from 'reactotron-react-native';
@@ -12,13 +18,13 @@ import {listPosts} from '../services/post';
 
 const Routes = () => {
   const [posts, setPosts] = useState([]);
-
-  const [comments, setComments] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    reactotron.debug('oi');
+    setLoading(true);
     listPosts().then((posts) => {
       if (Array.isArray(posts)) {
         setPosts(posts);
+        setLoading(false);
       }
       reactotron.debug(posts);
     });
@@ -32,6 +38,14 @@ const Routes = () => {
     return (
       <View style={{flex: 1, backgroundColor: '#25214D'}}>
         <View style={{flex: 1}}>
+          {loading && (
+            <View style={{alignItems: 'center'}}>
+              <ActivityIndicator
+                style={{width: 12, height: 12, marginTop: 20}}
+                color="#c8c8c8"
+              />
+            </View>
+          )}
           <Comments />
         </View>
       </View>

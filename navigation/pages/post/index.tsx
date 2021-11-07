@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View} from '../../../components/Themed';
-
+import Metrics from '../../../helpers/Metrics';
 import {Picker} from '@react-native-picker/picker';
 
 import styles from './styles';
@@ -97,6 +97,13 @@ const postScreen = () => {
     }
   };
 
+  const verifyHeight = () => {
+    if (Metrics.constants.screenHeight >= 760) {
+      return 80;
+    }
+    return -40;
+  };
+
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -187,6 +194,7 @@ const postScreen = () => {
                 backgroundColor: '#36375F',
                 paddingHorizontal: 20,
                 paddingVertical: 5,
+                marginBottom: verifyHeight(),
                 borderRadius: 10,
                 alignItems: 'center',
                 height: 50,

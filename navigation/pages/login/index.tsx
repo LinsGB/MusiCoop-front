@@ -4,11 +4,19 @@ import TouchableButton from '../../../components/touchableButton';
 import Logo from '../../../assets/images/musicoop.png';
 
 import styles from './styles';
+import Metrics from '../../../helpers/Metrics';
 
 const loginScreen = ({navigation}: {navigation: any}) => {
+  const verifyHeight = () => {
+    if (Metrics.constants.screenHeight >= 760) {
+      return 200;
+    }
+    return 90;
+  };
+
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center', marginBottom: 200}}>
+      <View style={{alignItems: 'center', marginBottom: verifyHeight()}}>
         <Image style={{width: 150, height: 153.75}} source={Logo} />
       </View>
       <View style={{marginVertical: 20}}>
