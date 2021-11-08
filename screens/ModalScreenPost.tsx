@@ -8,6 +8,7 @@ import {
   ScrollView,
   TextInput,
   Button,
+  RefreshControl,
 } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import {Text, View} from '../components/Themed';
@@ -19,17 +20,21 @@ import reactotron from 'reactotron-react-native';
 import AudioPlayer from '../components/audioPlayer';
 import {createContribuition, listPosts} from '../services/post';
 import {getContribution, getMusic} from '../services/music';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {react} from '@babel/types';
 
 const ModalScreenPost = ({route}: {route: any}) => {
   const [comment, setComment] = useState('');
   const [contribuitions, setContribuitions] = useState([]);
   const [uri, setUri] = useState('');
-  const [hasContri, setHasContri] = useState([]);
+  const [hasContri, setHasContri] = useState<any>([]);
   const [fileName, setFileName] = useState('');
   const [textValue, setTextValue] = useState('');
   const [hasFile, setHasFile] = useState<any>();
+  const [refreshing, setRefreshing] = React.useState(false);
 
   useEffect(() => {
+    onRefresh();
     setContribuitions(route.params.item.contribuitions);
     if (fileName) {
       setHasFile(true);
@@ -37,7 +42,23 @@ const ModalScreenPost = ({route}: {route: any}) => {
     if (!fileName) {
       setHasFile(false);
     }
-  }, [fileName, hasFile, hasContri]);
+  }, [fileName, hasFile]);
+
+  const onRefresh = React.useCallback(() => {
+    listPosts().then((posts) => {
+      if (Array.isArray(posts)) {
+        setHasContri(posts);
+        reactotron.debug(hasContri);
+      }
+    });
+    const wait = (timeout: any) => {
+      return new Promise((resolve) => setTimeout(resolve, timeout));
+    };
+
+    setRefreshing(true);
+
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   const items = route.params.item;
 
@@ -76,7 +97,11 @@ const ModalScreenPost = ({route}: {route: any}) => {
   return (
     <React.Fragment>
       <View style={styles.container}>
-        <ScrollView style={{backgroundColor: '#25214D'}}>
+        <ScrollView
+          style={{backgroundColor: '#25214D'}}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
           <View
             style={{
               flexDirection: 'row',
@@ -109,7 +134,24 @@ const ModalScreenPost = ({route}: {route: any}) => {
               uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
             />
           </View>
-
+          {/* {hasContri &&
+            hasContri.map((contribuition: any) => (
+              <View
+                style={{
+                  marginTop: 20,
+                  borderTopWidth: 1,
+                  borderColor: '#C8C8C8',
+                  paddingVertical: 10,
+                }}>
+                <Text style={{marginBottom: 25}}>{contribuition.name}</Text>
+                <AudioPlayer
+                  uri={
+                    contribuition.uri ||
+                    `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
+                  }
+                />
+              </View>
+            ))} */}
           {contribuitions &&
             contribuitions.map((contribuition: any) => (
               <View
