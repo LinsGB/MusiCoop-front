@@ -54,7 +54,7 @@ const postScreen = () => {
     setUri(result.uri);
   };
 
-  const maxLengthTitle = 30;
+  const maxLengthTitle = 50;
 
   const charRemainingTitle: string = `${
     title ? Math.abs(title.length - maxLengthTitle) : maxLengthTitle
@@ -186,25 +186,23 @@ const postScreen = () => {
           lightColor="#25214D"
           darkColor="rgba(255,255,255,0.1)"
         />
-        <View style={styles.container}>
-          <View style={styles.button}>
-            <TouchableOpacity
-              onPress={pickDocument}
-              style={{
-                backgroundColor: '#36375F',
-                paddingHorizontal: 20,
-                paddingVertical: 5,
-                marginBottom: verifyHeight(),
-                borderRadius: 10,
-                alignItems: 'center',
-                height: 50,
-                justifyContent: 'center',
-                width: hasFile ? 250 : 300,
-              }}>
-              {hasFile ? <Text>{fileName}</Text> : <Text>Enviar arquivo</Text>}
-            </TouchableOpacity>
-            {hasFile && <AudioPlayer uri={uri} />}
-          </View>
+        <View style={styles.button}>
+          <TouchableOpacity
+            onPress={pickDocument}
+            style={{
+              backgroundColor: '#36375F',
+              paddingHorizontal: 20,
+              paddingVertical: 5,
+              marginBottom: verifyHeight(),
+              borderRadius: 10,
+              alignItems: 'center',
+              height: 50,
+              justifyContent: 'center',
+              width: hasFile ? 250 : 300,
+            }}>
+            {hasFile ? <Text>{fileName}</Text> : <Text>Enviar arquivo</Text>}
+          </TouchableOpacity>
+          {hasFile && <AudioPlayer uri={uri} />}
         </View>
         <View style={{alignItems: 'center', marginTop: 190}}>
           <TouchableOpacity

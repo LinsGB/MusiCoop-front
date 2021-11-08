@@ -17,13 +17,14 @@ import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../assets/images/clipe.png';
 import reactotron from 'reactotron-react-native';
 import AudioPlayer from '../components/audioPlayer';
-import {createContribuition} from '../services/post';
+import {createContribuition, listPosts} from '../services/post';
 import {getContribution, getMusic} from '../services/music';
 
 const ModalScreenPost = ({route}: {route: any}) => {
   const [comment, setComment] = useState('');
   const [contribuitions, setContribuitions] = useState([]);
   const [uri, setUri] = useState('');
+  const [hasContri, setHasContri] = useState([]);
   const [fileName, setFileName] = useState('');
   const [textValue, setTextValue] = useState('');
   const [hasFile, setHasFile] = useState<any>();
@@ -36,10 +37,9 @@ const ModalScreenPost = ({route}: {route: any}) => {
     if (!fileName) {
       setHasFile(false);
     }
-  }, []);
+  }, [fileName, hasFile, hasContri]);
 
   const items = route.params.item;
-  reactotron.debug(items);
 
   const pickDocument = async () => {
     const result = await DocumentPicker.getDocumentAsync({
@@ -109,6 +109,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
               uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
             />
           </View>
+
           {contribuitions &&
             contribuitions.map((contribuition: any) => (
               <View
@@ -129,7 +130,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
             ))}
         </ScrollView>
       </View>
-      <View style={{borderTopWidth: 1, borderColor: '#eee'}}>
+      <View style={{borderTopWidth: 1, borderColor: '#eee', paddingBottom: 5}}>
         <View
           style={{
             flexDirection: 'row',
@@ -149,9 +150,9 @@ const ModalScreenPost = ({route}: {route: any}) => {
               />
             </TouchableOpacity>
             {hasFile && (
-              <Text style={{marginTop: 10, marginLeft: 10}}>
-                Arquivo selecionado
-              </Text>
+              <View style={{flexDirection: 'row', paddingTop: 10}}>
+                <Text style={{marginLeft: 10}}>{fileName}</Text>
+              </View>
             )}
           </View>
 

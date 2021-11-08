@@ -118,7 +118,6 @@ const Comments = () => {
                     <Text
                       style={{
                         fontSize: 20,
-                        maxWidth: 270,
                         lineHeight: 25,
                         marginBottom: 20,
                         color: 'white',
