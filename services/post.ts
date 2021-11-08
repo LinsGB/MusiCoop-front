@@ -8,6 +8,10 @@ const listPosts = async () => {
   return (await api.get('/posts')).data;
 };
 
+const findPost = async (postId:number) => {
+  return (await api.get(`/post?post_id=${postId}`)).data;
+};
+
 const createContribuition = async (id: number, payload: any) => {
   const bodyFormData = new FormData();
   const {name, description, file} = payload;
@@ -36,4 +40,4 @@ const createPost = async (payload: any) => {
   });
 };
 
-export {createPost, createContribuition, listPosts};
+export {createPost, createContribuition, listPosts, findPost};

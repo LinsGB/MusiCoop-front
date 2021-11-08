@@ -18,7 +18,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../assets/images/clipe.png';
 import reactotron from 'reactotron-react-native';
 import AudioPlayer from '../components/audioPlayer';
-import {createContribuition, listPosts} from '../services/post';
+import {createContribuition, listPosts, findPost} from '../services/post';
 import {getContribution, getMusic} from '../services/music';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {react} from '@babel/types';
@@ -27,7 +27,6 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const [comment, setComment] = useState('');
   const [contribuitions, setContribuitions] = useState([]);
   const [uri, setUri] = useState('');
-  const [hasContri, setHasContri] = useState<any>([]);
   const [fileName, setFileName] = useState('');
   const [textValue, setTextValue] = useState('');
   const [hasFile, setHasFile] = useState<any>();
@@ -45,10 +44,13 @@ const ModalScreenPost = ({route}: {route: any}) => {
   }, [fileName, hasFile]);
 
   const onRefresh = React.useCallback(() => {
-    listPosts().then((posts) => {
-      if (Array.isArray(posts)) {
-        setHasContri(posts);
-        reactotron.debug(hasContri);
+    console.log("LOG => ",route.params.item.id )
+    findPost(route.params.item.id).then((posts) => {
+      console.log("POSTS => ", posts)
+      //@ts-ignore
+      if (Array.isArray(posts.contribuitions)) {
+        //@ts-ignore
+        setContribuitions(posts.contribuitions);
       }
     });
     const wait = (timeout: any) => {
@@ -134,26 +136,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
               uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
             />
           </View>
-          {/* {hasContri &&
-            hasContri.map((contribuition: any) => (
-              <View
-                style={{
-                  marginTop: 20,
-                  borderTopWidth: 1,
-                  borderColor: '#C8C8C8',
-                  paddingVertical: 10,
-                }}>
-                <Text style={{marginBottom: 25}}>{contribuition.name}</Text>
-                <AudioPlayer
-                  uri={
-                    contribuition.uri ||
-                    `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
-                  }
-                />
-              </View>
-            ))} */}
-          {contribuitions &&
-            contribuitions.map((contribuition: any) => (
+          {contribuitions.map((contribuition: any) => (
               <View
                 style={{
                   marginTop: 20,
