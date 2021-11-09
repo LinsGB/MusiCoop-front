@@ -9,10 +9,10 @@ import {
   Dimensions,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
-import loading from './loading.json';
+import splashAnimation from './animation.json';
 import Constants from 'expo-constants';
 
-const size = Dimensions.get('window').width * 0.5;
+const size = Dimensions.get('window').width * 2;
 const version = Constants.manifest.version;
 
 const Splash = () => {
@@ -42,7 +42,7 @@ const Splash = () => {
     <>
       <View style={styles.container}>
         <LottieView
-          source={loading}
+          source={splashAnimation}
           style={{width: size, height: size}}
           autoPlay
           resizeMode="contain"
