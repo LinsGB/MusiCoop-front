@@ -94,7 +94,7 @@ const ModalScreenPost = ({ route }: { route: any }) => {
       }),
     );
   };
-  const [context, setContext] = useState([]);
+  const [context, setContext] = useState();
   return (
     <Reload.Provider value={[context, setContext]}>
       <React.Fragment>

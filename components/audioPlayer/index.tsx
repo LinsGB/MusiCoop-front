@@ -26,7 +26,6 @@ const AudioPlayer = (props: any) => {
     }
     setIsPlaying(false);
   }, []);
-  const uri = props.uri;
   useEffect(
     () => async () => {
       await playbackObject.pauseAsync();
@@ -35,16 +34,16 @@ const AudioPlayer = (props: any) => {
   );
 
   const handleAudioPlayPause = async () => {
+    const uri = props.uri;
     if (playbackObject !== null && playbackStatus === null) {
       try {
-        await pauseAudios()
+        await context.pauseAsync();
       } catch (error) {
         console.log("ERROR => ", error)
       }
-      console.log('1');
       setLoading(true);
       const status = await playbackObject.loadAsync({ uri }, { shouldPlay: true });
-      setContext([...context, playbackObject])
+      setContext(playbackObject)
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
         if (status.didJustFinish === true) {
@@ -69,7 +68,7 @@ const AudioPlayer = (props: any) => {
     // It will resume our audio
     if (!isPlaying) {
       try {
-        await pauseAudios()
+        await context.pauseAsync();
       } catch (error) {
         console.log("ERROR => ", error)
       }
@@ -80,6 +79,7 @@ const AudioPlayer = (props: any) => {
       } catch (error) {
         status = await playbackObject.loadAsync({ uri }, { shouldPlay: true });
       }
+      setContext(playbackObject)
       //global.isPlaying = true
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
@@ -96,12 +96,6 @@ const AudioPlayer = (props: any) => {
       return setPlaybackStatus(status);
     }
   };
-
-  const pauseAudios = async () => {
-    for (const music of context) {
-      await music.pauseAsync();
-    }
-  }
 
   return (
     <View
