@@ -1,12 +1,30 @@
 import React, {useState} from 'react';
 import {TextInput, View, Text} from 'react-native';
 import TouchableButton from '../../../components/touchableButton';
+import {apiUser} from '../../../services/user';
+import reactotron from '../../../config/Reactotron.config';
+import { AsyncStorage } from 'react-native';
+
 
 import styles from './styles';
 
 const authScreen = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState<any>();
   const [password, setPassword] = useState<any>();
+
+  const login = async () => {
+      await apiUser.logInGetToken(email, password)
+      .then((response:any) => {
+        if(response.status === 200){
+          AsyncStorage.setItem('token',response.data.access_token);
+          navigation.navigate('Root')
+        }else if(response.status === 401){
+          console.log("INVALIDOOOOOOO")
+        }
+      })
+      const value = AsyncStorage.getItem('token');
+      console.log(await value)
+  }
 
   return (
     <View style={styles.container}>
@@ -47,7 +65,7 @@ const authScreen = ({navigation}: {navigation: any}) => {
       <View style={{marginTop: 20}}>
         <TouchableButton
           disabled={!(email && password)}
-          onPress={() => navigation.navigate('Root')}
+          onPress={() => login() }
           title="entrar"
           style={styles.loginButton}
         />
