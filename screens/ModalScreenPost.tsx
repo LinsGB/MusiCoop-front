@@ -1,5 +1,5 @@
-import {StatusBar} from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
+import { StatusBar } from 'expo-status-bar';
+import React, { useState, useEffect } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -11,19 +11,20 @@ import {
   RefreshControl,
 } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
-import {Text, View} from '../components/Themed';
+import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
 import logoUsuario from '../assets/images/fffa.png';
 import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../assets/images/clipe.png';
 import reactotron from 'reactotron-react-native';
 import AudioPlayer from '../components/audioPlayer';
-import {createContribuition, listPosts, findPost} from '../services/post';
-import {getContribution, getMusic} from '../services/music';
+import { createContribuition, listPosts, findPost } from '../services/post';
+import { getContribution, getMusic } from '../services/music';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {react} from '@babel/types';
+import { react } from '@babel/types';
+import { Reload } from '../context/reload'
 
-const ModalScreenPost = ({route}: {route: any}) => {
+const ModalScreenPost = ({ route }: { route: any }) => {
   const [comment, setComment] = useState('');
   const [contribuitions, setContribuitions] = useState([]);
   const [uri, setUri] = useState('');
@@ -44,9 +45,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
   }, [fileName, hasFile]);
 
   const onRefresh = React.useCallback(() => {
-    console.log("LOG => ",route.params.item.id )
     findPost(route.params.item.id).then((posts) => {
-      console.log("POSTS => ", posts)
       //@ts-ignore
       if (Array.isArray(posts.contribuitions)) {
         //@ts-ignore
@@ -78,7 +77,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const postContribuition = async () => {
     setTextValue('');
     const copyContribuitions = [...contribuitions];
-    copyContribuitions.push({name: comment, uri});
+    copyContribuitions.push({ name: comment, uri });
     setContribuitions(copyContribuitions);
     const type = 'audio/mpeg';
     const file = {
@@ -95,48 +94,49 @@ const ModalScreenPost = ({route}: {route: any}) => {
       }),
     );
   };
-
+  const [context, setContext] = useState([]);
   return (
-    <React.Fragment>
-      <View style={styles.container}>
-        <ScrollView
-          style={{backgroundColor: '#25214D'}}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 10,
-              flex: 1,
-            }}>
-            <Image
-              source={logoUsuario}
+    <Reload.Provider value={[context, setContext]}>
+      <React.Fragment>
+        <View style={styles.container}>
+          <ScrollView
+            style={{ backgroundColor: '#25214D' }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
+            <View
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: 100,
-                marginRight: 10,
-              }}
-            />
-            <Text style={{color: 'white'}}>Nome do usuario</Text>
-          </View>
-          <View>
-            <Text style={styles.title}>{items.post_name}</Text>
-            <View style={styles.getStartedContainer}>
-              <Text
-                style={styles.getStartedText}
-                lightColor="rgba(0,0,0,0.8)"
-                darkColor="rgba(255,255,255,0.8)">
-                {items.description}
-              </Text>
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 10,
+                flex: 1,
+              }}>
+              <Image
+                source={logoUsuario}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 100,
+                  marginRight: 10,
+                }}
+              />
+              <Text style={{ color: 'white' }}>Nome do usuario</Text>
             </View>
-            <AudioPlayer
-              uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
-            />
-          </View>
-          {contribuitions.map((contribuition: any) => (
+            <View>
+              <Text style={styles.title}>{items.post_name}</Text>
+              <View style={styles.getStartedContainer}>
+                <Text
+                  style={styles.getStartedText}
+                  lightColor="rgba(0,0,0,0.8)"
+                  darkColor="rgba(255,255,255,0.8)">
+                  {items.description}
+                </Text>
+              </View>
+              <AudioPlayer
+                uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
+              />
+            </View>
+            {contribuitions.map((contribuition: any) => (
               <View
                 style={{
                   marginTop: 20,
@@ -144,7 +144,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
                   borderColor: '#C8C8C8',
                   paddingVertical: 10,
                 }}>
-                <Text style={{marginBottom: 25}}>{contribuition.name}</Text>
+                <Text style={{ marginBottom: 25 }}>{contribuition.name}</Text>
                 <AudioPlayer
                   uri={
                     contribuition.uri ||
@@ -153,61 +153,62 @@ const ModalScreenPost = ({route}: {route: any}) => {
                 />
               </View>
             ))}
-        </ScrollView>
-      </View>
-      <View style={{borderTopWidth: 1, borderColor: '#eee', paddingBottom: 5}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginHorizontal: 10,
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => pickDocument()}>
-              <Image
-                source={clipe}
-                style={{
-                  marginTop: 10,
-                  width: 17,
-                  height: 15,
-                }}
-              />
-            </TouchableOpacity>
-            {hasFile && (
-              <View style={{flexDirection: 'row', paddingTop: 10}}>
-                <Text style={{marginLeft: 10}}>{fileName}</Text>
-              </View>
-            )}
-          </View>
-
-          <View style={{marginTop: 10}}>
-            <Text
-              onPress={() => postContribuition()}
-              style={{fontWeight: 'bold'}}>
-              Enviar
-            </Text>
-          </View>
+          </ScrollView>
         </View>
-        <TextInput
-          style={{
-            height: 40,
-            borderWidth: 1,
-            paddingLeft: 10,
-            borderColor: '#C8C8C8',
-            backgroundColor: '#FFFFFF',
-            marginBottom: 10,
-            margin: 10,
-          }}
-          value={textValue}
-          onChangeText={(text) => {
-            setComment(text);
-            setTextValue(text);
-          }}
-          underlineColorAndroid="transparent"
-          placeholder="Faça uma colaboração"></TextInput>
-      </View>
-    </React.Fragment>
+        <View style={{ borderTopWidth: 1, borderColor: '#eee', paddingBottom: 5 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginHorizontal: 10,
+            }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity onPress={() => pickDocument()}>
+                <Image
+                  source={clipe}
+                  style={{
+                    marginTop: 10,
+                    width: 17,
+                    height: 15,
+                  }}
+                />
+              </TouchableOpacity>
+              {hasFile && (
+                <View style={{ flexDirection: 'row', paddingTop: 10 }}>
+                  <Text style={{ marginLeft: 10 }}>{fileName}</Text>
+                </View>
+              )}
+            </View>
+
+            <View style={{ marginTop: 10 }}>
+              <Text
+                onPress={() => postContribuition()}
+                style={{ fontWeight: 'bold' }}>
+                Enviar
+              </Text>
+            </View>
+          </View>
+          <TextInput
+            style={{
+              height: 40,
+              borderWidth: 1,
+              paddingLeft: 10,
+              borderColor: '#C8C8C8',
+              backgroundColor: '#FFFFFF',
+              marginBottom: 10,
+              margin: 10,
+            }}
+            value={textValue}
+            onChangeText={(text) => {
+              setComment(text);
+              setTextValue(text);
+            }}
+            underlineColorAndroid="transparent"
+            placeholder="Faça uma colaboração"></TextInput>
+        </View>
+      </React.Fragment>
+    </Reload.Provider>
   );
 };
 export default ModalScreenPost;
