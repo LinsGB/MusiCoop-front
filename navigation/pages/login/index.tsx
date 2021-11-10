@@ -21,7 +21,7 @@ const loginScreen = ({navigation}: {navigation: any}) => {
       </View>
       <View style={{marginVertical: 20}}>
         <TouchableButton
-          onPress={() => navigation.navigate('Root')}
+          onPress={() => navigation.navigate('Auth')}
           title="Entrar"
           style={[styles.loginButton, {backgroundColor: '#CB3C94'}]}
         />

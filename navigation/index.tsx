@@ -29,7 +29,7 @@ import {View, Text} from '../components/Themed';
 import TouchableButton from '../components/touchableButton';
 import EditScreenInfo from '../components/EditScreenInfo';
 import loginScreen from './pages/login';
-import SingUp from './pages/signUp';
+import SingUp from './pages/auth';
 import postScreen from './pages/post';
 import ModalScreenPost from '../screens/ModalScreenPost';
 
@@ -40,6 +40,7 @@ import HomeSelected from '../assets/images/home-selected.png';
 import User from '../assets/images/user.png';
 import UserSelected from '../assets/images/user-selected.png';
 import Splash from '../Splash';
+import authScreen from './pages/auth';
 
 export default function Navigation({
   colorScheme,
@@ -76,6 +77,11 @@ function RootNavigator() {
       <Stack.Screen
         name="SignUp"
         component={SingUp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Auth"
+        component={authScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

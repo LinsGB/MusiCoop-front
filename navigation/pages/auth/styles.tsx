@@ -4,10 +4,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    marginHorizontal: 10,
+    backgroundColor: '#25214d',
+    paddingHorizontal: 30,
   },
   loginButton: {
-    backgroundColor: '#226ddcff',
+    backgroundColor: '#f05922',
     borderRadius: 20,
   },
   input: {
