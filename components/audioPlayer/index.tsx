@@ -38,7 +38,7 @@ const AudioPlayer = (props: any) => {
     if (playbackObject !== null && playbackStatus === null) {
       try {
         setIsPlaying(false);
-        await context.unloadAsync();
+        await context.pauseAsync();
       } catch (error) {
         console.log('ERROR => ', error);
       }
@@ -48,7 +48,7 @@ const AudioPlayer = (props: any) => {
       setContext(playbackObject);
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
-        if (status.isLoaded === false) {
+        if (status.isPlaying === false) {
           setIsPlaying(false);
         }
         if (status.didJustFinish === true) {
@@ -73,7 +73,7 @@ const AudioPlayer = (props: any) => {
     // It will resume our audio
     if (!isPlaying) {
       try {
-        await context.unloadAsync();
+        await context.pauseAsync();
       } catch (error) {
         console.log('ERROR => ', error);
       }
@@ -88,7 +88,7 @@ const AudioPlayer = (props: any) => {
       //global.isPlaying = true
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
-        if (status.isLoaded === false) {
+        if (status.isPlaying === false) {
           setIsPlaying(false);
         }
         if (status.didJustFinish === true) {

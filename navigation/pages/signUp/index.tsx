@@ -1,11 +1,5 @@
 import React, {useState} from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {TextInput, View, Text} from 'react-native';
 import TouchableButton from '../../../components/touchableButton';
 import {apiUser} from '../../../services/user';
 import reactotron from '../../../config/Reactotron.config';
@@ -13,21 +7,17 @@ import {AsyncStorage} from 'react-native';
 
 import styles from './styles';
 
-const authScreen = ({navigation}: {navigation: any}) => {
+const SignUp = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState<any>();
   const [password, setPassword] = useState<any>();
-  const [loading, setLoading] = useState(false);
 
   const login = async () => {
-    setLoading(true);
     await apiUser.logInGetToken(email, password).then((response: any) => {
       if (response.status === 200) {
         AsyncStorage.setItem('token', response.data.access_token);
-        setLoading(false);
-
         navigation.navigate('Root');
       } else if (response.status === 401) {
-        setLoading(false);
+        console.log('INVALIDOOOOOOO');
       }
     });
     const value = AsyncStorage.getItem('token');
@@ -53,6 +43,38 @@ const authScreen = ({navigation}: {navigation: any}) => {
         />
       </View>
       <View>
+        <Text style={{color: 'white'}}>Usuário</Text>
+        <TextInput
+          style={{
+            color: 'white',
+            fontSize: 20,
+            marginBottom: 20,
+            paddingBottom: 5,
+            borderBottomWidth: 1,
+            borderBottomColor: '#4e4a6e',
+          }}
+          placeholder="Insira seu nome de usuário"
+          placeholderTextColor={'#484B72'}
+          onChangeText={(text) => setEmail(text)}
+        />
+      </View>
+      <View>
+        <Text style={{color: 'white'}}>Nome</Text>
+        <TextInput
+          style={{
+            color: 'white',
+            fontSize: 20,
+            marginBottom: 20,
+            paddingBottom: 5,
+            borderBottomWidth: 1,
+            borderBottomColor: '#4e4a6e',
+          }}
+          placeholder="Insira seu nome de nome"
+          placeholderTextColor={'#484B72'}
+          onChangeText={(text) => setEmail(text)}
+        />
+      </View>
+      <View>
         <Text style={{color: 'white'}}>Senha</Text>
 
         <TextInput
@@ -71,33 +93,15 @@ const authScreen = ({navigation}: {navigation: any}) => {
         />
       </View>
       <View style={{marginTop: 20}}>
-        <TouchableOpacity
+        <TouchableButton
           disabled={!(email && password)}
           onPress={() => login()}
-          style={[
-            styles.loginButton,
-            {
-              backgroundColor: password && email ? '#F05922' : '#623240',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: 40,
-              borderRadius: 100,
-              padding: 10,
-              width: 300,
-            },
-          ]}>
-          {!loading ? (
-            <Text style={{color: '#fff', fontWeight: 'bold'}}>Entrar</Text>
-          ) : (
-            <ActivityIndicator
-              style={{width: 12, height: 20}}
-              color="#c8c8c8"
-            />
-          )}
-        </TouchableOpacity>
+          title="registrar"
+          style={styles.loginButton}
+        />
       </View>
     </View>
   );
 };
 
-export default authScreen;
+export default SignUp;
