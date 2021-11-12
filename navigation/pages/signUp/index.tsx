@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TextInput, View, Text} from 'react-native';
+import {TextInput, View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import TouchableButton from '../../../components/touchableButton';
 import {apiUser} from '../../../services/user';
 import reactotron from '../../../config/Reactotron.config';
@@ -7,21 +7,38 @@ import {AsyncStorage} from 'react-native';
 
 import styles from './styles';
 
+interface Users {
+  email:string,
+  username:string,
+  name:string,
+  password:string
+}
+
 const SignUp = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState<any>();
+  const [username, setUsername] = useState<any>();
+  const [name, setName] = useState<any>();
   const [password, setPassword] = useState<any>();
+  const [loading, setLoading] = useState<any>(false);
 
-  const login = async () => {
-    await apiUser.logInGetToken(email, password).then((response: any) => {
+  const register = async () => {
+    setLoading(true)
+    const payload:Users = {
+      email: email,
+      username: username,
+      name: name,
+      password: password
+    }
+    await apiUser.createUser(payload).then((response: any) => {
       if (response.status === 200) {
-        AsyncStorage.setItem('token', response.data.access_token);
-        navigation.navigate('Root');
-      } else if (response.status === 401) {
-        console.log('INVALIDOOOOOOO');
+        alert("Usuário registrado com sucesso")
+        setLoading(false)
+        navigation.navigate('Auth');
+      } else if (response.status === 406) {
+        alert("Erro ao criar o usuário")
+        setLoading(false)
       }
     });
-    const value = AsyncStorage.getItem('token');
-    console.log(await value);
   };
 
   return (
@@ -55,7 +72,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
           }}
           placeholder="Insira seu nome de usuário"
           placeholderTextColor={'#484B72'}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setUsername(text)}
         />
       </View>
       <View>
@@ -71,7 +88,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
           }}
           placeholder="Insira seu nome de nome"
           placeholderTextColor={'#484B72'}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setName(text)}
         />
       </View>
       <View>
@@ -92,13 +109,31 @@ const SignUp = ({navigation}: {navigation: any}) => {
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <View style={{marginTop: 20}}>
-        <TouchableButton
+      <View style={{marginTop: 20, alignItems:'center'}}>
+      <TouchableOpacity
           disabled={!(email && password)}
-          onPress={() => login()}
-          title="registrar"
-          style={styles.loginButton}
-        />
+          onPress={() => register()}
+          style={[
+            styles.loginButton,
+            {
+              backgroundColor: password && email ? '#F05922' : '#623240',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 40,
+              borderRadius: 100,
+              padding: 10,
+              width: 300,
+            },
+          ]}>
+          {!loading ? (
+            <Text style={{color: '#fff', fontWeight: 'bold'}}>Registrar</Text>
+          ) : (
+            <ActivityIndicator
+              style={{width: 12, height: 20}}
+              color="#c8c8c8"
+            />
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );

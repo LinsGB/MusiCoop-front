@@ -4,6 +4,23 @@ const api = axios.create({
   baseURL: 'https://musicoop-api.herokuapp.com',
 });
 
+interface Users {
+  email:string,
+  username:string,
+  name:string,
+  password:string
+}
+
+function authHeaders(token:string) {
+  return {
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+      ContentType: 'application/json',
+    },
+  };
+}
+
 export const apiUser = {
   async logInGetToken(email: string, password: string,) {
     const params = new URLSearchParams();
@@ -17,10 +34,10 @@ export const apiUser = {
       .catch((err) => err.response)
   },
   async getToken(token: string) {
-    return api.get('/auth/token')
+    return api.get('/auth/token', authHeaders(token))
       .then((response) => response)
   },
-  async createUser(payload: any){
+  async createUser(payload: Users){
     return api.post('/user', payload)
       .then((response) => response)
       .catch((err) => err.response)

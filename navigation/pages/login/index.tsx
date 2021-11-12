@@ -2,9 +2,11 @@ import React from 'react';
 import {Image, View} from 'react-native';
 import TouchableButton from '../../../components/touchableButton';
 import Logo from '../../../assets/images/musicoop.png';
+import {apiUser} from '../../../services/user';
 
 import styles from './styles';
 import Metrics from '../../../helpers/Metrics';
+import {AsyncStorage} from 'react-native';
 
 const loginScreen = ({navigation}: {navigation: any}) => {
   const verifyHeight = () => {
@@ -13,6 +15,15 @@ const loginScreen = ({navigation}: {navigation: any}) => {
     }
     return 90;
   };
+
+  // const isLogged = async () => {
+  //   const token = AsyncStorage.getItem('token');
+  //   console.log(await token)
+  //   await apiUser.getToken(await token).then((response: any) => {
+  //     console.log(response)
+  //   })
+  //   navigation.navigate('Auth')
+  // }
 
   return (
     <View style={styles.container}>

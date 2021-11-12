@@ -28,6 +28,7 @@ const authScreen = ({navigation}: {navigation: any}) => {
         navigation.navigate('Root');
       } else if (response.status === 401) {
         setLoading(false);
+        alert("Confira seus dados e tente novamente!")
       }
     });
     const value = AsyncStorage.getItem('token');
@@ -70,7 +71,7 @@ const authScreen = ({navigation}: {navigation: any}) => {
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <View style={{marginTop: 20}}>
+      <View style={{marginTop: 20, alignItems:'center'}}>
         <TouchableOpacity
           disabled={!(email && password)}
           onPress={() => login()}
