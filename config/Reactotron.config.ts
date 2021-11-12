@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const reactotron = Reactotron.configure({
   name: 'Musicoop',
-  host: '192.168.0.5',
+  host: '192.168.0.61',
   port: 9090,
 })
   .setAsyncStorageHandler(AsyncStorage)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -7,19 +7,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
+import {Ionicons} from '@expo/vector-icons';
+import {Audio} from 'expo-av';
 import reactotron from 'reactotron-react-native';
 import Play from '../../assets/images/play.png';
 import Pause from '../../assets/images/pause.png';
-import { Reload } from '../../context/reload'
+import {Reload} from '../../context/reload';
 
 const AudioPlayer = (props: any) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackObject, setPlaybackObject] = useState<any>(null);
   const [playbackStatus, setPlaybackStatus] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [context, setContext] = useContext(Reload)
+  const [context, setContext] = useContext(Reload);
   useEffect(() => {
     if (playbackObject === null) {
       setPlaybackObject(new Audio.Sound());
@@ -37,15 +37,20 @@ const AudioPlayer = (props: any) => {
     const uri = props.uri;
     if (playbackObject !== null && playbackStatus === null) {
       try {
-        await context.pauseAsync();
+        setIsPlaying(false);
+        await context.unloadAsync();
       } catch (error) {
-        console.log("ERROR => ", error)
+        console.log('ERROR => ', error);
       }
+
       setLoading(true);
-      const status = await playbackObject.loadAsync({ uri }, { shouldPlay: true });
-      setContext(playbackObject)
+      const status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
+      setContext(playbackObject);
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
+        if (status.isLoaded === false) {
+          setIsPlaying(false);
+        }
         if (status.didJustFinish === true) {
           await playbackObject.unloadAsync();
           //global.isPlaying = false
@@ -68,21 +73,24 @@ const AudioPlayer = (props: any) => {
     // It will resume our audio
     if (!isPlaying) {
       try {
-        await context.pauseAsync();
+        await context.unloadAsync();
       } catch (error) {
-        console.log("ERROR => ", error)
+        console.log('ERROR => ', error);
       }
       setLoading(true);
       let status;
       try {
         status = await playbackObject.playAsync();
       } catch (error) {
-        status = await playbackObject.loadAsync({ uri }, { shouldPlay: true });
+        status = await playbackObject.loadAsync({uri}, {shouldPlay: true});
       }
-      setContext(playbackObject)
+      setContext(playbackObject);
       //global.isPlaying = true
       setIsPlaying(true);
       playbackObject.setOnPlaybackStatusUpdate(async (status: any) => {
+        if (status.isLoaded === false) {
+          setIsPlaying(false);
+        }
         if (status.didJustFinish === true) {
           await playbackObject.unloadAsync();
           //global.isPlaying = false
@@ -103,7 +111,7 @@ const AudioPlayer = (props: any) => {
         marginLeft: 5,
       }}>
       {/* <Text style={{fontSize: 18, marginBottom: 15}}>{audio.filename}</Text> */}
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -116,7 +124,7 @@ const AudioPlayer = (props: any) => {
           onPress={handleAudioPlayPause}>
           {loading ? (
             <ActivityIndicator
-              style={{ width: 12, height: 12 }}
+              style={{width: 12, height: 12}}
               color="#c8c8c8"
             />
           ) : (
