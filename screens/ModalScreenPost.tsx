@@ -1,38 +1,28 @@
-import {StatusBar} from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Platform,
   StyleSheet,
   TouchableOpacity,
   Image,
   ScrollView,
   TextInput,
-  Button,
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
-import EditScreenInfo from '../components/EditScreenInfo';
-import {Text, View} from '../components/Themed';
-import Colors from '../constants/Colors';
+import { Text, View } from '../components/Themed';
 import logoUsuario from '../assets/images/fffa.png';
 import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../assets/images/clipe.png';
 import postar from '../assets/images/postar.png';
 
-import reactotron from 'reactotron-react-native';
 import AudioPlayer from '../components/audioPlayer';
-import {createContribuition, listPosts, findPost} from '../services/post';
-import {getContribution, getMusic} from '../services/music';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {react} from '@babel/types';
-import {Reload} from '../context/reload';
+import { createContribuition, findPost } from '../services/post';
+import { Reload } from '../context/reload';
 
-const ModalScreenPost = ({route}: {route: any}) => {
+const ModalScreenPost = ({ route }: { route: any }) => {
   const [comment, setComment] = useState('');
   const [contribuitions, setContribuitions] = useState([]);
   const [uri, setUri] = useState('');
   const [fileName, setFileName] = useState('');
-  const [textValue, setTextValue] = useState('');
   const [hasFile, setHasFile] = useState<any>();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = useState(false);
@@ -68,21 +58,24 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const items = route.params.item;
 
   const pickDocument = async () => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: '*/*',
-      copyToCacheDirectory: false,
-    });
-    //@ts-ignore
-    setFileName(result.name);
-    //@ts-ignore
-    setUri(result.uri);
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        copyToCacheDirectory: false,
+      });
+      //@ts-ignore
+      setFileName(result.name);
+      //@ts-ignore
+      setUri(result.uri);
+    } catch (error) {
+      console.log("ERROR => ", error)
+    }
   };
 
   const postContribuition = async () => {
     setLoading(true);
-    setTextValue('');
     const copyContribuitions = [...contribuitions];
-    copyContribuitions.push({name: comment, uri});
+    copyContribuitions.push({ name: comment, uri });
     setContribuitions(copyContribuitions);
     const type = 'audio/mpeg';
     const file = {
@@ -91,22 +84,24 @@ const ModalScreenPost = ({route}: {route: any}) => {
       type,
     };
     //@ts-ignore
-    console.log(
-      await createContribuition(items.id, {
-        name: comment,
-        description: comment,
-        file,
-      }),
-    );
+    await createContribuition(items.id, {
+      name: comment,
+      description: comment,
+      file,
+    })
     setLoading(false);
+    setFileName('')
+    setComment('')
+    setUri('')
   };
+
   const [context, setContext] = useState();
   return (
     <Reload.Provider value={[context, setContext]}>
       <React.Fragment>
         <View style={styles.container}>
           <ScrollView
-            style={{backgroundColor: '#25214D'}}
+            style={{ backgroundColor: '#25214D' }}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
@@ -142,13 +137,13 @@ const ModalScreenPost = ({route}: {route: any}) => {
                       marginRight: 10,
                     }}
                   />
-                  <Text style={{color: 'white'}}>Nome do usuario</Text>
+                  <Text style={{ color: 'white' }}>Nome do usuario</Text>
                 </View>
                 <AudioPlayer
                   uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
                 />
               </View>
-              <View style={{marginHorizontal: 10}}>
+              <View style={{ marginHorizontal: 10 }}>
                 <Text style={styles.title}>{items.post_name}</Text>
                 <View style={styles.getStartedContainer}>
                   <Text
@@ -194,7 +189,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
                         marginRight: 10,
                       }}
                     />
-                    <Text style={{color: 'white'}}>Nome do usuario</Text>
+                    <Text style={{ color: 'white' }}>Nome do usuario</Text>
                   </View>
                   <AudioPlayer
                     uri={
@@ -204,8 +199,8 @@ const ModalScreenPost = ({route}: {route: any}) => {
                   />
                 </View>
 
-                <View style={{marginHorizontal: 10}}>
-                  <View style={{backgroundColor: '#36375f'}}>
+                <View style={{ marginHorizontal: 10 }}>
+                  <View style={{ backgroundColor: '#36375f' }}>
                     <Text
                       style={styles.getStartedText}
                       lightColor="rgba(0,0,0,0.8)"
@@ -219,11 +214,11 @@ const ModalScreenPost = ({route}: {route: any}) => {
           </ScrollView>
         </View>
         <View
-          style={{borderTopWidth: 1, borderColor: '#eee', paddingBottom: 5}}>
+          style={{ borderTopWidth: 1, borderColor: '#eee', paddingBottom: 5 }}>
           {hasFile && (
             <View
-              style={{flexDirection: 'row', paddingTop: 10, paddingLeft: 20}}>
-              <Text style={{marginLeft: 10}}>{fileName}</Text>
+              style={{ flexDirection: 'row', paddingTop: 10, paddingLeft: 20 }}>
+              <Text style={{ marginLeft: 10 }}>{fileName}</Text>
             </View>
           )}
           <View
@@ -265,10 +260,9 @@ const ModalScreenPost = ({route}: {route: any}) => {
                   width: '80%',
                 }}
                 multiline
-                value={textValue}
+                value={comment}
                 onChangeText={(text) => {
                   setComment(text);
-                  setTextValue(text);
                 }}
                 underlineColorAndroid="transparent"
                 placeholder="Faça uma colaboração"></TextInput>
@@ -294,7 +288,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
                   />
                 ) : (
                   <ActivityIndicator
-                    style={{width: 17, height: 16}}
+                    style={{ width: 17, height: 16 }}
                     color="#c8c8c8"
                   />
                 )}

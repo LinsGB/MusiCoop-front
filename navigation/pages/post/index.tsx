@@ -21,7 +21,7 @@ import {Reload} from '../../../context/reload';
 import {isLoading} from 'expo-font';
 
 const postScreen = () => {
-  const [uri, setUri] = useState();
+  const [uri, setUri] = useState('');
   const [fileName, setFileName] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -69,7 +69,6 @@ const postScreen = () => {
       name: fileName,
       type,
     };
-    await textInput.clear();
     if (!title) {
       alert('Por favor, preencha o titulo da postagem');
     }
@@ -81,22 +80,23 @@ const postScreen = () => {
     } else if (!`${fileName}`.match(/mp3|opus|ogg$/)) {
       alert('Por favor, insira um arquivo de áudio válido');
     } else {
+      setLoading(true);
       await uploadFile.createPost({file, description, post_name: title});
       setLoading(false);
-
-      listPosts().then((posts) => {
-        if (Array.isArray(posts)) {
-          setPosts(posts);
-        }
-        reactotron.debug(posts);
-      });
-      setLoading(false);
       setModalVisible(true);
+      clean()
       setTimeout(() => {
         setModalVisible(false);
-      }, 2000);
+      }, 1000);
     }
   };
+
+  const clean = () => {
+      setFileName('')
+      setDescription('')
+      setUri('')
+      setTitle('')
+  }
 
   const verifyHeight = () => {
     if (Metrics.constants.screenHeight >= 760) {
@@ -146,15 +146,12 @@ const postScreen = () => {
                   placeholderTextColor={'#484B72'}
                   onChangeText={(text) => {
                     setTitle(text);
-                    reactotron.debug(disabled);
                     if (text.length > 0) {
                       setUseOpacity(1);
                       setDisabled(false);
                     }
                   }}
-                  ref={(input) => {
-                    setTextInput(input);
-                  }}
+                  value={title}
                 />
                 <View>
                   <Text>{charRemainingTitle}</Text>
@@ -176,9 +173,7 @@ const postScreen = () => {
                   placeholder="Insira uma descrição"
                   placeholderTextColor={'#484B72'}
                   onChangeText={(text) => setDescription(text)}
-                  ref={(input) => {
-                    setTextInput(input);
-                  }}
+                  value={description}
                 />
               </View>
             </View>
