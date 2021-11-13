@@ -17,6 +17,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as uploadFile from '../../../services/post';
 import {listPosts} from '../../../services/post';
 import reactotron from '../../../config/Reactotron.config';
+import {Reload} from '../../../context/reload';
 import {isLoading} from 'expo-font';
 
 const postScreen = () => {
@@ -103,134 +104,136 @@ const postScreen = () => {
     }
     return -40;
   };
-
+  const [context, setContext] = useState();
   return (
-    <View style={styles.container}>
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <Pressable
-            onPress={() => {
-              setModalVisible(false);
-            }}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Publicação realizada!</Text>
-            </View>
-          </Pressable>
-        </View>
-      </Modal>
-      <ScrollView>
-        <View style={[{marginLeft: 20}]}>
-          <View>
-            <View style={{marginBottom: 20}}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontWeight: 'bold',
-                  marginBottom: 8,
-                  fontSize: 24,
-                }}>
-                Título
-              </Text>
-              <TextInput
-                multiline={true}
-                maxLength={maxLengthTitle}
-                style={{
-                  color: 'white',
-                  fontSize: 20,
-                  paddingRight: 20,
-                  marginBottom: 8,
-                }}
-                placeholder="Insira um titulo"
-                placeholderTextColor={'#484B72'}
-                onChangeText={(text) => {
-                  setTitle(text);
-                  reactotron.debug(disabled);
-                  if (text.length > 0) {
-                    setUseOpacity(1);
-                    setDisabled(false);
-                  }
-                }}
-                ref={(input) => {
-                  setTextInput(input);
-                }}
-              />
+    <Reload.Provider value={[context, setContext]}>
+      <View style={styles.container}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+          <View style={styles.centeredView}>
+            <Pressable
+              onPress={() => {
+                setModalVisible(false);
+              }}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Publicação realizada!</Text>
+              </View>
+            </Pressable>
+          </View>
+        </Modal>
+        <ScrollView>
+          <View style={[{marginLeft: 20}]}>
+            <View>
+              <View style={{marginBottom: 20}}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    marginBottom: 8,
+                    fontSize: 24,
+                  }}>
+                  Título
+                </Text>
+                <TextInput
+                  multiline={true}
+                  maxLength={maxLengthTitle}
+                  style={{
+                    color: 'white',
+                    fontSize: 20,
+                    paddingRight: 20,
+                    marginBottom: 8,
+                  }}
+                  placeholder="Insira um titulo"
+                  placeholderTextColor={'#484B72'}
+                  onChangeText={(text) => {
+                    setTitle(text);
+                    reactotron.debug(disabled);
+                    if (text.length > 0) {
+                      setUseOpacity(1);
+                      setDisabled(false);
+                    }
+                  }}
+                  ref={(input) => {
+                    setTextInput(input);
+                  }}
+                />
+                <View>
+                  <Text>{charRemainingTitle}</Text>
+                </View>
+              </View>
               <View>
-                <Text>{charRemainingTitle}</Text>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    marginBottom: 8,
+                    fontSize: 24,
+                  }}>
+                  Descrição
+                </Text>
+                <TextInput
+                  multiline={true}
+                  style={{color: 'white', fontSize: 20, paddingRight: 20}}
+                  placeholder="Insira uma descrição"
+                  placeholderTextColor={'#484B72'}
+                  onChangeText={(text) => setDescription(text)}
+                  ref={(input) => {
+                    setTextInput(input);
+                  }}
+                />
               </View>
             </View>
-            <View>
-              <Text
-                style={{
-                  color: 'white',
-                  fontWeight: 'bold',
-                  marginBottom: 8,
-                  fontSize: 24,
-                }}>
-                Descrição
-              </Text>
-              <TextInput
-                multiline={true}
-                style={{color: 'white', fontSize: 20, paddingRight: 20}}
-                placeholder="Insira uma descrição"
-                placeholderTextColor={'#484B72'}
-                onChangeText={(text) => setDescription(text)}
-                ref={(input) => {
-                  setTextInput(input);
-                }}
-              />
-            </View>
           </View>
-        </View>
-        <View
-          style={styles.separator}
-          lightColor="#25214D"
-          darkColor="rgba(255,255,255,0.1)"
-        />
-        <View style={styles.button}>
-          <TouchableOpacity
-            onPress={pickDocument}
-            style={{
-              backgroundColor: '#36375F',
-              paddingHorizontal: 20,
-              paddingVertical: 5,
-              marginBottom: verifyHeight(),
-              borderRadius: 10,
-              alignItems: 'center',
-              height: 50,
-              justifyContent: 'center',
-              width: hasFile ? 250 : 300,
-            }}>
-            {hasFile ? <Text>{fileName}</Text> : <Text>Enviar arquivo</Text>}
-          </TouchableOpacity>
-          {hasFile && <AudioPlayer WithBackground uri={uri} />}
-        </View>
-        <View style={{alignItems: 'center', marginTop: 190}}>
-          <TouchableOpacity
-            style={{
-              backgroundColor:
-                fileName && title && description ? '#F05922' : '#623240',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: 40,
-              borderRadius: 100,
-              padding: 10,
-              width: 300,
-              // opacity: fileName && title && description ? 1 : 0.4,
-            }}
-            disabled={!(fileName && title && description)}
-            onPress={() => post()}>
-            {!loading ? (
-              <Text style={{color: '#fff', fontWeight: 'bold'}}>Postar</Text>
-            ) : (
-              <ActivityIndicator
-                style={{width: 12, height: 20}}
-                color="#c8c8c8"
-              />
-            )}
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </View>
+          <View
+            style={styles.separator}
+            lightColor="#25214D"
+            darkColor="rgba(255,255,255,0.1)"
+          />
+          <View style={styles.button}>
+            <TouchableOpacity
+              onPress={pickDocument}
+              style={{
+                backgroundColor: '#36375F',
+                paddingHorizontal: 20,
+                paddingVertical: 5,
+                marginBottom: verifyHeight(),
+                borderRadius: 10,
+                alignItems: 'center',
+                height: 50,
+                justifyContent: 'center',
+                width: hasFile ? 250 : 300,
+              }}>
+              {hasFile ? <Text>{fileName}</Text> : <Text>Enviar arquivo</Text>}
+            </TouchableOpacity>
+            {hasFile && <AudioPlayer WithBackground uri={uri} />}
+          </View>
+          <View style={{alignItems: 'center', marginTop: 190}}>
+            <TouchableOpacity
+              style={{
+                backgroundColor:
+                  fileName && title && description ? '#F05922' : '#623240',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 40,
+                borderRadius: 100,
+                padding: 10,
+                width: 300,
+                // opacity: fileName && title && description ? 1 : 0.4,
+              }}
+              disabled={!(fileName && title && description)}
+              onPress={() => post()}>
+              {!loading ? (
+                <Text style={{color: '#fff', fontWeight: 'bold'}}>Postar</Text>
+              ) : (
+                <ActivityIndicator
+                  style={{width: 12, height: 20}}
+                  color="#c8c8c8"
+                />
+              )}
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
+    </Reload.Provider>
   );
 };
 
