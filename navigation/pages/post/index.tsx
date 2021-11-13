@@ -202,7 +202,7 @@ const postScreen = () => {
             }}>
             {hasFile ? <Text>{fileName}</Text> : <Text>Enviar arquivo</Text>}
           </TouchableOpacity>
-          {hasFile && <AudioPlayer uri={uri} />}
+          {hasFile && <AudioPlayer WithBackground uri={uri} />}
         </View>
         <View style={{alignItems: 'center', marginTop: 190}}>
           <TouchableOpacity

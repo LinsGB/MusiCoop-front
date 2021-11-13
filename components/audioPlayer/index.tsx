@@ -40,7 +40,7 @@ const AudioPlayer = (props: any) => {
         setIsPlaying(false);
         await context.pauseAsync();
       } catch (error) {
-        console.log('ERROR => ', error);
+        reactotron.debug(error);
       }
 
       setLoading(true);
