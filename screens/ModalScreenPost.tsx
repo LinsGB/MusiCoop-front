@@ -76,7 +76,6 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const postContribuition = async () => {
     setLoading(true);
     const copyContribuitions = [...contribuitions];
-    setContribuitions(copyContribuitions);
     const type = 'audio/mpeg';
     const file = {
       uri: uri,
@@ -93,6 +92,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
       .then((response) => {
         if (response.status == 200) {
           alert('Contribuição enviada com sucesso!');
+          setContribuitions(copyContribuitions);
         }
       })
       .catch((response) => {
