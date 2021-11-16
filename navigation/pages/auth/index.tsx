@@ -39,8 +39,6 @@ const authScreen = ({navigation}: {navigation: any}) => {
         alert("Confira seus dados e tente novamente!")
       }
     });
-    const value = AsyncStorage.getItem('token');
-    console.log(await value);
   };
 
   return (

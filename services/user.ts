@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {AsyncStorage} from 'react-native';
 
 const api = axios.create({
   baseURL: 'https://musicoop-api.herokuapp.com',
@@ -42,4 +43,7 @@ export const apiUser = {
       .then((response) => response)
       .catch((err) => err.response)
   },
+  async getUserById(id:number){
+    return api.get(`/user?id=${id}`, authHeaders(await AsyncStorage.getItem('token')))
+  }
 }
