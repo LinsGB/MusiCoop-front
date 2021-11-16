@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native';
-import { useFonts } from 'expo-font';
+import {useFonts} from 'expo-font';
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: '#25214d',
     paddingHorizontal: 30,
+    justifyContent: 'center',
   },
   loginButton: {
     backgroundColor: '#f05922',
