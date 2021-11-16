@@ -88,20 +88,20 @@ const ModalScreenPost = ({route}: {route: any}) => {
       name: comment,
       description: comment,
       file,
-    }
-    await createContribuition(items.id, payload).then((response) => {
-      if (response.status == 200){
-        alert("Contribuição enviada com sucesso!")
-      }
-    }).catch((response) => {
-      alert("Não foi possivel enviar sua contribuição, tente novamente")
-      
-    })
+    };
+    await createContribuition(items.id, payload)
+      .then((response) => {
+        if (response.status == 200) {
+          alert('Contribuição enviada com sucesso!');
+        }
+      })
+      .catch((response) => {
+        alert('Não foi possivel enviar sua contribuição, tente novamente');
+      });
     setLoading(false);
-    setFileName('')
-    setComment('')
-    setUri('')
-
+    setFileName('');
+    setComment('');
+    setUri('');
   };
 
   const [context, setContext] = useState();
@@ -286,6 +286,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
                   paddingHorizontal: 10,
                   marginLeft: 8,
                 }}
+                disabled={!comment}
                 onPress={() => postContribuition()}>
                 {!loading ? (
                   <Image
