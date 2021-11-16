@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
+import {CommonActions} from '@react-navigation/core';
 import {
   TextInput,
   View,
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  Image
 } from 'react-native';
 import TouchableButton from '../../../components/touchableButton';
 import {apiUser} from '../../../services/user';
 import reactotron from '../../../config/Reactotron.config';
 import {AsyncStorage} from 'react-native';
+import Musicoop from '../../../assets/images/musicooptext.png';
 
 import styles from './styles';
 
@@ -25,7 +28,12 @@ const authScreen = ({navigation}: {navigation: any}) => {
         AsyncStorage.setItem('token', response.data.access_token);
         setLoading(false);
 
-        navigation.navigate('Root');
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: 'Root'}],
+          }),
+        );
       } else if (response.status === 401) {
         setLoading(false);
         alert("Confira seus dados e tente novamente!")
@@ -37,6 +45,18 @@ const authScreen = ({navigation}: {navigation: any}) => {
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          marginBottom: 40,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Image
+          resizeMode="stretch"
+          style={{width: 166, height: 23}}
+          source={Musicoop}
+        />
+      </View>
       <View>
         <Text style={{color: 'white'}}>Email</Text>
         <TextInput

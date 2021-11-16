@@ -17,7 +17,6 @@ import {
   RefreshControl,
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import api from '../../config/axios/AudioAxios';
 import useComments from '../../hooks/useComments';
 import AudioPlayer from '../audioPlayer';
 import {listPosts} from '../../services/post';

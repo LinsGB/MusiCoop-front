@@ -12,7 +12,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     borderRadius: 25,
     textTransform: 'capitalize',
+    paddingVertical:14,
+    alignItems:'center',
   },
+  registerButton:{
+    backgroundColor: '#F05922',
+    marginHorizontal: 40,
+    borderRadius: 25,
+    textTransform: 'capitalize',
+  }
 });
 
 export default styles;

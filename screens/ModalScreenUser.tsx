@@ -5,8 +5,17 @@ import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import {Text, View} from '../components/Themed';
 import Colors from '../constants/Colors';
+import {AsyncStorage} from 'react-native';
 
 const ModalScreenUser = ({navigation}: {navigation: any}) => {
+  const logout = async () => {
+    const token = AsyncStorage.getItem('token');
+    console.log(await token)
+    AsyncStorage.removeItem('token');
+    const token2 = AsyncStorage.getItem('token');
+    console.log(await token2)
+    navigation.navigate('Login')
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Modal</Text>
@@ -42,7 +51,7 @@ const ModalScreenUser = ({navigation}: {navigation: any}) => {
 
         <View style={styles.helpContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => logout()}
             style={styles.helpLink}>
             <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
               Sair

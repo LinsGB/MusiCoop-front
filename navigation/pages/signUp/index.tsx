@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   TextInput,
   View,
@@ -29,6 +29,12 @@ const SignUp = ({navigation}: {navigation: any}) => {
   const [name, setName] = useState<any>();
   const [password, setPassword] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
+  const [validEmail, setValidEmail] = useState<any>(false);
+  const [unlockButton, setUnlockButton] = useState<any>(false);
+
+  useEffect(() => {
+    validateInputs()
+  },[validEmail, username, name, password])
 
   const register = async () => {
     setLoading(true);
@@ -38,6 +44,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
       name: name,
       password: password,
     };
+    console.log(payload)
     await apiUser
       .createUser(payload)
       .then((response: any) => {
@@ -58,17 +65,25 @@ const SignUp = ({navigation}: {navigation: any}) => {
   };
 
   const validateEmail = (text: string) => {
-    console.log(text);
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(text) === false) {
-      console.log('Email is Not Correct');
       setEmail({email: text});
+      setValidEmail(false)
       return false;
     } else {
       setEmail({email: text});
-      console.log('Email is Correct');
+      setValidEmail(true)
+      return true
     }
   };
+
+  const validateInputs = () => {
+    if(validEmail && password && name && username){
+      setUnlockButton(true)
+    }else{
+      setUnlockButton(false)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -152,12 +167,12 @@ const SignUp = ({navigation}: {navigation: any}) => {
       </View>
       <View style={{marginTop: 20, alignItems: 'center'}}>
         <TouchableOpacity
-          disabled={!(email && password)}
+          disabled={!(unlockButton)}
           onPress={() => register()}
           style={[
             styles.loginButton,
             {
-              backgroundColor: password && email ? '#F05922' : '#623240',
+              backgroundColor: unlockButton ? '#F05922' : '#623240',
               alignItems: 'center',
               justifyContent: 'center',
               marginBottom: 40,

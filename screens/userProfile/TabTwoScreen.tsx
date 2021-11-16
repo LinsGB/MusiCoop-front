@@ -4,10 +4,16 @@ import {TouchableOpacity} from 'react-native';
 import EditScreenInfo from '../../components/EditScreenInfo';
 import {Text, View} from '../../components/Themed';
 import Colors from '../../constants/Colors';
+import {AsyncStorage} from 'react-native';
 
 import styles from './style';
 
 const TabTwoScreen = ({navigation}: {navigation: any}) => {
+  const logout = async () => {
+    AsyncStorage.removeItem('token');
+    navigation.navigate('Login')
+  }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Usuário</Text>
@@ -43,7 +49,7 @@ const TabTwoScreen = ({navigation}: {navigation: any}) => {
 
         <View style={styles.helpContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => logout()}
             style={styles.helpLink}>
             <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
               Sair
