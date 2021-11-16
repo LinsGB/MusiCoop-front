@@ -21,9 +21,9 @@ const loginScreen = ({navigation}: {navigation: any}) => {
     await apiUser.getToken(await token).then((response: any) => {
       if(response.status == 200){
         navigation.navigate('Root')
-      }else{
-        navigation.navigate('Auth')
       }
+    }).catch((response:any) => {
+        navigation.navigate('Auth')
     })
   }
 
