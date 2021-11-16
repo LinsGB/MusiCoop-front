@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -8,17 +8,18 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
-import { Text, View } from '../components/Themed';
+import {Text, View} from '../components/Themed';
 import logoUsuario from '../assets/images/fffa.png';
 import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../assets/images/clipe.png';
 import postar from '../assets/images/postar.png';
+import postarOpacity from '../assets/images/postarOpaco.png';
 
 import AudioPlayer from '../components/audioPlayer';
-import { createContribuition, findPost } from '../services/post';
-import { Reload } from '../context/reload';
+import {createContribuition, findPost} from '../services/post';
+import {Reload} from '../context/reload';
 
-const ModalScreenPost = ({ route }: { route: any }) => {
+const ModalScreenPost = ({route}: {route: any}) => {
   const [comment, setComment] = useState('');
   const [contribuitions, setContribuitions] = useState([]);
   const [uri, setUri] = useState('');
@@ -68,7 +69,7 @@ const ModalScreenPost = ({ route }: { route: any }) => {
       //@ts-ignore
       setUri(result.uri);
     } catch (error) {
-      console.log("ERROR => ", error)
+      console.log('ERROR => ', error);
     }
   };
 
@@ -109,7 +110,7 @@ const ModalScreenPost = ({ route }: { route: any }) => {
       <React.Fragment>
         <View style={styles.container}>
           <ScrollView
-            style={{ backgroundColor: '#25214D' }}
+            style={{backgroundColor: '#25214D'}}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
@@ -145,13 +146,13 @@ const ModalScreenPost = ({ route }: { route: any }) => {
                       marginRight: 10,
                     }}
                   />
-                  <Text style={{ color: 'white' }}>Nome do usuario</Text>
+                  <Text style={{color: 'white'}}>Nome do usuario</Text>
                 </View>
                 <AudioPlayer
                   uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
                 />
               </View>
-              <View style={{ marginHorizontal: 10 }}>
+              <View style={{marginHorizontal: 10}}>
                 <Text style={styles.title}>{items.post_name}</Text>
                 <View style={styles.getStartedContainer}>
                   <Text
@@ -197,7 +198,7 @@ const ModalScreenPost = ({ route }: { route: any }) => {
                         marginRight: 10,
                       }}
                     />
-                    <Text style={{ color: 'white' }}>Nome do usuario</Text>
+                    <Text style={{color: 'white'}}>Nome do usuario</Text>
                   </View>
                   <AudioPlayer
                     uri={
@@ -207,8 +208,8 @@ const ModalScreenPost = ({ route }: { route: any }) => {
                   />
                 </View>
 
-                <View style={{ marginHorizontal: 10 }}>
-                  <View style={{ backgroundColor: '#36375f' }}>
+                <View style={{marginHorizontal: 10}}>
+                  <View style={{backgroundColor: '#36375f'}}>
                     <Text
                       style={styles.getStartedText}
                       lightColor="rgba(0,0,0,0.8)"
@@ -222,11 +223,11 @@ const ModalScreenPost = ({ route }: { route: any }) => {
           </ScrollView>
         </View>
         <View
-          style={{ borderTopWidth: 1, borderColor: '#eee', paddingBottom: 5 }}>
+          style={{borderTopWidth: 1, borderColor: '#eee', paddingBottom: 5}}>
           {hasFile && (
             <View
-              style={{ flexDirection: 'row', paddingTop: 10, paddingLeft: 20 }}>
-              <Text style={{ marginLeft: 10 }}>{fileName}</Text>
+              style={{flexDirection: 'row', paddingTop: 10, paddingLeft: 20}}>
+              <Text style={{marginLeft: 10}}>{fileName}</Text>
             </View>
           )}
           <View
@@ -288,7 +289,7 @@ const ModalScreenPost = ({ route }: { route: any }) => {
                 onPress={() => postContribuition()}>
                 {!loading ? (
                   <Image
-                    source={postar}
+                    source={comment ? postar : postarOpacity}
                     style={{
                       width: 17,
                       height: 15,
@@ -296,7 +297,7 @@ const ModalScreenPost = ({ route }: { route: any }) => {
                   />
                 ) : (
                   <ActivityIndicator
-                    style={{ width: 17, height: 16 }}
+                    style={{width: 17, height: 16}}
                     color="#c8c8c8"
                   />
                 )}
