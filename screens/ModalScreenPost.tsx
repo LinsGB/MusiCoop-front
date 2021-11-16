@@ -18,6 +18,7 @@ import postarOpacity from '../assets/images/postarOpaco.png';
 import AudioPlayer from '../components/audioPlayer';
 import {createContribuition, findPost} from '../services/post';
 import {Reload} from '../context/reload';
+import reactotron from 'reactotron-react-native';
 
 const ModalScreenPost = ({route}: {route: any}) => {
   const [comment, setComment] = useState('');
@@ -27,33 +28,12 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const [hasFile, setHasFile] = useState<any>();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = useState(false);
-  const [allContribuition, setallContribuition] = useState<any>([])
-  const [getFile, setGetFile] = useState<any>()
-
-  const getPosts = async () => {
-    await findPost(route.params.item.id).then((posts) => {
-      console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOI")
-      //@ts-ignore
-      setallContribuition(posts.contribuitions)
-      allContribuition.map((response:any) => {
-        setGetFile(response.file_size)
-        console.log(getFile)
-      })
-      //@ts-ignore
-      if (Array.isArray(posts.contribuitions)) {
-        //@ts-ignore
-        setContribuitions(posts.contribuitions);
-      }
-    });
-  }
-
-  useEffect(() => {
-    getPosts()
-  }, [])
-
+  const [allContribuition, setallContribuition] = useState([]);
+  const [getFile, setGetFile] = useState<any>();
 
   useEffect(() => {
     onRefresh();
+
     setContribuitions(route.params.item.contribuitions);
     if (fileName) {
       setHasFile(true);
@@ -62,7 +42,6 @@ const ModalScreenPost = ({route}: {route: any}) => {
       setHasFile(false);
     }
   }, [fileName, hasFile]);
-
 
   const onRefresh = React.useCallback(() => {
     findPost(route.params.item.id).then((posts) => {
@@ -107,21 +86,21 @@ const ModalScreenPost = ({route}: {route: any}) => {
       name: fileName,
       type,
     };
-    let payload:any
-    if(file.uri === ""){
+    let payload: any;
+    if (file.uri === '') {
       payload = {
         name: comment,
         description: comment,
-        file:""
+        file: '',
       };
-    }else{
+    } else {
       payload = {
         name: comment,
         description: comment,
         file,
       };
     }
-    console.log(payload)
+    console.log(payload);
     await createContribuition(items.id, payload)
       .then((response) => {
         if (response.status == 200) {
@@ -234,12 +213,14 @@ const ModalScreenPost = ({route}: {route: any}) => {
                     />
                     <Text style={{color: 'white'}}>Nome do usuario</Text>
                   </View>
-                    { getFile > 0 && <AudioPlayer
-                    uri={
-                      contribuition.uri ||
-                      `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
-                    }
-                  />}
+                  {contribuition.file_size > 0 && (
+                    <AudioPlayer
+                      uri={
+                        contribuition.uri ||
+                        `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
+                      }
+                    />
+                  )}
                   {/* { !getFile && <Text>Oi</Text>} */}
                 </View>
 
@@ -376,6 +357,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 24,
     marginBottom: 20,
+    paddingTop: 5,
     color: 'white',
   },
   helpContainer: {},
