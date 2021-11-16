@@ -75,7 +75,6 @@ const ModalScreenPost = ({ route }: { route: any }) => {
   const postContribuition = async () => {
     setLoading(true);
     const copyContribuitions = [...contribuitions];
-    copyContribuitions.push({ name: comment, uri });
     setContribuitions(copyContribuitions);
     const type = 'audio/mpeg';
     const file = {
@@ -84,15 +83,24 @@ const ModalScreenPost = ({ route }: { route: any }) => {
       type,
     };
     //@ts-ignore
-    await createContribuition(items.id, {
+    const payload: any = {
       name: comment,
       description: comment,
       file,
+    }
+    await createContribuition(items.id, payload).then((response) => {
+      if (response.status == 200){
+        alert("Contribuição enviada com sucesso!")
+      }
+    }).catch((response) => {
+      alert("Não foi possivel enviar sua contribuição, tente novamente")
+      
     })
     setLoading(false);
     setFileName('')
     setComment('')
     setUri('')
+
   };
 
   const [context, setContext] = useState();
