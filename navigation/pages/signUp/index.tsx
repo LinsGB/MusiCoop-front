@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {TextInput, View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {TextInput, View, Text, TouchableOpacity, ActivityIndicator, Image, ScrollView} from 'react-native';
 import TouchableButton from '../../../components/touchableButton';
 import {apiUser} from '../../../services/user';
 import reactotron from '../../../config/Reactotron.config';
 import {AsyncStorage} from 'react-native';
+import Musicoop from '../../../assets/images/musicooptext.png'
 
 import styles from './styles';
 
@@ -34,108 +35,128 @@ const SignUp = ({navigation}: {navigation: any}) => {
         alert("Usuário registrado com sucesso")
         setLoading(false)
         navigation.navigate('Auth');
-      } else if (response.status === 406) {
-        alert("Erro ao criar o usuário")
-        setLoading(false)
       }
+    }).catch((response:any) => {
+      if(response.status == 403){
+        alert("Email ou Usuário já cadastrado!")
+      }else{
+        alert("Error ao criar o usuário!")
+      }
+      setLoading(false)
     });
   };
 
-  return (
-    <View style={styles.container}>
-      <View>
-        <Text style={{color: 'white'}}>Email</Text>
-        <TextInput
-          style={{
-            color: 'white',
-            fontSize: 20,
-            marginBottom: 20,
-            paddingBottom: 5,
-            borderBottomWidth: 1,
-            borderBottomColor: '#4e4a6e',
-          }}
-          placeholder="Insira seu email"
-          placeholderTextColor={'#484B72'}
-          onChangeText={(text) => setEmail(text)}
-        />
-      </View>
-      <View>
-        <Text style={{color: 'white'}}>Usuário</Text>
-        <TextInput
-          style={{
-            color: 'white',
-            fontSize: 20,
-            marginBottom: 20,
-            paddingBottom: 5,
-            borderBottomWidth: 1,
-            borderBottomColor: '#4e4a6e',
-          }}
-          placeholder="Insira seu nome de usuário"
-          placeholderTextColor={'#484B72'}
-          onChangeText={(text) => setUsername(text)}
-        />
-      </View>
-      <View>
-        <Text style={{color: 'white'}}>Nome</Text>
-        <TextInput
-          style={{
-            color: 'white',
-            fontSize: 20,
-            marginBottom: 20,
-            paddingBottom: 5,
-            borderBottomWidth: 1,
-            borderBottomColor: '#4e4a6e',
-          }}
-          placeholder="Insira seu nome de nome"
-          placeholderTextColor={'#484B72'}
-          onChangeText={(text) => setName(text)}
-        />
-      </View>
-      <View>
-        <Text style={{color: 'white'}}>Senha</Text>
+  const validateEmail = (text:string) => {
+    console.log(text);
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(text) === false) {
+      console.log("Email is Not Correct");
+      setEmail({ email: text })
+      return false;
+    }
+    else {
+      setEmail({ email: text })
+      console.log("Email is Correct");
+    }
+  }
 
-        <TextInput
-          style={{
-            color: 'white',
-            fontSize: 20,
-            marginBottom: 40,
-            paddingBottom: 3,
-            borderBottomWidth: 1,
-            borderBottomColor: '#4e4a6e',
-          }}
-          secureTextEntry
-          placeholder="Insira sua senha"
-          placeholderTextColor={'#484B72'}
-          onChangeText={(text) => setPassword(text)}
-        />
-      </View>
-      <View style={{marginTop: 20, alignItems:'center'}}>
-      <TouchableOpacity
-          disabled={!(email && password)}
-          onPress={() => register()}
-          style={[
-            styles.loginButton,
-            {
-              backgroundColor: password && email ? '#F05922' : '#623240',
-              alignItems: 'center',
-              justifyContent: 'center',
+  return (
+    <ScrollView style={[styles.container]}>
+      <View style={{justifyContent:'center', flex:1}}>
+        <View>
+          <Text style={{color: 'white'}}>Email</Text>
+          <TextInput
+            style={{
+              color: 'white',
+              fontSize: 20,
+              marginBottom: 20,
+              paddingBottom: 5,
+              borderBottomWidth: 1,
+              borderBottomColor: '#4e4a6e',
+            }}
+            onChangeText={(text) => validateEmail(text)}
+            placeholder="Insira seu email"
+            placeholderTextColor={'#484B72'}
+          />
+        </View>
+        <View>
+          <Text style={{color: 'white'}}>Usuário</Text>
+          <TextInput
+            style={{
+              color: 'white',
+              fontSize: 20,
+              marginBottom: 20,
+              paddingBottom: 5,
+              borderBottomWidth: 1,
+              borderBottomColor: '#4e4a6e',
+            }}
+            placeholder="Insira seu nome de usuário"
+            placeholderTextColor={'#484B72'}
+            onChangeText={(text) => setUsername(text)}
+          />
+        </View>
+        <View>
+          <Text style={{color: 'white'}}>Nome</Text>
+          <TextInput
+            style={{
+              color: 'white',
+              fontSize: 20,
+              marginBottom: 20,
+              paddingBottom: 5,
+              borderBottomWidth: 1,
+              borderBottomColor: '#4e4a6e',
+            }}
+            placeholder="Insira seu nome de nome"
+            placeholderTextColor={'#484B72'}
+            onChangeText={(text) => setName(text)}
+          />
+        </View>
+        <View>
+          <Text style={{color: 'white'}}>Senha</Text>
+
+          <TextInput
+            style={{
+              color: 'white',
+              fontSize: 20,
               marginBottom: 40,
-              borderRadius: 100,
-              padding: 10,
-              width: 300,
-            },
-          ]}>
-          {!loading ? (
-            <Text style={{color: '#fff', fontWeight: 'bold'}}>Registrar</Text>
-          ) : (
-            <ActivityIndicator
-              style={{width: 12, height: 20}}
-              color="#c8c8c8"
-            />
-          )}
-        </TouchableOpacity>
+              paddingBottom: 3,
+              borderBottomWidth: 1,
+              borderBottomColor: '#4e4a6e',
+            }}
+            secureTextEntry
+            placeholder="Insira sua senha"
+            placeholderTextColor={'#484B72'}
+            onChangeText={(text) => setPassword(text)}
+          />
+        </View>
+        <View style={{marginTop: 20, alignItems:'center'}}>
+        <TouchableOpacity
+            disabled={!(email && password)}
+            onPress={() => register()}
+            style={[
+              styles.loginButton,
+              {
+                backgroundColor: password && email ? '#F05922' : '#623240',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 40,
+                borderRadius: 100,
+                padding: 10,
+                width: 300,
+              },
+            ]}>
+            {!loading ? (
+              <Text style={{color: '#fff', fontWeight: 'bold'}}>Registrar</Text>
+            ) : (
+              <ActivityIndicator
+                style={{width: 12, height: 20}}
+                color="#c8c8c8"
+              />
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

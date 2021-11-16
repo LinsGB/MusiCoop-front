@@ -16,14 +16,16 @@ const loginScreen = ({navigation}: {navigation: any}) => {
     return 90;
   };
 
-  // const isLogged = async () => {
-  //   const token = AsyncStorage.getItem('token');
-  //   console.log(await token)
-  //   await apiUser.getToken(await token).then((response: any) => {
-  //     console.log(response)
-  //   })
-  //   navigation.navigate('Auth')
-  // }
+  const isLogged = async () => {
+    const token = AsyncStorage.getItem('token');
+    await apiUser.getToken(await token).then((response: any) => {
+      if(response.status == 200){
+        navigation.navigate('Root')
+      }else{
+        navigation.navigate('Auth')
+      }
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -32,7 +34,7 @@ const loginScreen = ({navigation}: {navigation: any}) => {
       </View>
       <View style={{marginVertical: 20}}>
         <TouchableButton
-          onPress={() => navigation.navigate('Auth')}
+          onPress={() => isLogged()}
           title="Entrar"
           style={[styles.loginButton, {backgroundColor: '#CB3C94'}]}
         />

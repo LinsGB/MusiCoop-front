@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
+import { useFonts } from 'expo-font';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    flex:1,
     backgroundColor: '#25214d',
     paddingHorizontal: 30,
   },
@@ -22,3 +22,5 @@ const styles = StyleSheet.create({
 });
 
 export default styles;
+
+/* MUSICOOP */
