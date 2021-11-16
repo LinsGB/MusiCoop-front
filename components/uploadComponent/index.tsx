@@ -16,6 +16,8 @@ import {Buffer} from 'buffer';
 
 const UploadFile = () => {
   const [uri, setUri] = useState();
+  const [fileName, setFileName] = useState<any>();
+  const [saveUri, setSaveUri] = useState<any>();
 
   const pickDocument = async () => {
     const result = await DocumentPicker.getDocumentAsync({
@@ -23,15 +25,15 @@ const UploadFile = () => {
       copyToCacheDirectory: false,
     });
     //@ts-ignore
-    let localUri = result.uri;
+    setSaveUri(result.uri);
     //@ts-ignore
-    let filename = result.name;
+    setFileName(result.name);
     let type = 'audio/mpeg';
     //@ts-ignore
     setUri(result.uri + '/' + result.name);
     var fileToUpload = {
-      uri: localUri,
-      name: filename,
+      uri: saveUri,
+      name: fileName,
       type,
     };
     await uploadFile.createPost(fileToUpload);
@@ -51,6 +53,22 @@ const UploadFile = () => {
           <Button title="Enviar arquivo" color="black" onPress={pickDocument} />
         </TouchableOpacity>
         <AudioPlayer uri={uri} />
+        {!fileName && (
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#eee',
+              paddingHorizontal: 40,
+              paddingVertical: 5,
+              borderRadius: 10,
+              alignItems: 'center',
+            }}>
+            <Button
+              title="Enviar arquivo"
+              color="black"
+              onPress={() => setFileName('')}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

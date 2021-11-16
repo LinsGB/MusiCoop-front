@@ -6,7 +6,7 @@ import {Picker} from '@react-native-picker/picker';
 import styles from './styles';
 import {
   ActivityIndicator,
-  Button,
+  Image,
   Modal,
   Pressable,
   TextInput,
@@ -18,7 +18,7 @@ import * as uploadFile from '../../../services/post';
 import {listPosts} from '../../../services/post';
 import reactotron from '../../../config/Reactotron.config';
 import {Reload} from '../../../context/reload';
-import {isLoading} from 'expo-font';
+import trash from '../../../assets/images/trash.png';
 
 const postScreen = () => {
   const [uri, setUri] = useState('');
@@ -84,7 +84,7 @@ const postScreen = () => {
       await uploadFile.createPost({file, description, post_name: title});
       setLoading(false);
       setModalVisible(true);
-      clean()
+      clean();
       setTimeout(() => {
         setModalVisible(false);
       }, 1000);
@@ -92,11 +92,15 @@ const postScreen = () => {
   };
 
   const clean = () => {
-      setFileName('')
-      setDescription('')
-      setUri('')
-      setTitle('')
-  }
+    setFileName('');
+    setDescription('');
+    setUri('');
+    setTitle('');
+  };
+
+  const cleanFile = () => {
+    setFileName('');
+  };
 
   const verifyHeight = () => {
     if (Metrics.constants.screenHeight >= 760) {
@@ -186,6 +190,7 @@ const postScreen = () => {
           <View style={styles.button}>
             <TouchableOpacity
               onPress={pickDocument}
+              disabled={hasFile}
               style={{
                 backgroundColor: '#36375F',
                 paddingHorizontal: 20,
@@ -195,12 +200,33 @@ const postScreen = () => {
                 alignItems: 'center',
                 height: 50,
                 justifyContent: 'center',
-                width: hasFile ? 250 : 300,
+                width: hasFile ? 230 : 300,
               }}>
-              {hasFile ? <Text>{fileName}</Text> : <Text>Enviar arquivo</Text>}
+              {hasFile ? (
+                <Text style={{fontSize: 13}}>{fileName}</Text>
+              ) : (
+                <Text>Enviar arquivo</Text>
+              )}
             </TouchableOpacity>
             {hasFile && <AudioPlayer WithBackground uri={uri} />}
+            {hasFile && (
+              <TouchableOpacity
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginLeft: 5,
+                  backgroundColor: '#F05922',
+                  borderRadius: 10,
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  height: 50,
+                }}
+                onPress={() => cleanFile()}>
+                <Image source={trash} />
+              </TouchableOpacity>
+            )}
           </View>
+
           <View style={{alignItems: 'center', marginTop: 190}}>
             <TouchableOpacity
               style={{
