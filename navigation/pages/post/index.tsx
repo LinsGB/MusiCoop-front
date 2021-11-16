@@ -78,7 +78,8 @@ const postScreen = () => {
     if (!fileName) {
       alert('Por favor, insira um arquivo de áudio');
     } else if (!`${fileName}`.match(/mp3|opus|ogg$/)) {
-      alert('Por favor, insira um arquivo de áudio válido');
+      alert('Por favor, confira se inseriu um arquivo de áudio');
+      setLoading(false);
     } else {
       setLoading(true);
       await uploadFile.createPost({file, description, post_name: title});
