@@ -46,13 +46,14 @@ const postScreen = () => {
 
   const pickDocument = async () => {
     const result = await DocumentPicker.getDocumentAsync({
-      type: '*/*',
+      type: 'audio/*',
       copyToCacheDirectory: false,
     });
     //@ts-ignore
     setFileName(result.name);
     //@ts-ignore
     setUri(result.uri);
+    //@ts-ignore
   };
 
   const maxLengthTitle = 50;

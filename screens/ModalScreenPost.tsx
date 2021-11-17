@@ -77,7 +77,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const pickDocument = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: '*/*',
+        type: 'audio/*',
         copyToCacheDirectory: false,
       });
       //@ts-ignore
@@ -110,6 +110,12 @@ const ModalScreenPost = ({route}: {route: any}) => {
         description: comment,
         file,
       };
+    }
+    if (!fileName) {
+      alert('Por favor, insira um arquivo de áudio');
+    } else if (!`${fileName}`.match(/mp3|opus|ogg$/)) {
+      alert('Por favor, confira se inseriu um arquivo de áudio');
+      setLoading(false);
     }
     await createContribuition(items.id, payload)
       .then((response) => {
