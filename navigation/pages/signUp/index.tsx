@@ -39,12 +39,11 @@ const SignUp = ({navigation}: {navigation: any}) => {
   const register = async () => {
     setLoading(true);
     const payload: Users = {
-      email: email,
+      email: email.email,
       username: username,
       name: name,
       password: password,
     };
-    console.log(payload)
     await apiUser
       .createUser(payload)
       .then((response: any) => {
@@ -55,11 +54,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
         }
       })
       .catch((response: any) => {
-        if (response.status == 403) {
-          alert('Email ou Usuário já cadastrado!');
-        } else {
-          alert('Error ao criar o usuário!');
-        }
+        alert('Erro ao cadastrar, verifique os dados!');
         setLoading(false);
       });
   };
