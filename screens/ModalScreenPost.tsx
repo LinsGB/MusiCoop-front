@@ -19,6 +19,7 @@ import AudioPlayer from '../components/audioPlayer';
 import {createContribuition, findPost} from '../services/post';
 import {Reload} from '../context/reload';
 import reactotron from 'reactotron-react-native';
+import {apiUser} from '../services/user'
 
 const ModalScreenPost = ({route}: {route: any}) => {
   const [comment, setComment] = useState('');
@@ -30,6 +31,8 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const [loading, setLoading] = useState(false);
   const [allContribuition, setallContribuition] = useState([]);
   const [getFile, setGetFile] = useState<any>();
+  const [userName, setUsername] = useState<any>();
+  
 
   useEffect(() => {
     onRefresh();
@@ -43,12 +46,21 @@ const ModalScreenPost = ({route}: {route: any}) => {
     }
   }, [fileName, hasFile]);
 
+  
+  const getUserById = async (id:number) => {
+    return (await apiUser.getUserById(id)).data
+  }
+
   const onRefresh = React.useCallback(() => {
-    findPost(route.params.item.id).then((posts) => {
+    findPost(route.params.item.id).then(async (posts) => {
       //@ts-ignore
       if (Array.isArray(posts.contribuitions)) {
         //@ts-ignore
         setContribuitions(posts.contribuitions);
+        //@ts-ignore
+        const userPost = await getUserById(posts.user)
+        //@ts-ignore
+        setUsername(userPost.username)
       }
     });
     const wait = (timeout: any) => {
@@ -79,7 +91,6 @@ const ModalScreenPost = ({route}: {route: any}) => {
 
   const postContribuition = async () => {
     setLoading(true);
-    const copyContribuitions = [...contribuitions];
     const type = 'audio/mpeg';
     const file = {
       uri: uri,
@@ -100,12 +111,10 @@ const ModalScreenPost = ({route}: {route: any}) => {
         file,
       };
     }
-    console.log(payload);
     await createContribuition(items.id, payload)
       .then((response) => {
         if (response.status == 200) {
-          alert('Contribuição enviada com sucesso!');
-          setContribuitions(copyContribuitions);
+          onRefresh()
         }
       })
       .catch((response) => {
@@ -159,7 +168,7 @@ const ModalScreenPost = ({route}: {route: any}) => {
                       marginRight: 10,
                     }}
                   />
-                  <Text style={{color: 'white'}}>Nome do usuario</Text>
+                  <Text style={{color: 'white'}}>{userName}</Text>
                 </View>
                 <AudioPlayer
                   uri={`https://musicoop-api.herokuapp.com/musics?post_id=${items.id}`}
@@ -211,7 +220,8 @@ const ModalScreenPost = ({route}: {route: any}) => {
                         marginRight: 10,
                       }}
                     />
-                    <Text style={{color: 'white'}}>Nome do usuario</Text>
+                   
+                  <Text style={{color: 'white'}}>{contribuition.username}</Text>
                   </View>
                   {contribuition.file_size > 0 && (
                     <AudioPlayer

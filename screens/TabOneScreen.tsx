@@ -16,6 +16,7 @@ import Comments from '../components/Comments';
 import TouchableButton from '../components/touchableButton';
 import {listPosts} from '../services/post';
 
+
 const Routes = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);

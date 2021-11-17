@@ -109,7 +109,7 @@ const Comments = () => {
                         marginRight: 10,
                       }}
                     />
-                    <Text style={{color: 'white'}}>Nome do usuario</Text>
+                    <Text style={{color: 'white'}}>{item.username}</Text>
                   </View>
                 </View>
                 <View>
