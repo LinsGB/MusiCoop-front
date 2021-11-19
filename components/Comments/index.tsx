@@ -4,7 +4,7 @@
 // import React in our code
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import React, {useState, useEffect, useCallback} from 'react';
-import logoUsuario from '../../assets/images/fffa.png';
+import logoUsuario from '../../assets/images/avatar_Prancheta.png';
 
 // import all the components we are going to use
 import {

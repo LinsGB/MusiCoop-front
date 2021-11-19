@@ -78,9 +78,6 @@ const postScreen = () => {
     }
     if (!fileName) {
       alert('Por favor, insira um arquivo de áudio');
-    } else if (!`${fileName}`.match(/mp3|opus|ogg$/)) {
-      alert('Por favor, confira se inseriu um arquivo de áudio');
-      setLoading(false);
     } else {
       setLoading(true);
       await uploadFile.createPost({file, description, post_name: title});
@@ -207,7 +204,7 @@ const postScreen = () => {
               {hasFile ? (
                 <Text style={{fontSize: 13}}>{fileName}</Text>
               ) : (
-                <Text>Enviar arquivo</Text>
+                <Text>Selecionar Áudio</Text>
               )}
             </TouchableOpacity>
             {hasFile && <AudioPlayer WithBackground uri={uri} />}

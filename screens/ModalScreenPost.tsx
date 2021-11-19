@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {Text, View} from '../components/Themed';
-import logoUsuario from '../assets/images/fffa.png';
+import logoUsuario from '../assets/images/avatar_Prancheta.png';
 import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../assets/images/clipe.png';
 import postar from '../assets/images/postar.png';
@@ -111,10 +111,6 @@ const ModalScreenPost = ({route}: {route: any}) => {
         description: comment,
         file,
       };
-      if (!`${fileName}`.match(/mp3|opus|ogg$/)) {
-        alert('Por favor, confira se inseriu um arquivo de áudio');
-        setLoading(false);
-      }
     }
 
     await createContribuition(items.id, payload)
