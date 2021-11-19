@@ -7,7 +7,7 @@ import {
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import {ColorSchemeName, Pressable, Touchable, Image} from 'react-native';
+import {ColorSchemeName, Image} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -18,15 +18,10 @@ import styles from './styles';
 import TabTwoScreen from '../screens/userProfile/TabTwoScreen';
 import {
   RootStackParamList,
-  RootStackScreenProps,
   RootTabParamList,
   RootTabScreenProps,
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import {useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, Text} from '../components/Themed';
-import TouchableButton from '../components/touchableButton';
 import EditScreenInfo from '../components/EditScreenInfo';
 import loginScreen from './pages/initialPage';
 import SingUp from './pages/signUp';
@@ -58,7 +53,6 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const [logged, setLogged] = useState(false);
 
   return (
     <Stack.Navigator
@@ -135,10 +129,6 @@ function RootNavigator() {
   );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
@@ -172,23 +162,6 @@ function BottomTabNavigator() {
               }}
             />
           ),
-          // headerRight: () => (
-          //   <View>
-          //     <Pressable
-          //       onPress={() => navigation.navigate('Modal')}
-          //       style={({pressed}) => ({
-          //         opacity: pressed ? 0.5 : 1,
-          //       })}>
-          //       <FontAwesome
-          //         name="user"
-          //         size={25}
-          //         color={Colors[colorScheme].text}
-          //         style={{marginRight: 15}}
-          //       />
-          //     </Pressable>
-          //     <View></View>
-          //   </View>
-          // ),
         })}
       />
       <BottomTab.Screen
@@ -205,21 +178,6 @@ function BottomTabNavigator() {
               }}
             />
           ),
-
-          // headerRight: () => (
-          //   <Pressable
-          //     onPress={() => navigation.navigate('Modal')}
-          //     style={({pressed}) => ({
-          //       opacity: pressed ? 0.5 : 1,
-          //     })}>
-          //     <FontAwesome
-          //       name="user"
-          //       size={25}
-          //       color={Colors[colorScheme].text}
-          //       style={{marginRight: 15}}
-          //     />
-          //   </Pressable>
-          // ),
         })}
       />
       <BottomTab.Screen
@@ -243,9 +201,6 @@ function BottomTabNavigator() {
   );
 }
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;

@@ -2,7 +2,6 @@ import {StatusBar} from 'expo-status-bar';
 import * as React from 'react';
 import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import {Text, View} from '../components/Themed';
 import Colors from '../constants/Colors';
 import {AsyncStorage} from 'react-native';
@@ -24,7 +23,6 @@ const ModalScreenUser = ({navigation}: {navigation: any}) => {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      {/* <EditScreenInfo path="/screens/ModalScreen.tsx" /> */}
       <View>
         <View style={styles.getStartedContainer}>
           <Text
@@ -33,14 +31,6 @@ const ModalScreenUser = ({navigation}: {navigation: any}) => {
             darkColor="rgba(255,255,255,0.8)">
             Nome
           </Text>
-
-          {/* <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          darkColor="rgba(255,255,255,0.05)"
-          lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
-        </View> */}
-
           <Text
             style={styles.getStartedText}
             lightColor="rgba(0,0,0,0.8)"
@@ -59,7 +49,6 @@ const ModalScreenUser = ({navigation}: {navigation: any}) => {
           </TouchableOpacity>
         </View>
       </View>
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );

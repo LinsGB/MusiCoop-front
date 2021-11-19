@@ -6,12 +6,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
-  ScrollView,
 } from 'react-native';
-import TouchableButton from '../../../components/touchableButton';
 import {apiUser} from '../../../services/user';
-import reactotron from '../../../config/Reactotron.config';
-import {AsyncStorage} from 'react-native';
 import Musicoop from '../../../assets/images/musicooptext.png';
 
 import styles from './styles';

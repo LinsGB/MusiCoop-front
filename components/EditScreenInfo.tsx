@@ -1,11 +1,8 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 
 import Colors from '../constants/Colors';
-import Navigation from '../navigation';
 import {RootStackScreenProps} from '../types';
-import {MonoText} from './StyledText';
 import {Text, View} from './Themed';
 
 export default function EditScreenInfo({
@@ -20,14 +17,6 @@ export default function EditScreenInfo({
           darkColor="rgba(255,255,255,0.8)">
           Nome
         </Text>
-
-        {/* <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          darkColor="rgba(255,255,255,0.05)"
-          lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
-        </View> */}
-
         <Text
           style={styles.getStartedText}
           lightColor="rgba(0,0,0,0.8)"

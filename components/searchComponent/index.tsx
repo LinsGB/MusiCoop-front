@@ -1,10 +1,5 @@
-// Searching using Search Bar Filter in React Native List View
-// https://aboutreact.com/react-native-search-bar-filter-on-listview/
-
-// import React in our code
 import React, {useState, useEffect} from 'react';
 
-// import all the components we are going to use
 import {
   SafeAreaView,
   Text,
@@ -13,14 +8,11 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import reactotron from '../../config/Reactotron.config';
 
 const Search = () => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
-  const [refresh, setRefresh] = useState(false);
   const [showList, setShowList] = useState(false);
 
   const dados: any = [
@@ -40,32 +32,15 @@ const Search = () => {
       title: 'musica incrivel',
     },
   ];
-  // reactotron.debug!(dados);
+
   useEffect(() => {
-    // fetch('https://jsonplaceholder.typicode.com/posts')
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     reactotron.debug!(responseJson);
-    //     setFilteredDataSource(responseJson);
-    //     setMasterDataSource(responseJson);
-    //   })
-
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-    // reactotron.debug!(dados);
-
     setFilteredDataSource(dados);
     setMasterDataSource(dados);
   }, []);
 
   const searchFilterFunction = (text: any) => {
-    // Check if searched text is not blank
     if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource and update FilteredDataSource
       const newData = masterDataSource.filter(function (item: any) {
-        // Applying filter for the inserted text in search bar
         const itemData = item.title
           ? item.title.toUpperCase()
           : ''.toUpperCase();
@@ -76,23 +51,13 @@ const Search = () => {
       setSearch(text);
       setShowList(false);
     } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
       setFilteredDataSource(masterDataSource);
       setSearch(text);
     }
   };
 
-  // const ItemView = ({item}: any) => {
-  //   return (
-  //     // Flat List Item
-
-  //   );
-  // };
-
   const ItemSeparatorView = () => {
     return (
-      // Flat List Item Separator
       <View
         style={{
           height: 1,
@@ -104,12 +69,8 @@ const Search = () => {
   };
 
   const getItem = (item: any) => {
-    // Function for click on an item
-    // alert(item.title);
     setShowList(!showList);
     setSearch(item.title);
-    // searchFilterFunction(item.title);
-    setRefresh(true);
   };
 
   return (

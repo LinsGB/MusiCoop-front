@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View} from '../../../components/Themed';
 import Metrics from '../../../helpers/Metrics';
-import {Picker} from '@react-native-picker/picker';
 
 import styles from './styles';
 import {
@@ -15,7 +14,6 @@ import AudioPlayer from '../../../components/audioPlayer';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import * as DocumentPicker from 'expo-document-picker';
 import * as uploadFile from '../../../services/post';
-import {listPosts} from '../../../services/post';
 import reactotron from '../../../config/Reactotron.config';
 import {Reload} from '../../../context/reload';
 import trash from '../../../assets/images/trash.png';
@@ -25,9 +23,7 @@ const postScreen = () => {
   const [fileName, setFileName] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [textInput, setTextInput] = useState<any>();
   const [hasFile, setHasFile] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [useOpacity, setUseOpacity] = useState<any>(0.4);
@@ -237,7 +233,6 @@ const postScreen = () => {
                 borderRadius: 100,
                 padding: 10,
                 width: 300,
-                // opacity: fileName && title && description ? 1 : 0.4,
               }}
               disabled={!(fileName && title && description)}
               onPress={() => post()}>

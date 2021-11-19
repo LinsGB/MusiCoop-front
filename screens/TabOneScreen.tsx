@@ -1,30 +1,22 @@
-import {react} from '@babel/types';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
 import React, {useState, useEffect} from 'react';
 import {
   View,
   useWindowDimensions,
   Text,
-  RefreshControl,
   ActivityIndicator,
 } from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import reactotron from 'reactotron-react-native';
-import AudioPlayer from '../components/audioPlayer';
 import Comments from '../components/Comments';
-import TouchableButton from '../components/touchableButton';
 import {listPosts} from '../services/post';
 
 
 const Routes = () => {
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
     listPosts().then((posts) => {
       if (Array.isArray(posts)) {
-        setPosts(posts);
         setLoading(false);
       }
       reactotron.debug(posts);
@@ -32,10 +24,6 @@ const Routes = () => {
   }, []);
 
   const FirstRoute = () => {
-    const [reload, setReload] = useState(0);
-    const test = () => {
-      setReload(reload + 1);
-    };
     return (
       <View style={{flex: 1, backgroundColor: '#25214D'}}>
         <View style={{flex: 1}}>
@@ -73,11 +61,9 @@ export default function TabViewExample() {
     second: SecondRoute,
   });
   const layout = useWindowDimensions();
-  const color = 1;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'Últimos posts'},
-    // {key: 'second', title: 'Popular'},
   ]);
 
   return (

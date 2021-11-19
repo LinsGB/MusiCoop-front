@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
 import {
   StyleSheet,
-  Text,
   View,
-  TextInput,
   Button,
   TouchableOpacity,
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
 import * as uploadFile from '../../services/post';
-import * as FileSystem from 'expo-file-system';
 import AudioPlayer from '../audioPlayer';
-import {Buffer} from 'buffer';
 
 const UploadFile = () => {
   const [uri, setUri] = useState();

@@ -18,7 +18,6 @@ import postarOpacity from '../assets/images/postarOpaco.png';
 import AudioPlayer from '../components/audioPlayer';
 import {createContribuition, findPost} from '../services/post';
 import {Reload} from '../context/reload';
-import reactotron from 'reactotron-react-native';
 import {apiUser} from '../services/user'
 
 const ModalScreenPost = ({route}: {route: any}) => {
@@ -29,8 +28,6 @@ const ModalScreenPost = ({route}: {route: any}) => {
   const [hasFile, setHasFile] = useState<any>();
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = useState(false);
-  const [allContribuition, setallContribuition] = useState([]);
-  const [getFile, setGetFile] = useState<any>();
   const [userName, setUsername] = useState<any>();
   
 
@@ -233,7 +230,6 @@ const ModalScreenPost = ({route}: {route: any}) => {
                       }
                     />
                   )}
-                  {/* { !getFile && <Text>Oi</Text>} */}
                 </View>
 
                 <View style={{marginHorizontal: 10}}>

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {useReducer} from 'react';
 
 type InitialState = {
