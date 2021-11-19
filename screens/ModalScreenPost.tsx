@@ -104,26 +104,26 @@ const ModalScreenPost = ({route}: {route: any}) => {
         description: comment,
         file: '',
       };
+
     } else {
       payload = {
         name: comment,
         description: comment,
         file,
       };
+      if (!`${fileName}`.match(/mp3|opus|ogg$/)) {
+        alert('Por favor, confira se inseriu um arquivo de áudio');
+        setLoading(false);
+      }
     }
-    if (!fileName) {
-      alert('Por favor, insira um arquivo de áudio');
-    } else if (!`${fileName}`.match(/mp3|opus|ogg$/)) {
-      alert('Por favor, confira se inseriu um arquivo de áudio');
-      setLoading(false);
-    }
+
     await createContribuition(items.id, payload)
       .then((response) => {
         if (response.status == 200) {
           onRefresh()
         }
       })
-      .catch((response) => {
+      .catch(() => {
         alert('Não foi possivel enviar sua contribuição, tente novamente');
       });
     setLoading(false);
