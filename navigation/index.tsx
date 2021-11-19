@@ -28,7 +28,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {View, Text} from '../components/Themed';
 import TouchableButton from '../components/touchableButton';
 import EditScreenInfo from '../components/EditScreenInfo';
-import loginScreen from './pages/login';
+import loginScreen from './pages/initialPage';
 import SingUp from './pages/signUp';
 import postScreen from './pages/post';
 import ModalScreenPost from '../screens/ModalScreenPost';
