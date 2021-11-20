@@ -4,56 +4,51 @@ import {TouchableOpacity} from 'react-native';
 import EditScreenInfo from '../../components/EditScreenInfo';
 import {Text, View} from '../../components/Themed';
 import Colors from '../../constants/Colors';
-import {AsyncStorage} from 'react-native';
+import logoUsuario from '../../assets/images/user-model.png';
+import {AsyncStorage, Image} from 'react-native';
 
 import styles from './style';
+import {CommonActions} from '@react-navigation/native';
 
 const TabTwoScreen = ({navigation}: {navigation: any}) => {
   const logout = async () => {
     AsyncStorage.removeItem('token');
-    navigation.navigate('Login')
-  }
-  
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      }),
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Usuário</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <View style={styles.logoView}>
+        <Image
+          source={logoUsuario}
+          style={{
+            width: 80,
+            height: 80,
+            borderRadius: 100,
+            marginTop: 40,
+          }}
+        />
+      </View>
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
       <View>
-        <View style={styles.getStartedContainer}>
-          <Text
-            style={styles.getStartedText}
-            lightColor="rgba(0,0,0,0.8)"
-            darkColor="rgba(255,255,255,0.8)">
-            Nome
-          </Text>
-
-          {/* <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          darkColor="rgba(255,255,255,0.05)"
-          lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
-        </View> */}
-
-          <Text
-            style={styles.getStartedText}
-            lightColor="rgba(0,0,0,0.8)"
-            darkColor="rgba(255,255,255,0.8)">
-            data de criação
-          </Text>
+        <View style={styles.userView}>
+          <Text style={styles.user}>nome do usuário</Text>
+          <Text style={styles.userText}>Usuário da Silva</Text>
         </View>
-
-        <View style={styles.helpContainer}>
+        <View style={styles.emailView}>
+          <Text style={styles.email}>e-mail</Text>
+          <Text style={styles.emailText}>exemplo@teste.com.br</Text>
+        </View>
+        <View style={styles.logoutView}>
           <TouchableOpacity
-            onPress={() => logout()}
-            style={styles.helpLink}>
-            <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-              Sair
-            </Text>
+            style={styles.logoutButton}
+            onPress={() => logout()}>
+            <Text style={styles.logoutText}>Sair</Text>
           </TouchableOpacity>
         </View>
       </View>

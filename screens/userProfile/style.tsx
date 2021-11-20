@@ -4,46 +4,47 @@ import {isIphone8PlusOrLower} from '../../helpers/iphone';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  logoView: {
     alignItems: 'center',
-    justifyContent: 'center',
+    marginBottom: 60,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  userView: {
+    marginBottom: 28,
+    marginHorizontal: 25,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  user: {
+    textTransform: 'uppercase',
+    fontSize: 18,
+    marginBottom: 5,
   },
-  getStartedContainer: {
+  userText: {
+    fontSize: 14,
+  },
+  emailView: {
+    marginHorizontal: 25,
+    marginBottom: 28,
+  },
+  email: {
+    textTransform: 'uppercase',
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  emailText: {
+    fontSize: 14,
+  },
+  logoutView: {
     alignItems: 'center',
-    marginHorizontal: 50,
+    marginTop: 20,
   },
-  homeScreenFilename: {
-    marginVertical: 7,
+  logoutButton: {
+    backgroundColor: '#F05922',
+    paddingHorizontal: 50,
+    paddingVertical: 5,
+    borderRadius: 100,
   },
-  codeHighlightContainer: {
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: 'center',
+  logoutText: {
     color: 'white',
-  },
-  helpContainer: {
-    marginTop: 15,
-    marginHorizontal: 20,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    textAlign: 'center',
-    color: '#F05922',
   },
 });
 
