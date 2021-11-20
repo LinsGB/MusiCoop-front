@@ -24,15 +24,18 @@ const TabTwoScreen = ({navigation}: {navigation: any}) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoView}>
-        <Image
-          source={logoUsuario}
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: 100,
-            marginTop: 40,
-          }}
-        />
+        <TouchableOpacity
+          onPress={() => alert('Funcionalidade não implementada')}>
+          <Image
+            source={logoUsuario}
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: 100,
+              marginTop: 40,
+            }}
+          />
+        </TouchableOpacity>
       </View>
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
       <View>
@@ -49,6 +52,11 @@ const TabTwoScreen = ({navigation}: {navigation: any}) => {
             style={styles.logoutButton}
             onPress={() => logout()}>
             <Text style={styles.logoutText}>Sair</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.passwordButton}
+            onPress={() => alert('Funcionalidade não implementada')}>
+            <Text style={styles.passwordText}>Alterar senha</Text>
           </TouchableOpacity>
         </View>
       </View>

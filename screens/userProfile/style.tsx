@@ -39,11 +39,23 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     backgroundColor: '#F05922',
-    paddingHorizontal: 50,
     paddingVertical: 5,
     borderRadius: 100,
+    marginBottom: 10,
+    width: 200,
+    alignItems: 'center',
   },
   logoutText: {
+    color: 'white',
+  },
+  passwordButton: {
+    backgroundColor: '#F05922',
+    paddingVertical: 5,
+    borderRadius: 100,
+    width: 200,
+    alignItems: 'center',
+  },
+  passwordText: {
     color: 'white',
   },
 });
