@@ -49,14 +49,14 @@ const TabTwoScreen = ({navigation}: {navigation: any}) => {
         </View>
         <View style={styles.logoutView}>
           <TouchableOpacity
-            style={styles.logoutButton}
-            onPress={() => logout()}>
-            <Text style={styles.logoutText}>Sair</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             style={styles.passwordButton}
             onPress={() => alert('Funcionalidade não implementada')}>
             <Text style={styles.passwordText}>Alterar senha</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => logout()}>
+            <Text style={styles.logoutText}>Sair</Text>
           </TouchableOpacity>
         </View>
       </View>

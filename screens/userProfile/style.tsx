@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F05922',
     paddingVertical: 5,
     borderRadius: 100,
-    marginBottom: 10,
     width: 200,
     alignItems: 'center',
   },
@@ -51,6 +50,7 @@ const styles = StyleSheet.create({
   passwordButton: {
     backgroundColor: '#F05922',
     paddingVertical: 5,
+    marginBottom: 100,
     borderRadius: 100,
     width: 200,
     alignItems: 'center',
