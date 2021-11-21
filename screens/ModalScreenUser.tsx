@@ -10,10 +10,7 @@ import {AsyncStorage} from 'react-native';
 const ModalScreenUser = ({navigation}: {navigation: any}) => {
   const logout = async () => {
     const token = AsyncStorage.getItem('token');
-    console.log(await token)
     AsyncStorage.removeItem('token');
-    const token2 = AsyncStorage.getItem('token');
-    console.log(await token2)
     navigation.navigate('Login')
   }
   return (
