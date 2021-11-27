@@ -19,6 +19,15 @@ const listPosts = async () => {
   return (await api.get('/posts', authHeaders(await AsyncStorage.getItem('token')))).data;
 };
 
+const listPostsByUser = async () => {
+  return (await api.get(`/post/user`, {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${await AsyncStorage.getItem('token')}`
+    },
+  })).data;
+};
+
 const findPost = async (postId:number) => {
   return (await api.get(`/post?post_id=${postId}`, authHeaders(await AsyncStorage.getItem('token')))).data;
 };
@@ -54,4 +63,4 @@ const createPost = async (payload: any) => {
   });
 };
 
-export {createPost, createContribuition, listPosts, findPost};
+export {createPost, createContribuition, listPosts, findPost, listPostsByUser};

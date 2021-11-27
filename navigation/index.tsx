@@ -12,6 +12,7 @@ import {ColorSchemeName, Image} from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreenUser from '../screens/ModalScreenUser';
+import ModalScremUserPost from '../screens/ModalScremUserPost';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import styles from './styles';
@@ -109,7 +110,7 @@ function RootNavigator() {
             color: '#fff',
           },
         }}>
-        <Stack.Screen name="Modal" component={ModalScreenUser} />
+        <Stack.Screen name="Modal" component={ModalScremUserPost} />
       </Stack.Group>
       <Stack.Group
         screenOptions={{

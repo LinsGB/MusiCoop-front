@@ -73,8 +73,9 @@ const TabTwoScreen = ({navigation}: {navigation: any}) => {
         <View style={styles.logoutView}>
           <TouchableOpacity
             style={styles.passwordButton}
-            onPress={() => alert('Funcionalidade não implementada')}>
-            <Text style={styles.passwordText}>Alterar senha</Text>
+            onPress={() => //@ts-ignore
+              navigation.navigate('Modal')}>
+            <Text style={styles.passwordText}>Ver Posts</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.logoutButton}

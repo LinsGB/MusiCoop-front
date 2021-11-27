@@ -2,8 +2,8 @@
 // https://aboutreact.com/react-native-search-bar-filter-on-listview/
 
 // import React in our code
-import {MaterialCommunityIcons} from '@expo/vector-icons';
-import React, {useState, useEffect, useCallback} from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useState, useEffect, useCallback } from 'react';
 import logoUsuario from '../../assets/images/avatar_Prancheta.png';
 
 // import all the components we are going to use
@@ -16,34 +16,40 @@ import {
   ScrollView,
   RefreshControl,
 } from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import useComments from '../../hooks/useComments';
 import AudioPlayer from '../audioPlayer';
-import {listPosts} from '../../services/post';
+import { listPosts, listPostsByUser } from '../../services/post';
 import TouchableButton from '../touchableButton';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import reactotron from 'reactotron-react-native';
 
 const wait = (timeout: any) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-const Comments = () => {
+const Comments = (props: any) => {
   const [comments, setComments] = useState();
   const navigation = useNavigation();
 
   const [audio, setAudio] = useState();
 
-  const {items, post, setPost, setItem, setToggle} = useComments();
+  const { items, post, setPost, setItem, setToggle } = useComments();
 
   const [posts, setPosts] = useState([]);
-
   useEffect(() => {
-    listPosts().then((posts) => {
-      if (Array.isArray(posts)) {
-        setPosts(posts);
-      }
-    });
+    if (props.type === 1)
+      listPosts().then((posts) => {
+        if (Array.isArray(posts)) {
+          setPosts(posts);
+        }
+      });
+    else
+      listPostsByUser().then((posts) => {
+        if (Array.isArray(posts)) {
+          setPosts(posts);
+        }
+      });
   }, []);
 
   const [refreshing, setRefreshing] = React.useState<any>(false);
@@ -57,9 +63,6 @@ const Comments = () => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
-  const handleToggle = (commentIndex: number) => {
-    setToggle(commentIndex);
-  };
   return (
     <ScrollView
       bounces
@@ -77,7 +80,7 @@ const Comments = () => {
               key={commentIndex.toString()}
               onPress={() =>
                 //@ts-ignore
-                navigation.navigate('Postagem', {item: item})
+                navigation.navigate('Postagem', { item: item })
               }>
               <View
                 style={{
@@ -109,11 +112,11 @@ const Comments = () => {
                         marginRight: 10,
                       }}
                     />
-                    <Text style={{color: 'white'}}>{item.username}</Text>
+                    <Text style={{ color: 'white' }}>{item.username}</Text>
                   </View>
                 </View>
                 <View>
-                  <View style={{marginTop: 20, flexDirection: 'row'}}>
+                  <View style={{ marginTop: 20, flexDirection: 'row' }}>
                     <Text
                       style={{
                         fontSize: 20,
@@ -135,8 +138,8 @@ const Comments = () => {
                           borderColor: '#C8C8C8',
                           paddingVertical: 10,
                         }}>
-                        <Text style={{fontSize: 13}}>{item.postDate}</Text>
-                        <Text style={{marginTop: 10}}>{item.comment}</Text>
+                        <Text style={{ fontSize: 13 }}>{item.postDate}</Text>
+                        <Text style={{ marginTop: 10 }}>{item.comment}</Text>
                       </View>
                       <View>
                         <TextInput
@@ -154,14 +157,14 @@ const Comments = () => {
                     </React.Fragment>
                   )}
                 </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <MaterialCommunityIcons
                     name="comment-text-outline"
                     size={24}
                     color="white"
-                    style={{marginRight: 8}}
+                    style={{ marginRight: 8 }}
                   />
-                  <Text style={{color: 'white'}}>
+                  <Text style={{ color: 'white' }}>
                     {item.contribuitions.length}
                   </Text>
                 </View>

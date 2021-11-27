@@ -35,7 +35,7 @@ const Routes = () => {
               />
             </View>
           )}
-          <Comments />
+          <Comments type={1}/>
         </View>
       </View>
     );
