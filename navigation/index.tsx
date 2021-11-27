@@ -184,7 +184,7 @@ function BottomTabNavigator() {
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: 'Meu perfil',
+          title: 'Usuário',
           tabBarIcon: ({focused}) => (
             <Image
               source={focused ? UserSelected : User}
