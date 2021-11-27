@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   TextInput,
   View,
@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
-import {apiUser} from '../../../services/user';
+import { apiUser } from '../../../services/user';
 import Musicoop from '../../../assets/images/musicooptext.png';
 
 import styles from './styles';
@@ -19,7 +19,7 @@ interface Users {
   password: string;
 }
 
-const SignUp = ({navigation}: {navigation: any}) => {
+const SignUp = ({ navigation }: { navigation: any }) => {
   const [email, setEmail] = useState<any>();
   const [username, setUsername] = useState<any>();
   const [name, setName] = useState<any>();
@@ -30,7 +30,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
 
   useEffect(() => {
     validateInputs()
-  },[validEmail, username, name, password])
+  }, [validEmail, username, name, password])
 
   const register = async () => {
     setLoading(true);
@@ -47,6 +47,12 @@ const SignUp = ({navigation}: {navigation: any}) => {
           alert('Usuário registrado com sucesso');
           setLoading(false);
           navigation.navigate('Auth');
+        } else {
+          if (response.data && response.data.detail)
+            alert(response.data.detail);
+          else
+            alert('Algum dato está incorreto ou mal formatado');
+          setLoading(false);
         }
       })
       .catch((response: any) => {
@@ -58,20 +64,20 @@ const SignUp = ({navigation}: {navigation: any}) => {
   const validateEmail = (text: string) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(text) === false) {
-      setEmail({email: text});
+      setEmail({ email: text });
       setValidEmail(false)
       return false;
     } else {
-      setEmail({email: text});
+      setEmail({ email: text });
       setValidEmail(true)
       return true
     }
   };
 
   const validateInputs = () => {
-    if(validEmail && password && name && username){
+    if (validEmail && password && name && username) {
       setUnlockButton(true)
-    }else{
+    } else {
       setUnlockButton(false)
     }
   }
@@ -86,12 +92,12 @@ const SignUp = ({navigation}: {navigation: any}) => {
         }}>
         <Image
           resizeMode="stretch"
-          style={{width: 166, height: 23}}
+          style={{ width: 166, height: 23 }}
           source={Musicoop}
         />
       </View>
       <View>
-        <Text style={{color: 'white'}}>Email</Text>
+        <Text style={{ color: 'white' }}>Email</Text>
         <TextInput
           style={{
             color: 'white',
@@ -107,7 +113,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
         />
       </View>
       <View>
-        <Text style={{color: 'white'}}>Usuário</Text>
+        <Text style={{ color: 'white' }}>Usuário</Text>
         <TextInput
           style={{
             color: 'white',
@@ -123,7 +129,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
         />
       </View>
       <View>
-        <Text style={{color: 'white'}}>Nome</Text>
+        <Text style={{ color: 'white' }}>Nome</Text>
         <TextInput
           style={{
             color: 'white',
@@ -139,7 +145,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
         />
       </View>
       <View>
-        <Text style={{color: 'white'}}>Senha</Text>
+        <Text style={{ color: 'white' }}>Senha</Text>
 
         <TextInput
           style={{
@@ -156,7 +162,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
           onChangeText={(text) => setPassword(text)}
         />
       </View>
-      <View style={{marginTop: 20, alignItems: 'center'}}>
+      <View style={{ marginTop: 20, alignItems: 'center' }}>
         <TouchableOpacity
           disabled={!(unlockButton)}
           onPress={() => register()}
@@ -173,10 +179,10 @@ const SignUp = ({navigation}: {navigation: any}) => {
             },
           ]}>
           {!loading ? (
-            <Text style={{color: '#fff', fontWeight: 'bold'}}>Registrar</Text>
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Registrar</Text>
           ) : (
             <ActivityIndicator
-              style={{width: 12, height: 20}}
+              style={{ width: 12, height: 20 }}
               color="#c8c8c8"
             />
           )}
