@@ -38,6 +38,18 @@ const Comments = (props: any) => {
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
+    postProccess()
+  }, []);
+
+  const [refreshing, setRefreshing] = React.useState<any>(false);
+
+  const onRefresh = React.useCallback(() => {
+    postProccess()
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  const postProccess = () => {
     if (props.type === 1)
       listPosts().then((posts) => {
         if (Array.isArray(posts)) {
@@ -50,19 +62,9 @@ const Comments = (props: any) => {
           setPosts(posts);
         }
       });
-  }, []);
+  }
 
-  const [refreshing, setRefreshing] = React.useState<any>(false);
 
-  const onRefresh = React.useCallback(() => {
-    listPosts().then((posts) => {
-      if (Array.isArray(posts)) {
-        setPosts(posts);
-      }
-    });
-    setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
   return (
     <ScrollView
       bounces
