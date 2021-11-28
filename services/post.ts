@@ -63,4 +63,19 @@ const createPost = async (payload: any) => {
   });
 };
 
-export {createPost, createContribuition, listPosts, findPost, listPostsByUser};
+const downloadPost = async(id:number) => {
+  return await api.get(`/download?post_id=${id}`, {
+    headers: {
+      accept: 'application/json',
+    }
+  })
+}
+const downloadContribuition = async(id:number) => {
+  return await api.get(`/download?contribuition_id=${id}`, {
+    headers:{
+      accept: 'application/json',
+    }
+  })
+}
+
+export {createPost, createContribuition, listPosts, findPost, listPostsByUser, downloadPost, downloadContribuition};
