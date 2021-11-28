@@ -54,7 +54,6 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-
   return (
     <Stack.Navigator
       initialRouteName="Splash"
@@ -101,19 +100,6 @@ function RootNavigator() {
       />
       <Stack.Group
         screenOptions={{
-          presentation: 'modal',
-          headerStyle: {
-            backgroundColor: '#25214D',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            color: '#fff',
-          },
-        }}>
-        <Stack.Screen name="Modal" component={ModalScremUserPost} />
-      </Stack.Group>
-      <Stack.Group
-        screenOptions={{
           headerShown: true,
           presentation: 'modal',
           headerTintColor: '#fff',
@@ -125,6 +111,7 @@ function RootNavigator() {
           },
         }}>
         <Stack.Screen name="Postagem" component={ModalScreenPost} />
+        <Stack.Screen name="Posts" component={ModalScremUserPost} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -181,6 +168,7 @@ function BottomTabNavigator() {
           ),
         })}
       />
+
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}

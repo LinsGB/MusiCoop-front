@@ -3,42 +3,37 @@ import * as React from 'react';
 import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {useState, useEffect} from 'react';
-import {
-  View,
-  useWindowDimensions,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
+import {View, useWindowDimensions, Text, ActivityIndicator} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import reactotron from 'reactotron-react-native';
 import Comments from '../components/Comments';
 import {listPosts} from '../services/post';
 
 const ModalScreenUser = ({navigation}: {navigation: any}) => {
-    const [loading, setLoading] = useState(false);
-    useEffect(() => {
-      setLoading(true);
-      listPosts().then((posts) => {
-        if (Array.isArray(posts)) {
-          setLoading(false);
-        }
-        reactotron.debug(posts);
-      });
-    }, []);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    listPosts().then((posts) => {
+      if (Array.isArray(posts)) {
+        setLoading(false);
+      }
+      reactotron.debug(posts);
+    });
+  }, []);
   return (
     <View style={{flex: 1, backgroundColor: '#25214D'}}>
-        <View style={{flex: 1}}>
-          {loading && (
-            <View style={{alignItems: 'center'}}>
-              <ActivityIndicator
-                style={{width: 12, height: 12, marginTop: 20}}
-                color="#c8c8c8"
-              />
-            </View>
-          )}
-          <Comments type={2}/>
-        </View>
+      <View>
+        {loading && (
+          <View style={{alignItems: 'center'}}>
+            <ActivityIndicator
+              style={{width: 12, height: 12, marginTop: 25}}
+              color="#c8c8c8"
+            />
+          </View>
+        )}
+        <Comments type={2} />
       </View>
+    </View>
   );
 };
 export default ModalScreenUser;

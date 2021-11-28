@@ -1,12 +1,12 @@
-import React, {useEffect,useState} from 'react';
-import {TouchableOpacity,} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {TouchableOpacity} from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import {Text, View} from '../../components/Themed';
 import Colors from '../../constants/Colors';
 import logoUsuario from '../../assets/images/user-model.png';
 import {AsyncStorage, Image} from 'react-native';
-import {apiUser} from '../../services/user'
+import {apiUser} from '../../services/user';
 import jwt_decode from 'jwt-decode';
 
 import styles from './style';
@@ -16,10 +16,9 @@ const TabTwoScreen = ({navigation}: {navigation: any}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-
   useEffect(() => {
-    getUser()
-  }, [])
+    getUser();
+  }, []);
 
   const logout = async () => {
     AsyncStorage.removeItem('token');
@@ -32,18 +31,22 @@ const TabTwoScreen = ({navigation}: {navigation: any}) => {
   };
 
   const getUser = async () => {
-    const userToken:string = await AsyncStorage.getItem('token');
-    const jwt:any = jwt_decode(userToken)
-    const userId:number = jwt.id;
-    await apiUser.getUserById(userId).then((response) => {
-      const user:any = response.data
-      setName(user.name)
-      setEmail(user.email)
-    }).catch(() => {
-      alert("Não foi possivel pegar as informaçoes do usuário, tente novamente!")
-    }
-    )
-  }
+    const userToken: string = await AsyncStorage.getItem('token');
+    const jwt: any = jwt_decode(userToken);
+    const userId: number = jwt.id;
+    await apiUser
+      .getUserById(userId)
+      .then((response) => {
+        const user: any = response.data;
+        setName(user.name);
+        setEmail(user.email);
+      })
+      .catch(() => {
+        alert(
+          'Não foi possivel pegar as informaçoes do usuário, tente novamente!',
+        );
+      });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.logoView}>
@@ -73,8 +76,10 @@ const TabTwoScreen = ({navigation}: {navigation: any}) => {
         <View style={styles.logoutView}>
           <TouchableOpacity
             style={styles.passwordButton}
-            onPress={() => //@ts-ignore
-              navigation.navigate('Modal')}>
+            onPress={() =>
+              //@ts-ignore
+              navigation.navigate('Posts')
+            }>
             <Text style={styles.passwordText}>Ver Posts</Text>
           </TouchableOpacity>
           <TouchableOpacity
