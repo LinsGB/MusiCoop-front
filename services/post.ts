@@ -47,6 +47,14 @@ const createContribuition = async (id: number, payload: any) => {
   });
 };
 
+const listContributionByUser = async ():Promise<any> => {
+  return (await api.get(`/contribuitions/user`, {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${await AsyncStorage.getItem('token')}`
+    },
+  })).data;
+};
 
 const createPost = async (payload: any) => {
   const bodyFormData = new FormData();
@@ -78,4 +86,4 @@ const downloadContribuition = async(id:number) => {
   })
 }
 
-export {createPost, createContribuition, listPosts, findPost, listPostsByUser, downloadPost, downloadContribuition};
+export {createPost, createContribuition, listPosts, findPost, listPostsByUser, downloadPost, downloadContribuition, listContributionByUser};

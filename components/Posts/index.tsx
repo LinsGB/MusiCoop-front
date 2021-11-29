@@ -3,13 +3,12 @@
 
 // import React in our code
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import logoUsuario from '../../assets/images/avatar_Prancheta.png';
 
 // import all the components we are going to use
 import {
   Text,
-  StyleSheet,
   View,
   TextInput,
   Image,
@@ -17,24 +16,15 @@ import {
   RefreshControl,
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import useComments from '../../hooks/useComments';
-import AudioPlayer from '../audioPlayer';
 import { listPosts, listPostsByUser } from '../../services/post';
-import TouchableButton from '../touchableButton';
 import { useNavigation } from '@react-navigation/native';
-import reactotron from 'reactotron-react-native';
 
 const wait = (timeout: any) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
 const Comments = (props: any) => {
-  const [comments, setComments] = useState();
   const navigation = useNavigation();
-
-  const [audio, setAudio] = useState();
-
-  const { items, post, setPost, setItem, setToggle } = useComments();
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -178,22 +168,5 @@ const Comments = (props: any) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#25214D',
-  },
-  itemStyle: {
-    padding: 10,
-  },
-  textInputStyle: {
-    height: 40,
-    borderWidth: 1,
-    paddingLeft: 20,
-    margin: 5,
-    borderColor: '#C8C8C8',
-    backgroundColor: '#FFFFFF',
-  },
-});
 
 export default Comments;

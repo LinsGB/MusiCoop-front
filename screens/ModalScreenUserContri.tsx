@@ -1,9 +1,11 @@
+import {StatusBar} from 'expo-status-bar';
 import * as React from 'react';
+import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {useState, useEffect} from 'react';
 import {View, ActivityIndicator} from 'react-native';
 import reactotron from 'reactotron-react-native';
-import Comments from '../components/Posts';
+import Contribution from '../components/Contribution';
 import {listPosts} from '../services/post';
 
 const ModalScreenUser = ({navigation}: {navigation: any}) => {
@@ -28,7 +30,7 @@ const ModalScreenUser = ({navigation}: {navigation: any}) => {
             />
           </View>
         )}
-        <Comments type={2} />
+        <Contribution />
       </View>
     </View>
   );

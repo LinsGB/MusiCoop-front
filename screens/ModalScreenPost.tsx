@@ -33,6 +33,7 @@ const ModalScreenPost = ({ route }: { route: any }) => {
 
 
   useEffect(() => {
+    console.log("POST!!", route.params.item)
     onRefresh();
 
     setContribuitions(route.params.item.contribuitions);

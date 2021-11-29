@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import reactotron from 'reactotron-react-native';
-import Comments from '../components/Comments';
+import Comments from '../components/Posts';
 import {listPosts} from '../services/post';
 
 

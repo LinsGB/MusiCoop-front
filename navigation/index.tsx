@@ -1,17 +1,16 @@
-import {FontAwesome} from '@expo/vector-icons';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { FontAwesome } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
 } from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import {ColorSchemeName, Image} from 'react-native';
+import { ColorSchemeName, Image } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreenUser from '../screens/ModalScreenUser';
 import ModalScremUserPost from '../screens/ModalScremUserPost';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
@@ -28,6 +27,7 @@ import loginScreen from './pages/initialPage';
 import SingUp from './pages/signUp';
 import postScreen from './pages/post';
 import ModalScreenPost from '../screens/ModalScreenPost';
+import ModalScreenUserContri from '../screens/ModalScreenUserContri';
 
 import Post from '../assets/images/post.png';
 import PostSelected from '../assets/images/post-selected.png';
@@ -57,46 +57,46 @@ function RootNavigator() {
   return (
     <Stack.Navigator
       initialRouteName="Splash"
-      screenOptions={{headerShown: false}}>
+      screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="Splash"
         component={Splash}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Login"
         component={loginScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="SignUp"
         component={SingUp}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Auth"
         component={authScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Post"
         component={postScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{title: 'Oops!'}}
+        options={{ title: 'Oops!' }}
       />
       <Stack.Screen
         name="LogOff"
         component={EditScreenInfo}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Group
         screenOptions={{
@@ -112,6 +112,7 @@ function RootNavigator() {
         }}>
         <Stack.Screen name="Postagem" component={ModalScreenPost} />
         <Stack.Screen name="Posts" component={ModalScremUserPost} />
+        <Stack.Screen name="Contribution" component={ModalScreenUserContri} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -139,9 +140,9 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
-        options={({navigation}: RootTabScreenProps<'TabOne'>) => ({
+        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Início',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={focused ? HomeSelected : Home}
               style={{
@@ -155,8 +156,8 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="Post"
         component={postScreen}
-        options={({navigation}: RootTabScreenProps<'Post'>) => ({
-          tabBarIcon: ({focused}) => (
+        options={({ navigation }: RootTabScreenProps<'Post'>) => ({
+          tabBarIcon: ({ focused }) => (
             <Image
               source={focused ? PostSelected : Post}
               resizeMode={'contain'}
@@ -174,7 +175,7 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Usuário',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={focused ? UserSelected : User}
               resizeMode={'contain'}
@@ -194,5 +195,5 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{marginBottom: -3}} {...props} />;
+  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
