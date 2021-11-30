@@ -200,7 +200,7 @@ const postScreen = () => {
               {hasFile ? (
                 <Text style={{fontSize: 13}}>{fileName}</Text>
               ) : (
-                <Text>Selecionar Áudio</Text>
+                <Text>Selecionar áudio</Text>
               )}
             </TouchableOpacity>
             {hasFile && <AudioPlayer WithBackground uri={uri} />}

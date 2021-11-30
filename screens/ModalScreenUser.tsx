@@ -10,8 +10,8 @@ const ModalScreenUser = ({navigation}: {navigation: any}) => {
   const logout = async () => {
     const token = AsyncStorage.getItem('token');
     AsyncStorage.removeItem('token');
-    navigation.navigate('Login')
-  }
+    navigation.navigate('Login');
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Modal</Text>
@@ -37,9 +37,7 @@ const ModalScreenUser = ({navigation}: {navigation: any}) => {
         </View>
 
         <View style={styles.helpContainer}>
-          <TouchableOpacity
-            onPress={() => logout()}
-            style={styles.helpLink}>
+          <TouchableOpacity onPress={() => logout()} style={styles.helpLink}>
             <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
               Sair
             </Text>

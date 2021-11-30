@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -7,9 +7,9 @@ import {
   TextInput,
   RefreshControl,
   ActivityIndicator,
-  Linking
+  Linking,
 } from 'react-native';
-import { Text, View } from '../../components/Themed';
+import {Text, View} from '../../components/Themed';
 import logoUsuario from '../../assets/images/avatar_Prancheta.png';
 import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../../assets/images/clipe.png';
@@ -17,10 +17,14 @@ import postar from '../../assets/images/postar.png';
 import postarOpacity from '../../assets/images/postarOpaco.png';
 
 import AudioPlayer from '../../components/audioPlayer';
-import { createContribuition, findPost, listContributionByUser } from '../../services/post';
-import { Reload } from '../../context/reload';
-import { apiUser } from '../../services/user'
-import { useNavigation } from '@react-navigation/native';
+import {
+  createContribuition,
+  findPost,
+  listContributionByUser,
+} from '../../services/post';
+import {Reload} from '../../context/reload';
+import {apiUser} from '../../services/user';
+import {useNavigation} from '@react-navigation/native';
 
 const ModalScreenPost = () => {
   const [comment, setComment] = useState('');
@@ -29,12 +33,12 @@ const ModalScreenPost = () => {
   const [fileName, setFileName] = useState('');
   const [hasFile, setHasFile] = useState<any>();
   const [refreshing, setRefreshing] = useState(false);
-  const [postSelected, setPostSelected] = useState<any>(false); 
+  const [postSelected, setPostSelected] = useState<any>(false);
 
   const navigation = useNavigation();
   useEffect(() => {
     //onRefresh();
-    contributionProccess()
+    contributionProccess();
     if (fileName) {
       setHasFile(true);
     }
@@ -44,8 +48,8 @@ const ModalScreenPost = () => {
   }, [fileName, hasFile]);
 
   const contributionProccess = async () => {
-    setContribuitions(await listContributionByUser())
-  }
+    setContribuitions(await listContributionByUser());
+  };
 
   const onRefresh = React.useCallback(() => {
     /*findPost(route.params.item.id).then(async (posts) => {
@@ -64,7 +68,7 @@ const ModalScreenPost = () => {
     setRefreshing(true);
 
     wait(2000).then(() => setRefreshing(false));*/
-    console.log("TEST")
+    console.log('TEST');
   }, []);
 
   //const items = route.params.item;
@@ -73,34 +77,36 @@ const ModalScreenPost = () => {
   return (
     <Reload.Provider value={[context, setContext]}>
       <React.Fragment>
-        <View style={styles.container}>
+        <View>
           <ScrollView
-            style={{ backgroundColor: '#25214D' }}
+            style={{backgroundColor: '#25214D'}}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-
-          </ScrollView>
+            }></ScrollView>
         </View>
-        <View
-          style={{ borderTopWidth: 1, borderColor: '#eee', paddingBottom: 5 }}>
+        <View style={{paddingBottom: 5}}>
           {hasFile && (
             <View
-              style={{ flexDirection: 'row', paddingTop: 10, paddingLeft: 20 }}>
-              <Text style={{ marginLeft: 10 }}>{fileName}</Text>
+              style={{flexDirection: 'row', paddingTop: 10, paddingLeft: 20}}>
+              <Text style={{marginLeft: 10}}>{fileName}</Text>
             </View>
           )}
-          <ScrollView>
+          <ScrollView style={{marginTop: 20}}>
             {contribuitions.map((contribuition: any) => (
-              <TouchableOpacity onPress={async() => 
-                //@ts-ignore
-                navigation.navigate('Postagem', { item: await findPost(contribuition.post)})}>
+              <TouchableOpacity
+                onPress={async () =>
+                  //@ts-ignore
+                  navigation.navigate('Postagem', {
+                    item: await findPost(contribuition.post),
+                  })
+                }>
                 <View
                   style={{
                     marginBottom: 10,
                     flex: 1,
                     borderRadius: 8,
                     backgroundColor: '#36375f',
+                    marginHorizontal: 10,
                   }}>
                   <View
                     style={{
@@ -129,7 +135,9 @@ const ModalScreenPost = () => {
                         }}
                       />
 
-                      <Text style={{ color: 'white' }}>{contribuition.username}</Text>
+                      <Text style={{color: 'white'}}>
+                        {contribuition.username}
+                      </Text>
                     </View>
                     {contribuition.file_size > 0 && (
                       <AudioPlayer
@@ -140,8 +148,8 @@ const ModalScreenPost = () => {
                       />
                     )}
                   </View>
-                  <View style={{ marginHorizontal: 10 }}>
-                    <View style={{ backgroundColor: '#36375f' }}>
+                  <View style={{marginHorizontal: 10}}>
+                    <View style={{backgroundColor: '#36375f'}}>
                       <Text
                         style={styles.getStartedText}
                         lightColor="rgba(0,0,0,0.8)"

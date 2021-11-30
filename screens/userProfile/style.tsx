@@ -55,6 +55,22 @@ const styles = StyleSheet.create({
     width: 200,
     alignItems: 'center',
   },
+  seeContriButton: {
+    backgroundColor: '#F05922',
+    paddingVertical: 5,
+    marginBottom: 20,
+    borderRadius: 100,
+    width: 200,
+    alignItems: 'center',
+  },
+  seePostsButton: {
+    backgroundColor: '#F05922',
+    paddingVertical: 5,
+    marginBottom: 100,
+    borderRadius: 100,
+    width: 200,
+    alignItems: 'center',
+  },
   passwordText: {
     color: 'white',
   },

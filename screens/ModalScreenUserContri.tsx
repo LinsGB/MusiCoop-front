@@ -24,10 +24,7 @@ const ModalScreenUser = ({navigation}: {navigation: any}) => {
       <View>
         {loading && (
           <View style={{alignItems: 'center'}}>
-            <ActivityIndicator
-              style={{width: 12, height: 12, marginTop: 25}}
-              color="#c8c8c8"
-            />
+            <ActivityIndicator style={{width: 12, height: 12, marginTop: 25}} />
           </View>
         )}
         <Contribution />

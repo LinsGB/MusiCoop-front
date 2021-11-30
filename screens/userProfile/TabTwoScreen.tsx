@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, TouchableOpacity} from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+import {Text, View} from '../../components/Themed';
 import Colors from '../../constants/Colors';
 import logoUsuario from '../../assets/images/user-model.png';
-import { AsyncStorage, Image } from 'react-native';
-import { apiUser } from '../../services/user';
+import {AsyncStorage, Image} from 'react-native';
+import {apiUser} from '../../services/user';
 import jwt_decode from 'jwt-decode';
 
 import styles from './style';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 
-const TabTwoScreen = ({ navigation }: { navigation: any }) => {
+const TabTwoScreen = ({navigation}: {navigation: any}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -25,7 +25,7 @@ const TabTwoScreen = ({ navigation }: { navigation: any }) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: 'Login' }],
+        routes: [{name: 'Login'}],
       }),
     );
   };
@@ -48,35 +48,35 @@ const TabTwoScreen = ({ navigation }: { navigation: any }) => {
       });
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.logoView}>
-        <TouchableOpacity
-          onPress={() => alert('Funcionalidade não implementada')}>
-          <Image
-            source={logoUsuario}
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: 100,
-              marginTop: 40,
-            }}
-          />
-        </TouchableOpacity>
-      </View>
-      {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-      <View>
-        <View style={styles.userView}>
-          <Text style={styles.user}>nome do usuário:</Text>
-          <Text style={styles.userText}>{name}</Text>
+    <ScrollView style={{backgroundColor: '#25214D'}}>
+      <View style={styles.container}>
+        <View style={styles.logoView}>
+          <TouchableOpacity
+            onPress={() => alert('Funcionalidade não implementada')}>
+            <Image
+              source={logoUsuario}
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 100,
+                marginTop: 40,
+              }}
+            />
+          </TouchableOpacity>
         </View>
-        <View style={styles.emailView}>
-          <Text style={styles.email}>e-mail:</Text>
-          <Text style={styles.emailText}>{email}</Text>
-        </View>
-        <ScrollView>
+        {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
+        <View>
+          <View style={styles.userView}>
+            <Text style={styles.user}>nome do usuário:</Text>
+            <Text style={styles.userText}>{name}</Text>
+          </View>
+          <View style={styles.emailView}>
+            <Text style={styles.email}>e-mail:</Text>
+            <Text style={styles.emailText}>{email}</Text>
+          </View>
           <View style={styles.logoutView}>
             <TouchableOpacity
-              style={styles.passwordButton}
+              style={styles.seeContriButton}
               onPress={() =>
                 //@ts-ignore
                 navigation.navigate('Contribution')
@@ -84,7 +84,7 @@ const TabTwoScreen = ({ navigation }: { navigation: any }) => {
               <Text style={styles.passwordText}>Ver Contribuições</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.passwordButton}
+              style={styles.seePostsButton}
               onPress={() =>
                 //@ts-ignore
                 navigation.navigate('Posts')
@@ -97,9 +97,9 @@ const TabTwoScreen = ({ navigation }: { navigation: any }) => {
               <Text style={styles.logoutText}>Sair</Text>
             </TouchableOpacity>
           </View>
-        </ScrollView>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
