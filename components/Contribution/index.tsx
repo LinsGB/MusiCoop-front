@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -9,22 +9,22 @@ import {
   ActivityIndicator,
   Linking,
 } from 'react-native';
-import {Text, View} from '../../components/Themed';
+import { Text, View } from '../../components/Themed';
 import logoUsuario from '../../assets/images/avatar_Prancheta.png';
 import * as DocumentPicker from 'expo-document-picker';
 import clipe from '../../assets/images/clipe.png';
 import postar from '../../assets/images/postar.png';
 import postarOpacity from '../../assets/images/postarOpaco.png';
-
+import download from '../../assets/images/download.png';
 import AudioPlayer from '../../components/audioPlayer';
 import {
   createContribuition,
   findPost,
   listContributionByUser,
 } from '../../services/post';
-import {Reload} from '../../context/reload';
-import {apiUser} from '../../services/user';
-import {useNavigation} from '@react-navigation/native';
+import { Reload } from '../../context/reload';
+import { apiUser } from '../../services/user';
+import { useNavigation } from '@react-navigation/native';
 
 const ModalScreenPost = () => {
   const [comment, setComment] = useState('');
@@ -37,29 +37,19 @@ const ModalScreenPost = () => {
 
   const navigation = useNavigation();
   useEffect(() => {
-    //onRefresh();
     contributionProccess();
-    if (fileName) {
-      setHasFile(true);
-    }
-    if (!fileName) {
-      setHasFile(false);
-    }
-  }, [fileName, hasFile]);
+  }, []);
 
   const contributionProccess = async () => {
     setContribuitions(await listContributionByUser());
   };
 
   const onRefresh = React.useCallback(() => {
-    /*findPost(route.params.item.id).then(async (posts) => {
+    findPost(contribuitions[0].post).then(async (post) => {
       //@ts-ignore
-      if (Array.isArray(posts.contribuitions)) {
-        //@ts-ignore
-        const userPost = await getUserById(posts.user)
-        //@ts-ignore
-        setUsername(userPost.username)
-      }
+      const contribuitions = post.contribuitions
+      if (Array.isArray(contribuitions))
+        setContribuitions(contribuitions)
     });
     const wait = (timeout: any) => {
       return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -67,8 +57,7 @@ const ModalScreenPost = () => {
 
     setRefreshing(true);
 
-    wait(2000).then(() => setRefreshing(false));*/
-    console.log('TEST');
+    wait(2000).then(() => setRefreshing(false));
   }, []);
 
   //const items = route.params.item;
@@ -79,19 +68,19 @@ const ModalScreenPost = () => {
       <React.Fragment>
         <View>
           <ScrollView
-            style={{backgroundColor: '#25214D'}}
+            style={{ backgroundColor: '#25214D' }}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }></ScrollView>
         </View>
-        <View style={{paddingBottom: 5}}>
+        <View style={{ paddingBottom: 5 }}>
           {hasFile && (
             <View
-              style={{flexDirection: 'row', paddingTop: 10, paddingLeft: 20}}>
-              <Text style={{marginLeft: 10}}>{fileName}</Text>
+              style={{ flexDirection: 'row', paddingTop: 10, paddingLeft: 20 }}>
+              <Text style={{ marginLeft: 10 }}>{fileName}</Text>
             </View>
           )}
-          <ScrollView style={{marginTop: 20}}>
+          <ScrollView style={{ marginTop: 20 }}>
             {contribuitions.map((contribuition: any) => (
               <TouchableOpacity
                 onPress={async () =>
@@ -135,21 +124,44 @@ const ModalScreenPost = () => {
                         }}
                       />
 
-                      <Text style={{color: 'white'}}>
+                      <Text style={{ color: 'white' }}>
                         {contribuition.username}
                       </Text>
                     </View>
                     {contribuition.file_size > 0 && (
-                      <AudioPlayer
-                        uri={
-                          contribuition.uri ||
-                          `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
-                        }
-                      />
+                      <View
+                      style={{
+                        backgroundColor: '#36375f',
+                        flexDirection: 'row',
+                      }}>
+                        <AudioPlayer
+                          uri={
+                            contribuition.uri ||
+                            `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
+                          }
+                        />
+                        <TouchableOpacity
+                          style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: '#36375F',
+                            borderRadius: 10,
+                            height: 50,
+                            width: 40,
+                            marginLeft: 10,
+                          }}
+                          onPress={() =>
+                            Linking.openURL(
+                              `https://musicoop-api.herokuapp.com/download?contribuition_id=${contribuition.id}`,
+                            )
+                          }>
+                          <Image source={download} />
+                        </TouchableOpacity>
+                      </View>
                     )}
                   </View>
-                  <View style={{marginHorizontal: 10}}>
-                    <View style={{backgroundColor: '#36375f'}}>
+                  <View style={{ marginHorizontal: 10 }}>
+                    <View style={{ backgroundColor: '#36375f' }}>
                       <Text
                         style={styles.getStartedText}
                         lightColor="rgba(0,0,0,0.8)"
