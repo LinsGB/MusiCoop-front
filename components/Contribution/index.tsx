@@ -45,12 +45,7 @@ const ModalScreenPost = () => {
   };
 
   const onRefresh = React.useCallback(() => {
-    findPost(contribuitions[0].post).then(async (post) => {
-      //@ts-ignore
-      const contribuitions = post.contribuitions
-      if (Array.isArray(contribuitions))
-        setContribuitions(contribuitions)
-    });
+    contributionProccess()
     const wait = (timeout: any) => {
       return new Promise((resolve) => setTimeout(resolve, timeout));
     };
@@ -66,115 +61,114 @@ const ModalScreenPost = () => {
   return (
     <Reload.Provider value={[context, setContext]}>
       <React.Fragment>
-        <View>
           <ScrollView
             style={{ backgroundColor: '#25214D' }}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }></ScrollView>
-        </View>
-        <View style={{ paddingBottom: 5 }}>
-          {hasFile && (
-            <View
-              style={{ flexDirection: 'row', paddingTop: 10, paddingLeft: 20 }}>
-              <Text style={{ marginLeft: 10 }}>{fileName}</Text>
-            </View>
-          )}
-          <ScrollView style={{ marginTop: 20 }}>
-            {contribuitions.map((contribuition: any) => (
-              <TouchableOpacity
-                onPress={async () =>
-                  //@ts-ignore
-                  navigation.navigate('Postagem', {
-                    item: await findPost(contribuition.post),
-                  })
-                }>
+            }>
+            <View style={{ paddingBottom: 5 }}>
+              {hasFile && (
                 <View
-                  style={{
-                    marginBottom: 10,
-                    flex: 1,
-                    borderRadius: 8,
-                    backgroundColor: '#36375f',
-                    marginHorizontal: 10,
-                  }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      borderBottomWidth: 1,
-                      borderBottomColor: '#4e4a6e',
-                      marginHorizontal: 10,
-                      paddingVertical: 5,
-                      backgroundColor: '#36375f',
-                    }}>
+                  style={{ flexDirection: 'row', paddingTop: 10, paddingLeft: 20 }}>
+                  <Text style={{ marginLeft: 10 }}>{fileName}</Text>
+                </View>
+              )}
+              <ScrollView style={{ marginTop: 20 }}>
+                {contribuitions.map((contribuition: any) => (
+                  <TouchableOpacity
+                    onPress={async () =>
+                      //@ts-ignore
+                      navigation.navigate('Postagem', {
+                        item: await findPost(contribuition.post),
+                      })
+                    }>
                     <View
                       style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
+                        marginBottom: 10,
+                        flex: 1,
+                        borderRadius: 8,
                         backgroundColor: '#36375f',
+                        marginHorizontal: 10,
                       }}>
-                      <Image
-                        source={logoUsuario}
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: 100,
-                          marginRight: 10,
-                        }}
-                      />
-
-                      <Text style={{ color: 'white' }}>
-                        {contribuition.username}
-                      </Text>
-                    </View>
-                    {contribuition.file_size > 0 && (
                       <View
-                      style={{
-                        backgroundColor: '#36375f',
-                        flexDirection: 'row',
-                      }}>
-                        <AudioPlayer
-                          uri={
-                            contribuition.uri ||
-                            `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
-                          }
-                        />
-                        <TouchableOpacity
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          borderBottomWidth: 1,
+                          borderBottomColor: '#4e4a6e',
+                          marginHorizontal: 10,
+                          paddingVertical: 5,
+                          backgroundColor: '#36375f',
+                        }}>
+                        <View
                           style={{
+                            flexDirection: 'row',
                             alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#36375F',
-                            borderRadius: 10,
-                            height: 50,
-                            width: 40,
-                            marginLeft: 10,
-                          }}
-                          onPress={() =>
-                            Linking.openURL(
-                              `https://musicoop-api.herokuapp.com/download?contribuition_id=${contribuition.id}`,
-                            )
-                          }>
-                          <Image source={download} />
-                        </TouchableOpacity>
+                            justifyContent: 'space-between',
+                            backgroundColor: '#36375f',
+                          }}>
+                          <Image
+                            source={logoUsuario}
+                            style={{
+                              width: 40,
+                              height: 40,
+                              borderRadius: 100,
+                              marginRight: 10,
+                            }}
+                          />
+
+                          <Text style={{ color: 'white' }}>
+                            {contribuition.username}
+                          </Text>
+                        </View>
+                        {contribuition.file_size > 0 && (
+                          <View
+                            style={{
+                              backgroundColor: '#36375f',
+                              flexDirection: 'row',
+                            }}>
+                            <AudioPlayer
+                              uri={
+                                contribuition.uri ||
+                                `https://musicoop-api.herokuapp.com/musics?contribuition_id=${contribuition.id}`
+                              }
+                            />
+                            <TouchableOpacity
+                              style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: '#36375F',
+                                borderRadius: 10,
+                                height: 50,
+                                width: 40,
+                                marginLeft: 10,
+                              }}
+                              onPress={() =>
+                                Linking.openURL(
+                                  `https://musicoop-api.herokuapp.com/download?contribuition_id=${contribuition.id}`,
+                                )
+                              }>
+                              <Image source={download} />
+                            </TouchableOpacity>
+                          </View>
+                        )}
                       </View>
-                    )}
-                  </View>
-                  <View style={{ marginHorizontal: 10 }}>
-                    <View style={{ backgroundColor: '#36375f' }}>
-                      <Text
-                        style={styles.getStartedText}
-                        lightColor="rgba(0,0,0,0.8)"
-                        darkColor="rgba(255,255,255,0.8)">
-                        {contribuition.name}
-                      </Text>
+                      <View style={{ marginHorizontal: 10 }}>
+                        <View style={{ backgroundColor: '#36375f' }}>
+                          <Text
+                            style={styles.getStartedText}
+                            lightColor="rgba(0,0,0,0.8)"
+                            darkColor="rgba(255,255,255,0.8)">
+                            {contribuition.name}
+                          </Text>
+                        </View>
+                      </View>
                     </View>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            ))}
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
           </ScrollView>
-        </View>
       </React.Fragment>
     </Reload.Provider>
   );
